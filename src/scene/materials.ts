@@ -1,7 +1,9 @@
 import { MeshStandardMaterial } from 'three';
 import { findMaterial } from '../catalogue/materials';
+import { CUSTOM_COLOR_PATTERN } from '../schema/apartment';
 
 const FALLBACK_COLOR = '#ff00ff';
+const CUSTOM_COLOR_ROUGHNESS = 0.9;
 const cache = new Map<string, MeshStandardMaterial>();
 
 export function meshMaterial(ref: string): MeshStandardMaterial {
@@ -14,6 +16,9 @@ export function meshMaterial(ref: string): MeshStandardMaterial {
 }
 
 function createMaterial(ref: string): MeshStandardMaterial {
+  if (CUSTOM_COLOR_PATTERN.test(ref)) {
+    return new MeshStandardMaterial({ color: ref, roughness: CUSTOM_COLOR_ROUGHNESS });
+  }
   const definition = findMaterial(ref);
   if (!definition) {
     return new MeshStandardMaterial({ color: FALLBACK_COLOR });

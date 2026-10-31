@@ -143,6 +143,20 @@ describe('validateApartment', () => {
     ]);
   });
 
+  it('accepts custom colours and rejects malformed ones', () => {
+    // Arrange
+    const input = sampleApartment();
+    input.floors[0]!.walls[0]!.materials.left = '#a1b2c3';
+    input.floors[0]!.walls[0]!.materials.right = '#ABC';
+
+    // Act
+    const errors = expectErrors(input);
+
+    // Assert
+    expect(errors).toHaveLength(1);
+    expect(errors[0]).toMatch(/^floors\.0\.walls\.0\.materials\.right:/);
+  });
+
   it('rejects openings on unknown walls', () => {
     // Arrange
     const input = sampleApartment();

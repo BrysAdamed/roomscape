@@ -4,15 +4,15 @@ An apartment is a single JSON file in `public/projects/`. The viewer renders it,
 
 ## Conventions
 
-| Topic          | Rule                                                                                                                        |
-| -------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| Units          | Metres. Rotations in degrees.                                                                                               |
-| Plan points    | `[x, y]` as drawn on the floor plan, x to the right and y downwards. In 3D, plan x is world X and plan y is world Z (Y-up). |
-| Ids            | Lower-case kebab-case (`w-north`, `bed-1`), unique across the whole apartment.                                              |
-| Materials      | Referenced by id from the catalogue in [`src/catalogue/materials.ts`](../src/catalogue/materials.ts).                       |
-| Wall sides     | `left` / `right` as seen when walking from `start` to `end`.                                                                |
-| Rotation       | Counter-clockwise in plan view around the item's position. At `0` a piece's front faces +y (the bottom of the plan).        |
-| Schema version | `schemaVersion` is `1`. Breaking changes bump it.                                                                           |
+| Topic          | Rule                                                                                                                                              |
+| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Units          | Metres. Rotations in degrees.                                                                                                                     |
+| Plan points    | `[x, y]` as drawn on the floor plan, x to the right and y downwards. In 3D, plan x is world X and plan y is world Z (Y-up).                       |
+| Ids            | Lower-case kebab-case (`w-north`, `bed-1`), unique across the whole apartment.                                                                    |
+| Materials      | Referenced by id from the catalogue in [`src/catalogue/materials.ts`](../src/catalogue/materials.ts), or a custom colour `#rrggbb` (matte paint). |
+| Wall sides     | `left` / `right` as seen when walking from `start` to `end`.                                                                                      |
+| Rotation       | Counter-clockwise in plan view around the item's position. At `0` a piece's front faces +y (the bottom of the plan).                              |
+| Schema version | `schemaVersion` is `1`. Breaking changes bump it.                                                                                                 |
 
 ## Structure
 

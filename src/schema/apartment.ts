@@ -6,6 +6,13 @@ const id = z
   .string()
   .regex(/^[a-z0-9][a-z0-9-]*$/, 'ids use lower-case letters, digits and dashes');
 
+export const CUSTOM_COLOR_PATTERN = /^#[0-9a-f]{6}$/;
+
+const materialRef = z.union([
+  id,
+  z.string().regex(CUSTOM_COLOR_PATTERN, 'custom colours use the #rrggbb format'),
+]);
+
 const positive = z.number().positive();
 const nonNegative = z.number().nonnegative();
 
@@ -18,15 +25,15 @@ export const wallSchema = z.object({
   thickness: positive,
   height: positive.optional(),
   materials: z.object({
-    left: id,
-    right: id,
+    left: materialRef,
+    right: materialRef,
   }),
 });
 
 export const doorSchema = z.object({
   hinge: z.enum(['start', 'end']),
   opensTo: z.enum(['left', 'right']),
-  material: id.optional(),
+  material: materialRef.optional(),
 });
 
 export const openingSchema = z.object({
@@ -44,7 +51,7 @@ export const roomSchema = z.object({
   id,
   name: z.string().min(1),
   polygon: z.array(planPointSchema).min(3),
-  floorMaterial: id,
+  floorMaterial: materialRef,
 });
 
 export const furnitureSchema = z.object({
@@ -54,7 +61,7 @@ export const furnitureSchema = z.object({
   elevation: nonNegative.optional(),
   rotation: z.number(),
   params: z.record(z.string(), z.union([z.number(), z.string(), z.boolean()])),
-  materials: z.record(z.string(), id),
+  materials: z.record(z.string(), materialRef),
 });
 
 export const floorSchema = z.object({

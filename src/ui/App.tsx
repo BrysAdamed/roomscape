@@ -1,16 +1,38 @@
+import { useEffect } from 'react';
 import { Viewport } from '../scene/Viewport';
+import { useApartmentStore } from '../state/apartmentStore';
 import { CameraToolbar } from './CameraToolbar';
+import { ConfigPanel } from './ConfigPanel';
 import { useProject } from './useProject';
 
 const DEFAULT_PROJECT = 'pilot-bedroom';
 
 export function App() {
   const project = useProject(DEFAULT_PROJECT);
+  const load = useApartmentStore((state) => state.load);
+  const select = useApartmentStore((state) => state.select);
+
+  useEffect(() => {
+    if (project.status === 'ready') {
+      load(project.apartment);
+    }
+  }, [project, load]);
+
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        select(undefined);
+      }
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [select]);
 
   return (
     <div className="app">
-      <Viewport apartment={project.status === 'ready' ? project.apartment : undefined} />
+      <Viewport />
       <CameraToolbar />
+      <ConfigPanel />
       {project.status === 'loading' && <div className="overlay">Loading…</div>}
       {project.status === 'error' && (
         <div className="overlay overlay-error">

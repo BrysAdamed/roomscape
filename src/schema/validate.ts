@@ -2,7 +2,13 @@ import type { z } from 'zod';
 import { furnitureTypes } from '../catalogue/furniture/registry';
 import type { FurnitureType } from '../catalogue/furniture/types';
 import { materials } from '../catalogue/materials';
-import { apartmentSchema, type Apartment, type Floor, type PlanPoint } from './apartment';
+import {
+  apartmentSchema,
+  CUSTOM_COLOR_PATTERN,
+  type Apartment,
+  type Floor,
+  type PlanPoint,
+} from './apartment';
 
 export type ValidationResult =
   { success: true; apartment: Apartment } | { success: false; errors: string[] };
@@ -51,7 +57,7 @@ function checkReferences(apartment: Apartment, context: ValidationContext): stri
   };
 
   const checkMaterial = (materialId: string, path: string) => {
-    if (!context.materialIds.has(materialId)) {
+    if (!CUSTOM_COLOR_PATTERN.test(materialId) && !context.materialIds.has(materialId)) {
       errors.push(`${path}: unknown material '${materialId}'`);
     }
   };

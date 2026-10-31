@@ -38,6 +38,7 @@ export function CameraRig({ framing }: { framing: CameraFraming }) {
     <OrbitControls
       ref={orbit}
       makeDefault
+      enableDamping={false}
       maxPolarAngle={Math.PI / 2 - 0.05}
       minDistance={0.5}
       maxDistance={60}
