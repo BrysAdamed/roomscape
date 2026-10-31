@@ -3,6 +3,7 @@ import { Viewport } from '../scene/Viewport';
 import { useApartmentStore } from '../state/apartmentStore';
 import { CameraToolbar } from './CameraToolbar';
 import { ConfigPanel } from './ConfigPanel';
+import { ProjectBar } from './ProjectBar';
 import { useProject } from './useProject';
 
 const DEFAULT_PROJECT = 'pilot-bedroom';
@@ -31,6 +32,7 @@ export function App() {
   return (
     <div className="app">
       <Viewport />
+      <ProjectBar />
       <CameraToolbar />
       <ConfigPanel />
       {project.status === 'loading' && <div className="overlay">Loading…</div>}
