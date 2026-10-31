@@ -8,12 +8,20 @@
     sans-serif;
   --bg: #f4f2ee;
   --fg: #1f1f1f;
+  --surface: #ffffff;
+  --surface-hover: #f0eee9;
+  --border: #d6d2ca;
+  --accent: #3d6b8f;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --bg: #1b1c1f;
     --fg: #e8e6e3;
+    --surface: #2a2b2f;
+    --surface-hover: #34363b;
+    --border: #44464c;
+    --accent: #5b8db5;
   }
 }
 
@@ -30,6 +38,64 @@ body,
   position: relative;
   width: 100%;
   height: 100%;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  padding: 6px 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface);
+  cursor: pointer;
+}
+
+button:hover {
+  background: var(--surface-hover);
+}
+
+button[aria-pressed='true'] {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.toolbar {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  right: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  pointer-events: none;
+}
+
+.toolbar > * {
+  pointer-events: auto;
+}
+
+.segmented {
+  display: inline-flex;
+}
+
+.segmented button:not(:first-child) {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  margin-left: -1px;
+}
+
+.segmented button:not(:last-child) {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.hint {
+  font-size: 13px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--bg) 80%, transparent);
 }
 
 .overlay {

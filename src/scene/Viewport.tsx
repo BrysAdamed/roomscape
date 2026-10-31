@@ -1,11 +1,16 @@
+import { useMemo } from 'react';
 import { Canvas } from '@react-three/fiber';
-import { Grid, OrbitControls } from '@react-three/drei';
+import { Grid } from '@react-three/drei';
 import type { Apartment } from '../schema/apartment';
 import { ApartmentView } from './ApartmentView';
+import { CameraRig } from './camera/CameraRig';
+import { frameApartment } from './camera/framing';
 
 export function Viewport({ apartment }: { apartment?: Apartment }) {
+  const framing = useMemo(() => frameApartment(apartment), [apartment]);
+
   return (
-    <Canvas camera={{ position: [7, 8, 9], fov: 50 }} shadows>
+    <Canvas camera={{ position: framing.position, fov: 50, near: 0.05 }} shadows>
       <hemisphereLight args={['#ffffff', '#8a8378', 0.9]} />
       <directionalLight
         position={[6, 12, 8]}
@@ -29,7 +34,7 @@ export function Viewport({ apartment }: { apartment?: Apartment }) {
         infiniteGrid
       />
       {apartment && <ApartmentView apartment={apartment} />}
-      <OrbitControls makeDefault target={[2.9, 0, 1.2]} maxPolarAngle={Math.PI / 2 - 0.05} />
+      <CameraRig framing={framing} />
     </Canvas>
   );
 }

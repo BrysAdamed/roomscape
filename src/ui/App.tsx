@@ -1,4 +1,5 @@
 import { Viewport } from '../scene/Viewport';
+import { CameraToolbar } from './CameraToolbar';
 import { useProject } from './useProject';
 
 const DEFAULT_PROJECT = 'pilot-bedroom';
@@ -9,6 +10,7 @@ export function App() {
   return (
     <div className="app">
       <Viewport apartment={project.status === 'ready' ? project.apartment : undefined} />
+      <CameraToolbar />
       {project.status === 'loading' && <div className="overlay">Loading…</div>}
       {project.status === 'error' && (
         <div className="overlay overlay-error">
