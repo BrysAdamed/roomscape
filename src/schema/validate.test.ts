@@ -204,6 +204,38 @@ describe('validateApartment', () => {
   });
 });
 
+describe('validateApartment furniture', () => {
+  it('rejects unknown furniture types', () => {
+    // Arrange
+    const input = sampleApartment();
+    input.floors[0]!.furniture[0]!.type = 'hammock';
+
+    // Act
+    const errors = expectErrors(input);
+
+    // Assert
+    expect(errors).toEqual(["floors.0.furniture.0: unknown furniture type 'hammock'"]);
+  });
+
+  it('rejects parameters and material slots the type does not define', () => {
+    // Arrange
+    const input = sampleApartment();
+    const item = input.floors[0]!.furniture[0]!;
+    item.params = { width: 'wide', colour: 3 };
+    item.materials = { legs: 'metal-black' };
+
+    // Act
+    const errors = expectErrors(input);
+
+    // Assert
+    expect(errors).toEqual([
+      'floors.0.furniture.0.params.width: must be a number',
+      "floors.0.furniture.0.params.colour: 'bed' has no parameter 'colour'",
+      "floors.0.furniture.0.materials.legs: 'bed' has no material slot 'legs'",
+    ]);
+  });
+});
+
 describe('wallLength', () => {
   it('returns the euclidean distance between the wall ends', () => {
     expect(wallLength([1, 1], [4, 5])).toBe(5);

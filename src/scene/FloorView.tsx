@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import type { Floor, Opening } from '../schema/apartment';
+import { FurnitureMesh } from './FurnitureMesh';
 import { layoutWalls } from './geometry/wallLayout';
 import { OpeningMesh } from './OpeningMesh';
 import { RoomFloor } from './RoomFloor';
@@ -35,6 +36,9 @@ export function FloorView({ floor }: { floor: Floor }) {
           <OpeningMesh key={opening.id} opening={opening} wall={span.wall} />
         )),
       )}
+      {floor.furniture.map((item) => (
+        <FurnitureMesh key={item.id} item={item} />
+      ))}
     </group>
   );
 }

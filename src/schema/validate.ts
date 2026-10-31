@@ -1,4 +1,6 @@
 import type { z } from 'zod';
+import { furnitureTypes } from '../catalogue/furniture/registry';
+import type { FurnitureType } from '../catalogue/furniture/types';
 import { materials } from '../catalogue/materials';
 import { apartmentSchema, type Apartment, type Floor, type PlanPoint } from './apartment';
 
@@ -7,10 +9,12 @@ export type ValidationResult =
 
 export interface ValidationContext {
   materialIds: ReadonlySet<string>;
+  furnitureTypes: ReadonlyMap<string, Pick<FurnitureType, 'params' | 'slots'>>;
 }
 
 const defaultContext: ValidationContext = {
   materialIds: new Set(materials.map((material) => material.id)),
+  furnitureTypes: new Map(furnitureTypes.map((type) => [type.id, type])),
 };
 
 export function validateApartment(
@@ -56,19 +60,21 @@ function checkReferences(apartment: Apartment, context: ValidationContext): stri
   apartment.floors.forEach((floor, floorIndex) => {
     const floorPath = `floors.${floorIndex}`;
     claimId(floor.id, `${floorPath}.id`);
-    checkFloor(floor, floorPath, claimId, checkMaterial, errors);
+    checkFloor(floor, floorPath, { claimId, checkMaterial, errors, context });
   });
 
   return errors;
 }
 
-function checkFloor(
-  floor: Floor,
-  floorPath: string,
-  claimId: (elementId: string, path: string) => void,
-  checkMaterial: (materialId: string, path: string) => void,
-  errors: string[],
-) {
+interface FloorChecks {
+  claimId: (elementId: string, path: string) => void;
+  checkMaterial: (materialId: string, path: string) => void;
+  errors: string[];
+  context: ValidationContext;
+}
+
+function checkFloor(floor: Floor, floorPath: string, checks: FloorChecks) {
+  const { claimId, checkMaterial, errors, context } = checks;
   const wallsById = new Map(floor.walls.map((wall) => [wall.id, wall]));
 
   floor.walls.forEach((wall, index) => {
@@ -115,7 +121,21 @@ function checkFloor(
   floor.furniture.forEach((item, index) => {
     const path = `${floorPath}.furniture.${index}`;
     claimId(item.id, `${path}.id`);
+    const type = context.furnitureTypes.get(item.type);
+    if (!type) {
+      errors.push(`${path}: unknown furniture type '${item.type}'`);
+    }
+    for (const [name, value] of Object.entries(item.params)) {
+      if (type && !(name in type.params)) {
+        errors.push(`${path}.params.${name}: '${item.type}' has no parameter '${name}'`);
+      } else if (type && typeof value !== 'number') {
+        errors.push(`${path}.params.${name}: must be a number`);
+      }
+    }
     for (const [slot, materialId] of Object.entries(item.materials)) {
+      if (type && !(slot in type.slots)) {
+        errors.push(`${path}.materials.${slot}: '${item.type}' has no material slot '${slot}'`);
+      }
       checkMaterial(materialId, `${path}.materials.${slot}`);
     }
   });
