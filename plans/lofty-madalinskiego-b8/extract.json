@@ -1,0 +1,29 @@
+{
+  "pdf": "plan.pdf",
+  "id": "lofty-madalinskiego-b8",
+  "name": "Lofty Madalińskiego – B8",
+  "pointsPerMetre": 21.81,
+  "wallFill": [0, 0, 0],
+  "defaults": {
+    "wallMaterial": "paint-white",
+    "floorMaterial": "wood-oak-natural"
+  },
+  "floors": [
+    {
+      "id": "parter",
+      "name": "Parter",
+      "elevation": 0,
+      "height": 2.7,
+      "clip": [228, 85, 475, 245],
+      "origin": [231.6, 6.0]
+    },
+    {
+      "id": "poddasze",
+      "name": "Poddasze",
+      "elevation": 2.98,
+      "height": 2.6,
+      "clip": [228, 258, 470, 500],
+      "origin": [231.72, 263.4]
+    }
+  ]
+}

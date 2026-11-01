@@ -3,6 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 Point = tuple[float, float]
+Edge = tuple[Point, Point]
 
 
 @dataclass(frozen=True)
@@ -41,14 +42,16 @@ def bounding_rect(points: list[Point]) -> Rect:
 
 
 def point_in_polygon(point: Point, polygon: list[Point]) -> bool:
+    return point_in_path(point, [(polygon[i - 1], p) for i, p in enumerate(polygon)])
+
+
+def point_in_path(point: Point, edges: list[Edge]) -> bool:
+    """Even-odd rule over closed sub-paths given as edges."""
     x, y = point
     inside = False
-    j = len(polygon) - 1
-    for i, (xi, yi) in enumerate(polygon):
-        xj, yj = polygon[j]
+    for (xi, yi), (xj, yj) in edges:
         if (yi > y) != (yj > y) and x < (xj - xi) * (y - yi) / (yj - yi) + xi:
             inside = not inside
-        j = i
     return inside
 
 

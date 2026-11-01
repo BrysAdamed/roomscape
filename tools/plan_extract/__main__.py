@@ -67,11 +67,11 @@ def print_report(config: PlanConfig, results: list[FloorResult]) -> None:
                 print(f'    (unlabelled)          {"":>6}  {area:6.2f}')
                 continue
             listed = sum(label.area for label in room.labels)
-            name = ' + '.join(f'{label.number} {label.name}' for label in room.labels)
+            name = ' + '.join(label.caption for label in room.labels)
             holes = f'  ({room.holes} hole(s) ignored)' if room.holes else ''
             print(f'    {name:<34} {listed:6.2f}  {area:6.2f}  {(area / listed - 1) * 100:+5.1f}%{holes}')
         for label in result.unmatched_labels:
-            print(f'    {label.number} {label.name}: not enclosed by walls ({label.area:.2f} m2)')
+            print(f'    {label.caption}: not enclosed by walls ({label.area:.2f} m2)')
         print('  openings:')
         for opening in result.openings:
             hinge = ''
@@ -89,7 +89,7 @@ def print_report(config: PlanConfig, results: list[FloorResult]) -> None:
             box = candidate.box
             centre = ((box.x0 + box.x1) / 2 - ox) / unit, ((box.y0 + box.y1) / 2 - oy) / unit
             print(
-                f'    {candidate.room.labels[0].number} {candidate.room.labels[0].name}: '
+                f'    {candidate.room.labels[0].caption}: '
                 f'({centre[0]:.2f}, {centre[1]:.2f}) / {box.width / unit:.2f} x {box.height / unit:.2f}'
                 f'  [{candidate.strokes} strokes]'
             )

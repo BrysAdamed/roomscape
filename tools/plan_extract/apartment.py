@@ -80,7 +80,7 @@ def _floor(config: PlanConfig, result: FloorResult, unit: float) -> dict[str, An
         ],
         'rooms': [
             {
-                'id': 'room-' + '-'.join(label.number for label in room.labels),
+                'id': 'room-' + '-'.join(label.key for label in room.labels),
                 'name': ' + '.join(label.name for label in room.labels),
                 'polygon': [point(p) for p in room.polygon],
                 'floorMaterial': config.defaults.floor_material,

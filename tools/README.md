@@ -2,7 +2,7 @@
 
 ## `plan_extract` – floor plan PDF → apartment JSON draft
 
-Reads a vector floor-plan PDF (tested with Archicad exports) and produces an apartment JSON draft with walls, openings and rooms, plus a report used to finish the apartment by hand.
+Reads a vector floor-plan PDF (tested with Archicad exports and a Microsoft Print to PDF sales sheet) and produces an apartment JSON draft with walls, openings and rooms, plus a report used to finish the apartment by hand.
 
 ### Setup
 
@@ -75,10 +75,10 @@ Finding clips and colours: list the drawings with PyMuPDF (`page.get_drawings()`
 
 ### How it works
 
-1. Wall fills inside the clip are unioned on a grid over their distinct coordinates (walls are rectilinear, so this is exact).
+1. Wall fills inside the clip are cut to the clip paths they are drawn under (some exporters draw a wall as one rectangle and cut the door gaps out with a clip path), then unioned on a grid over their distinct coordinates (walls are rectilinear, so this is exact).
 2. The union is split into rectangles; wall layers ending at slightly offset jambs are merged; each rectangle becomes a centre line with a thickness. End points are snapped to the centre line of the wall they meet, so the viewer's corner rule rebuilds the drawn corners.
-3. Collinear gaps between walls, and gaps between a wall end and a perpendicular wall, become openings. A swing arc next to the gap makes it a door (hinge and side from the arc); a dashed arc a glazed door; no arc a window in thick walls or an open passage in thin ones.
-4. Openings (except passages) are closed and the free space is flood-filled; enclosed regions are matched to the room labels (`NN / NAME / area m2`) they contain.
+3. Collinear gaps between walls, and gaps between a wall end and a perpendicular wall, become openings. A swing arc next to the gap (a Bézier curve, or a run of short line segments turning the same way when the exporter flattened it) makes it a door (hinge and side from the arc); a dashed arc a glazed door; no arc a window in thick walls or an open passage in thin ones.
+4. Openings (except passages) are closed and the free space is flood-filled; enclosed regions are matched to the room labels (`NN / NAME / area m2`, `area m2 / Name`, or a bare `Name` with the area below it; unnumbered rooms get ids from their names) they contain.
 
 ### Tests
 
@@ -86,4 +86,4 @@ Finding clips and colours: list the drawings with PyMuPDF (`page.get_drawings()`
 python -m unittest discover -s tools -t .
 ```
 
-`test_harmonia.py` runs the whole extraction on the reference plan and checks room areas, scale and door count.
+`test_harmonia.py` and `test_lofty.py` run the whole extraction on the two reference plans and check room areas and door counts (and the fitted scale on Harmonia, whose rooms are all full height).

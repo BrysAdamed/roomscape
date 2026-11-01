@@ -1,0 +1,1389 @@
+{
+  "schemaVersion": 1,
+  "id": "lofty-madalinskiego-b8",
+  "name": "Lofty Madalińskiego – B8",
+  "floors": [
+    {
+      "id": "parter",
+      "name": "Parter",
+      "elevation": 0,
+      "height": 2.7,
+      "walls": [
+        {
+          "id": "parter-w-01",
+          "start": [6.486, 3.935],
+          "end": [8.386, 3.935],
+          "thickness": 0.3,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "parter-w-03",
+          "start": [0.341, 5.845],
+          "end": [6.486, 5.845],
+          "thickness": 0.2,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "parter-w-04",
+          "start": [8.386, 5.925],
+          "end": [10.446, 5.925],
+          "thickness": 0.34,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "parter-w-07",
+          "start": [5.196, 7.225],
+          "end": [8.271, 7.225],
+          "thickness": 0.1,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "parter-w-08",
+          "start": [6.351, 8],
+          "end": [6.611, 8],
+          "thickness": 0.09,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "parter-w-09",
+          "start": [6.351, 8.645],
+          "end": [6.611, 8.645],
+          "thickness": 0.1,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "parter-w-10",
+          "start": [5.196, 9.355],
+          "end": [6.611, 9.355],
+          "thickness": 0.1,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "parter-w-11",
+          "start": [7.611, 9.9],
+          "end": [8.211, 9.9],
+          "thickness": 0.11,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "parter-w-12",
+          "start": [0.341, 10.55],
+          "end": [10.446, 10.55],
+          "thickness": 0.21,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "parter-w-14",
+          "start": [0.341, 5.845],
+          "end": [0.341, 10.55],
+          "thickness": 0.68,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "parter-w-15",
+          "start": [5.196, 7.225],
+          "end": [5.196, 10.55],
+          "thickness": 0.11,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "parter-w-16",
+          "start": [5.541, 9.355],
+          "end": [5.541, 10.55],
+          "thickness": 0.1,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "parter-w-17",
+          "start": [6.351, 8],
+          "end": [6.351, 8.645],
+          "thickness": 0.1,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "parter-w-18",
+          "start": [6.486, 3.935],
+          "end": [6.486, 5.845],
+          "thickness": 0.19,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "parter-w-19",
+          "start": [6.611, 7.225],
+          "end": [6.611, 8],
+          "thickness": 0.1,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "parter-w-20",
+          "start": [6.611, 8.645],
+          "end": [6.611, 9.355],
+          "thickness": 0.1,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "parter-w-21",
+          "start": [7.611, 7.225],
+          "end": [7.611, 10.55],
+          "thickness": 0.1,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "parter-w-22",
+          "start": [8.211, 9.9],
+          "end": [8.211, 10.55],
+          "thickness": 0.1,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "parter-w-23",
+          "start": [8.271, 5.925],
+          "end": [8.271, 7.225],
+          "thickness": 0.1,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "parter-w-24",
+          "start": [8.386, 3.935],
+          "end": [8.386, 5.925],
+          "thickness": 0.33,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "parter-w-25",
+          "start": [10.446, 5.925],
+          "end": [10.446, 10.55],
+          "thickness": 0.67,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        }
+      ],
+      "openings": [
+        {
+          "id": "parter-o-02",
+          "wallId": "parter-w-07",
+          "kind": "door",
+          "offset": 0.145,
+          "width": 0.91,
+          "height": 2.05,
+          "sillHeight": 0,
+          "door": {
+            "hinge": "start",
+            "opensTo": "left"
+          }
+        },
+        {
+          "id": "parter-o-03",
+          "wallId": "parter-w-07",
+          "kind": "door",
+          "offset": 1.465,
+          "width": 0.9,
+          "height": 2.7,
+          "sillHeight": 0
+        },
+        {
+          "id": "parter-o-04",
+          "wallId": "parter-w-21",
+          "kind": "door",
+          "offset": 0.17,
+          "width": 0.92,
+          "height": 2.05,
+          "sillHeight": 0,
+          "door": {
+            "hinge": "start",
+            "opensTo": "left"
+          }
+        },
+        {
+          "id": "parter-o-05",
+          "wallId": "parter-w-24",
+          "kind": "door",
+          "offset": 0.41,
+          "width": 1.04,
+          "height": 2.05,
+          "sillHeight": 0,
+          "door": {
+            "hinge": "start",
+            "opensTo": "right"
+          }
+        },
+        {
+          "id": "parter-o-06",
+          "wallId": "parter-w-14",
+          "offset": 0.36,
+          "width": 2.01,
+          "kind": "window",
+          "height": 2.2,
+          "sillHeight": 0
+        },
+        {
+          "id": "parter-o-07",
+          "wallId": "parter-w-25",
+          "offset": 1.26,
+          "width": 1.34,
+          "kind": "window",
+          "height": 2.2,
+          "sillHeight": 0
+        }
+      ],
+      "rooms": [
+        {
+          "id": "room-komunikacja-1",
+          "name": "Komunikacja 1",
+          "polygon": [
+            [6.581, 4.085],
+            [8.221, 4.085],
+            [8.221, 7.175],
+            [7.561, 7.175],
+            [7.561, 10.445],
+            [5.591, 10.445],
+            [5.591, 9.405],
+            [6.661, 9.405],
+            [6.661, 7.175],
+            [5.141, 7.175],
+            [5.141, 5.945],
+            [6.581, 5.945]
+          ],
+          "floorMaterial": "wood-oak-natural"
+        },
+        {
+          "id": "room-salon-z-aneksem",
+          "name": "Salon z aneksem",
+          "polygon": [
+            [0.681, 5.945],
+            [5.141, 5.945],
+            [5.141, 10.445],
+            [0.681, 10.445]
+          ],
+          "floorMaterial": "wood-oak-natural"
+        },
+        {
+          "id": "room-wc-1",
+          "name": "WC 1",
+          "polygon": [
+            [5.251, 7.275],
+            [6.561, 7.275],
+            [6.561, 7.955],
+            [6.301, 7.955],
+            [6.301, 8.695],
+            [6.561, 8.695],
+            [6.561, 9.305],
+            [5.251, 9.305]
+          ],
+          "floorMaterial": "tile-grey-concrete"
+        },
+        {
+          "id": "room-gabinet",
+          "name": "Gabinet",
+          "polygon": [
+            [8.321, 6.095],
+            [10.111, 6.095],
+            [10.111, 10.445],
+            [8.261, 10.445],
+            [8.261, 9.845],
+            [7.661, 9.845],
+            [7.661, 7.275],
+            [8.321, 7.275]
+          ],
+          "floorMaterial": "wood-oak-natural"
+        }
+      ],
+      "furniture": [
+        {
+          "id": "table-salon",
+          "type": "table",
+          "position": [2.27, 6.83],
+          "rotation": 0,
+          "params": {
+            "width": 1.8,
+            "depth": 0.8
+          },
+          "materials": {}
+        },
+        {
+          "id": "chair-salon-n1",
+          "type": "chair",
+          "position": [1.67, 6.23],
+          "rotation": 0,
+          "params": {},
+          "materials": {}
+        },
+        {
+          "id": "chair-salon-n2",
+          "type": "chair",
+          "position": [2.27, 6.23],
+          "rotation": 0,
+          "params": {},
+          "materials": {}
+        },
+        {
+          "id": "chair-salon-n3",
+          "type": "chair",
+          "position": [2.87, 6.23],
+          "rotation": 0,
+          "params": {},
+          "materials": {}
+        },
+        {
+          "id": "chair-salon-s1",
+          "type": "chair",
+          "position": [1.67, 7.43],
+          "rotation": 180,
+          "params": {},
+          "materials": {}
+        },
+        {
+          "id": "chair-salon-s2",
+          "type": "chair",
+          "position": [2.27, 7.43],
+          "rotation": 180,
+          "params": {},
+          "materials": {}
+        },
+        {
+          "id": "chair-salon-s3",
+          "type": "chair",
+          "position": [2.87, 7.43],
+          "rotation": 180,
+          "params": {},
+          "materials": {}
+        },
+        {
+          "id": "sofa-salon",
+          "type": "sofa",
+          "position": [2.1, 8.675],
+          "rotation": 0,
+          "params": {
+            "width": 2.26,
+            "depth": 0.9,
+            "chaise": 1.43
+          },
+          "materials": {}
+        },
+        {
+          "id": "tv-salon",
+          "type": "tv-unit",
+          "position": [2.13, 10.27],
+          "rotation": 180,
+          "params": {
+            "width": 1.4,
+            "depth": 0.35
+          },
+          "materials": {}
+        },
+        {
+          "id": "fridge-kitchen",
+          "type": "fridge",
+          "position": [4.816, 7.5],
+          "rotation": -90,
+          "params": {},
+          "materials": {}
+        },
+        {
+          "id": "counter-east",
+          "type": "kitchen-counter",
+          "position": [4.841, 9.123],
+          "rotation": -90,
+          "params": {
+            "width": 2.645,
+            "sinkOffset": 1.32
+          },
+          "materials": {}
+        },
+        {
+          "id": "counter-south",
+          "type": "kitchen-counter",
+          "position": [3.911, 10.145],
+          "rotation": 180,
+          "params": {
+            "width": 1.26,
+            "hobOffset": 0.63
+          },
+          "materials": {}
+        },
+        {
+          "id": "washbasin-wc-1",
+          "type": "washbasin",
+          "position": [5.4, 8.13],
+          "rotation": 90,
+          "params": {
+            "width": 0.4,
+            "depth": 0.3
+          },
+          "materials": {}
+        },
+        {
+          "id": "toilet-wc-1",
+          "type": "toilet",
+          "position": [5.91, 8.98],
+          "rotation": 180,
+          "params": {},
+          "materials": {}
+        },
+        {
+          "id": "wardrobe-komunikacja-1",
+          "type": "wardrobe",
+          "position": [7.916, 6.415],
+          "rotation": -90,
+          "params": {
+            "width": 1.47,
+            "depth": 0.6,
+            "doors": 2
+          },
+          "materials": {}
+        },
+        {
+          "id": "desk-gabinet",
+          "type": "desk",
+          "position": [9.22, 6.44],
+          "rotation": 0,
+          "params": {
+            "width": 1.2,
+            "depth": 0.65
+          },
+          "materials": {}
+        },
+        {
+          "id": "chair-gabinet",
+          "type": "chair",
+          "position": [9.22, 7.0],
+          "rotation": 180,
+          "params": {},
+          "materials": {}
+        },
+        {
+          "id": "wardrobe-gabinet",
+          "type": "wardrobe",
+          "position": [9.186, 10.2],
+          "rotation": 180,
+          "params": {
+            "width": 1.85,
+            "depth": 0.49,
+            "doors": 3
+          },
+          "materials": {}
+        }
+      ],
+      "planImage": {
+        "src": "projects/lofty-madalinskiego-b8/parter.png",
+        "bounds": [-0.165, 3.622, 11.16, 10.958]
+      },
+      "stairs": [
+        {
+          "id": "stairs-1",
+          "riserHeight": 0.1753,
+          "steps": [
+            [
+              [6.661, 8.555],
+              [7.561, 8.555],
+              [7.561, 8.855],
+              [6.661, 8.855]
+            ],
+            [
+              [6.661, 8.855],
+              [7.561, 8.855],
+              [7.561, 9.155],
+              [6.661, 9.155]
+            ],
+            [
+              [6.661, 9.155],
+              [7.561, 9.155],
+              [7.561, 9.455],
+              [6.661, 9.455]
+            ],
+            [
+              [6.611, 9.455],
+              [7.561, 9.455],
+              [7.561, 9.912]
+            ],
+            [
+              [6.611, 9.455],
+              [7.561, 9.912],
+              [7.561, 10.445],
+              [7.4, 10.445]
+            ],
+            [
+              [6.611, 9.455],
+              [7.4, 10.445],
+              [6.837, 10.445]
+            ],
+            [
+              [6.611, 9.455],
+              [6.837, 10.445],
+              [6.385, 10.445]
+            ],
+            [
+              [6.611, 9.455],
+              [6.385, 10.445],
+              [5.822, 10.445]
+            ],
+            [
+              [6.611, 9.455],
+              [5.822, 10.445],
+              [5.591, 10.445],
+              [5.591, 9.946]
+            ],
+            [
+              [6.611, 9.455],
+              [5.591, 9.946],
+              [5.591, 9.455]
+            ],
+            [
+              [5.591, 9.191],
+              [6.561, 9.191],
+              [6.561, 9.455],
+              [5.591, 9.455]
+            ],
+            [
+              [5.591, 8.927],
+              [6.561, 8.927],
+              [6.561, 9.191],
+              [5.591, 9.191]
+            ],
+            [
+              [5.591, 8.662],
+              [6.561, 8.662],
+              [6.561, 8.927],
+              [5.591, 8.927]
+            ],
+            [
+              [5.591, 8.398],
+              [6.561, 8.398],
+              [6.561, 8.662],
+              [5.591, 8.662]
+            ],
+            [
+              [5.591, 8.134],
+              [6.561, 8.134],
+              [6.561, 8.398],
+              [5.591, 8.398]
+            ],
+            [
+              [5.591, 7.87],
+              [6.561, 7.87],
+              [6.561, 8.134],
+              [5.591, 8.134]
+            ]
+          ],
+          "material": "wood-oak-natural"
+        }
+      ]
+    },
+    {
+      "id": "poddasze",
+      "name": "Poddasze",
+      "elevation": 2.98,
+      "height": 2.6,
+      "walls": [
+        {
+          "id": "poddasze-w-01",
+          "start": [0.186, 0.103],
+          "end": [10.591, 0.103],
+          "thickness": 0.2,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "poddasze-w-02",
+          "start": [5.986, 0.733],
+          "end": [6.486, 0.733],
+          "thickness": 0.1,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "poddasze-w-03",
+          "start": [5.906, 3.133],
+          "end": [6.526, 3.133],
+          "thickness": 0.1,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "poddasze-w-04",
+          "start": [3.916, 3.283],
+          "end": [4.076, 3.283],
+          "thickness": 0.16,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "poddasze-w-05",
+          "start": [4.286, 3.913],
+          "end": [6.526, 3.913],
+          "thickness": 0.1,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "poddasze-w-06",
+          "start": [6.486, 5.933],
+          "end": [10.591, 5.933],
+          "thickness": 0.08,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "poddasze-w-07",
+          "start": [6.716, 6.073],
+          "end": [6.876, 6.073],
+          "thickness": 0.16,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "poddasze-w-08",
+          "start": [0.186, 6.443],
+          "end": [4.231, 6.443],
+          "thickness": 0.2,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "poddasze-w-11",
+          "start": [4.286, 7.613],
+          "end": [5.506, 7.613],
+          "thickness": 0.1,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "poddasze-w-12",
+          "start": [6.496, 9.103],
+          "end": [10.591, 9.103],
+          "thickness": 0.08,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "poddasze-w-13",
+          "start": [5.196, 9.353],
+          "end": [5.506, 9.353],
+          "thickness": 0.1,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "poddasze-w-14",
+          "start": [7.606, 9.903],
+          "end": [8.206, 9.903],
+          "thickness": 0.1,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "poddasze-w-15",
+          "start": [0.186, 10.553],
+          "end": [10.591, 10.553],
+          "thickness": 0.2,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "poddasze-w-16",
+          "start": [0.186, 0.103],
+          "end": [0.186, 10.553],
+          "thickness": 0.38,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "poddasze-w-18",
+          "start": [4.231, 5.753],
+          "end": [4.231, 6.443],
+          "thickness": 0.21,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "poddasze-w-19",
+          "start": [4.286, 0.103],
+          "end": [4.286, 5.753],
+          "thickness": 0.1,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "poddasze-w-20",
+          "start": [4.286, 7.613],
+          "end": [4.286, 10.553],
+          "thickness": 0.1,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "poddasze-w-21",
+          "start": [5.196, 9.353],
+          "end": [5.196, 10.553],
+          "thickness": 0.1,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "poddasze-w-22",
+          "start": [5.506, 7.613],
+          "end": [5.506, 10.553],
+          "thickness": 0.1,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "poddasze-w-23",
+          "start": [5.906, 3.133],
+          "end": [5.906, 3.913],
+          "thickness": 0.1,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "poddasze-w-24",
+          "start": [5.986, 0.103],
+          "end": [5.986, 0.733],
+          "thickness": 0.1,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "poddasze-w-25",
+          "start": [6.486, 0.103],
+          "end": [6.486, 5.933],
+          "thickness": 0.1,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "poddasze-w-26",
+          "start": [6.496, 5.933],
+          "end": [6.496, 9.103],
+          "thickness": 0.08,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "poddasze-w-27",
+          "start": [6.526, 3.133],
+          "end": [6.526, 3.913],
+          "thickness": 0.2,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "poddasze-w-28",
+          "start": [6.796, 3.083],
+          "end": [6.796, 3.243],
+          "thickness": 0.16,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "poddasze-w-29",
+          "start": [7.606, 9.103],
+          "end": [7.606, 10.553],
+          "thickness": 0.1,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "poddasze-w-30",
+          "start": [8.206, 9.903],
+          "end": [8.206, 10.553],
+          "thickness": 0.1,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "poddasze-w-31",
+          "start": [10.591, 0.103],
+          "end": [10.591, 10.553],
+          "thickness": 0.37,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "poddasze-w-33",
+          "start": [4.286, 6.443],
+          "end": [4.286, 7.613],
+          "thickness": 0.1,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        }
+      ],
+      "openings": [
+        {
+          "id": "poddasze-o-01",
+          "wallId": "poddasze-w-05",
+          "kind": "door",
+          "offset": 0.48,
+          "width": 0.93,
+          "height": 2.05,
+          "sillHeight": 0,
+          "door": {
+            "hinge": "start",
+            "opensTo": "right"
+          }
+        },
+        {
+          "id": "poddasze-o-04",
+          "wallId": "poddasze-w-11",
+          "kind": "door",
+          "offset": 0.12,
+          "width": 0.92,
+          "height": 2.05,
+          "sillHeight": 0,
+          "door": {
+            "hinge": "end",
+            "opensTo": "left"
+          }
+        },
+        {
+          "id": "poddasze-o-05",
+          "wallId": "poddasze-w-12",
+          "kind": "door",
+          "offset": 1.27,
+          "width": 0.9,
+          "height": 2.6,
+          "sillHeight": 0
+        },
+        {
+          "id": "poddasze-o-06",
+          "wallId": "poddasze-w-19",
+          "kind": "door",
+          "offset": 4.22,
+          "width": 0.93,
+          "height": 2.05,
+          "sillHeight": 0,
+          "door": {
+            "hinge": "end",
+            "opensTo": "right"
+          }
+        },
+        {
+          "id": "poddasze-o-07",
+          "wallId": "poddasze-w-25",
+          "kind": "door",
+          "offset": 4.22,
+          "width": 0.93,
+          "height": 2.05,
+          "sillHeight": 0,
+          "door": {
+            "hinge": "end",
+            "opensTo": "left"
+          }
+        },
+        {
+          "id": "poddasze-o-08",
+          "wallId": "poddasze-w-26",
+          "kind": "door",
+          "offset": 0.47,
+          "width": 0.91,
+          "height": 2.05,
+          "sillHeight": 0,
+          "door": {
+            "hinge": "start",
+            "opensTo": "left"
+          }
+        },
+        {
+          "id": "poddasze-o-09",
+          "wallId": "poddasze-w-31",
+          "kind": "window",
+          "offset": 4.08,
+          "width": 1.29,
+          "height": 2.2,
+          "sillHeight": 0
+        },
+        {
+          "id": "poddasze-o-10",
+          "wallId": "poddasze-w-33",
+          "offset": 0.15,
+          "width": 0.92,
+          "kind": "door",
+          "height": 2.05,
+          "sillHeight": 0,
+          "door": {
+            "hinge": "start",
+            "opensTo": "right"
+          }
+        },
+        {
+          "id": "poddasze-o-11",
+          "wallId": "poddasze-w-16",
+          "offset": 3.855,
+          "width": 1.29,
+          "kind": "window",
+          "height": 2.2,
+          "sillHeight": 0
+        }
+      ],
+      "rooms": [
+        {
+          "id": "room-komunikacja-2",
+          "name": "Komunikacja 2",
+          "polygon": [
+            [4.336, 3.963],
+            [6.456, 3.963],
+            [6.456, 7.87],
+            [5.556, 7.87],
+            [5.556, 7.563],
+            [4.336, 7.563]
+          ],
+          "floorMaterial": "wood-oak-natural"
+        },
+        {
+          "id": "room-sypialnia-1",
+          "name": "Sypialnia 1",
+          "polygon": [
+            [6.536, 0.203],
+            [10.406, 0.203],
+            [10.406, 5.893],
+            [6.536, 5.893]
+          ],
+          "floorMaterial": "wood-oak-natural"
+        },
+        {
+          "id": "room-sypialnia-2",
+          "name": "Sypialnia 2",
+          "polygon": [
+            [6.536, 5.973],
+            [10.406, 5.973],
+            [10.406, 9.063],
+            [6.536, 9.063]
+          ],
+          "floorMaterial": "wood-oak-natural"
+        },
+        {
+          "id": "room-garderoba",
+          "name": "Garderoba",
+          "polygon": [
+            [7.656, 9.143],
+            [10.406, 9.143],
+            [10.406, 10.453],
+            [8.256, 10.453],
+            [8.256, 9.853],
+            [7.656, 9.853]
+          ],
+          "floorMaterial": "wood-oak-natural"
+        },
+        {
+          "id": "room-wc-2",
+          "name": "WC 2",
+          "polygon": [
+            [4.336, 7.663],
+            [5.456, 7.663],
+            [5.456, 9.303],
+            [5.146, 9.303],
+            [5.146, 10.453],
+            [4.336, 10.453]
+          ],
+          "floorMaterial": "tile-grey-concrete"
+        },
+        {
+          "id": "room-sypialnia-3",
+          "name": "Sypialnia 3",
+          "polygon": [
+            [0.376, 6.543],
+            [4.236, 6.543],
+            [4.236, 10.453],
+            [0.376, 10.453]
+          ],
+          "floorMaterial": "wood-oak-natural"
+        },
+        {
+          "id": "room-sypialnia-4",
+          "name": "Sypialnia 4",
+          "polygon": [
+            [0.376, 0.203],
+            [4.236, 0.203],
+            [4.236, 5.753],
+            [4.126, 5.753],
+            [4.126, 6.343],
+            [0.376, 6.343]
+          ],
+          "floorMaterial": "wood-oak-natural"
+        },
+        {
+          "id": "room-lazienka",
+          "name": "Łazienka",
+          "polygon": [
+            [4.336, 0.203],
+            [5.936, 0.203],
+            [5.936, 0.783],
+            [6.436, 0.783],
+            [6.436, 3.083],
+            [5.856, 3.083],
+            [5.856, 3.863],
+            [4.336, 3.863]
+          ],
+          "floorMaterial": "tile-grey-concrete"
+        },
+        {
+          "id": "room-balkon-1",
+          "name": "Balkon",
+          "polygon": [
+            [-1.111, 3.23],
+            [-0.004, 3.23],
+            [-0.004, 5.975],
+            [-1.111, 5.975]
+          ],
+          "floorMaterial": "tile-grey-concrete"
+        },
+        {
+          "id": "room-balkon-2",
+          "name": "Balkon",
+          "polygon": [
+            [10.776, 3.477],
+            [11.884, 3.477],
+            [11.884, 6.222],
+            [10.776, 6.222]
+          ],
+          "floorMaterial": "tile-grey-concrete"
+        }
+      ],
+      "furniture": [
+        {
+          "id": "bed-sypialnia-4",
+          "type": "bed",
+          "position": [2.86, 1.19],
+          "rotation": 0,
+          "params": {
+            "width": 1.4,
+            "length": 2.0
+          },
+          "materials": {}
+        },
+        {
+          "id": "desk-sypialnia-4",
+          "type": "desk",
+          "position": [1.27, 3.0],
+          "rotation": 90,
+          "params": {
+            "width": 1.2,
+            "depth": 0.7
+          },
+          "materials": {}
+        },
+        {
+          "id": "chair-sypialnia-4",
+          "type": "chair",
+          "position": [1.77, 3.0],
+          "rotation": -90,
+          "params": {},
+          "materials": {}
+        },
+        {
+          "id": "wardrobe-sypialnia-4",
+          "type": "wardrobe",
+          "position": [2.965, 6.04],
+          "rotation": 180,
+          "params": {
+            "width": 2.31,
+            "depth": 0.6,
+            "doors": 3
+          },
+          "materials": {}
+        },
+        {
+          "id": "desk-sypialnia-3",
+          "type": "desk",
+          "position": [1.65, 6.85],
+          "rotation": 0,
+          "params": {},
+          "materials": {}
+        },
+        {
+          "id": "chair-sypialnia-3",
+          "type": "chair",
+          "position": [1.65, 7.35],
+          "rotation": 180,
+          "params": {},
+          "materials": {}
+        },
+        {
+          "id": "bed-sypialnia-3",
+          "type": "bed",
+          "position": [2.01, 10.05],
+          "rotation": 90,
+          "params": {
+            "width": 0.8,
+            "length": 2.0
+          },
+          "materials": {}
+        },
+        {
+          "id": "wardrobe-sypialnia-3",
+          "type": "wardrobe",
+          "position": [3.936, 9.55],
+          "rotation": -90,
+          "params": {
+            "width": 1.8,
+            "depth": 0.6,
+            "doors": 3
+          },
+          "materials": {}
+        },
+        {
+          "id": "bed-sypialnia-1",
+          "type": "bed",
+          "position": [8.36, 1.28],
+          "rotation": 0,
+          "params": {
+            "width": 1.4,
+            "length": 2.0
+          },
+          "materials": {}
+        },
+        {
+          "id": "wardrobe-sypialnia-1",
+          "type": "wardrobe",
+          "position": [6.836, 1.72],
+          "rotation": 90,
+          "params": {
+            "width": 3.05,
+            "depth": 0.6,
+            "doors": 4
+          },
+          "materials": {}
+        },
+        {
+          "id": "desk-sypialnia-1",
+          "type": "desk",
+          "position": [9.3, 5.59],
+          "rotation": 180,
+          "params": {},
+          "materials": {}
+        },
+        {
+          "id": "chair-sypialnia-1",
+          "type": "chair",
+          "position": [9.3, 5.05],
+          "rotation": 0,
+          "params": {},
+          "materials": {}
+        },
+        {
+          "id": "bed-sypialnia-2",
+          "type": "bed",
+          "position": [8.53, 6.37],
+          "rotation": 90,
+          "params": {
+            "width": 0.8,
+            "length": 2.0
+          },
+          "materials": {}
+        },
+        {
+          "id": "desk-sypialnia-2",
+          "type": "desk",
+          "position": [9.54, 7.67],
+          "rotation": -90,
+          "params": {
+            "width": 1.2,
+            "depth": 0.7
+          },
+          "materials": {}
+        },
+        {
+          "id": "chair-sypialnia-2",
+          "type": "chair",
+          "position": [9.07, 7.67],
+          "rotation": 90,
+          "params": {},
+          "materials": {}
+        },
+        {
+          "id": "wardrobe-garderoba",
+          "type": "wardrobe",
+          "position": [9.08, 10.153],
+          "rotation": 180,
+          "params": {
+            "width": 1.64,
+            "depth": 0.6,
+            "doors": 3
+          },
+          "materials": {}
+        },
+        {
+          "id": "bathtub-lazienka",
+          "type": "bathtub",
+          "position": [5.14, 0.51],
+          "rotation": 0,
+          "params": {
+            "width": 1.44,
+            "depth": 0.62
+          },
+          "materials": {}
+        },
+        {
+          "id": "washer-lazienka",
+          "type": "washing-machine",
+          "position": [6.14, 1.46],
+          "rotation": -90,
+          "params": {},
+          "materials": {}
+        },
+        {
+          "id": "washbasin-lazienka",
+          "type": "washbasin",
+          "position": [4.54, 2.13],
+          "rotation": 90,
+          "params": {
+            "width": 0.5,
+            "depth": 0.4
+          },
+          "materials": {}
+        },
+        {
+          "id": "toilet-lazienka",
+          "type": "toilet",
+          "position": [6.13, 2.69],
+          "rotation": -90,
+          "params": {},
+          "materials": {}
+        },
+        {
+          "id": "toilet-wc-2",
+          "type": "toilet",
+          "position": [4.74, 10.15],
+          "rotation": 180,
+          "params": {},
+          "materials": {}
+        },
+        {
+          "id": "washbasin-wc-2",
+          "type": "washbasin",
+          "position": [5.31, 8.66],
+          "rotation": -90,
+          "params": {
+            "width": 0.4,
+            "depth": 0.3
+          },
+          "materials": {}
+        }
+      ],
+      "planImage": {
+        "src": "projects/lofty-madalinskiego-b8/poddasze.png",
+        "bounds": [-0.171, -0.248, 10.925, 10.848]
+      }
+    }
+  ]
+}
