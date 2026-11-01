@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Viewport } from '../scene/Viewport';
+import { findElement } from '../state/apartmentEdits';
 import { useApartmentStore } from '../state/apartmentStore';
 import { useViewerStore } from '../state/viewerStore';
 import { CameraToolbar } from './CameraToolbar';
@@ -27,6 +28,12 @@ export function App() {
   const load = useApartmentStore((state) => state.load);
   const source = useApartmentStore((state) => state.source);
   const select = useApartmentStore((state) => state.select);
+  const panelOpen = useApartmentStore(
+    (state) =>
+      state.apartment !== undefined &&
+      state.selectedId !== undefined &&
+      findElement(state.apartment, state.selectedId) !== undefined,
+  );
 
   const openFile = useCallback(async (opened: File) => {
     setFile({ name: opened.name, result: parseApartmentFile(await opened.text()) });
@@ -81,10 +88,12 @@ export function App() {
           <ProjectBar origin={file?.name} onBack={() => openProject(undefined)} />
           <FloorSwitcher />
           <CameraToolbar />
-          <div className="side-column">
-            <ConfigPanel />
+          <div className={panelOpen ? 'top-right with-panel' : 'top-right'}>
             <SunClock />
             <Compass />
+          </div>
+          <div className="side-column">
+            <ConfigPanel />
             <HelpPanel />
           </div>
         </>

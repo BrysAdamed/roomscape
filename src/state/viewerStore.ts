@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { seasonOf, type Season } from '../scene/lighting/seasons';
 
 export type CameraMode = 'orbit' | 'fly';
 export type Tool = 'select' | 'ruler';
@@ -25,7 +26,7 @@ interface ViewerState {
   rulerFloorOnly: boolean;
   rulerModifierHeld: boolean;
   heading: number;
-  sunDate: string;
+  season: Season;
   sunMinutes: number;
   setCameraMode: (mode: CameraMode) => void;
   requestCameraReset: () => void;
@@ -41,7 +42,8 @@ interface ViewerState {
   toggleRulerFloorOnly: () => void;
   setRulerModifierHeld: (held: boolean) => void;
   setHeading: (heading: number) => void;
-  setSunTime: (date: string, minutes: number) => void;
+  setSeason: (season: Season) => void;
+  setSunMinutes: (minutes: number) => void;
 }
 
 export const useViewerStore = create<ViewerState>((set) => ({
@@ -59,7 +61,7 @@ export const useViewerStore = create<ViewerState>((set) => ({
   rulerFloorOnly: false,
   rulerModifierHeld: false,
   heading: 0,
-  sunDate: localDate(new Date()),
+  season: seasonOf(new Date()),
   sunMinutes: 12 * 60,
   setCameraMode: (cameraMode) => set({ cameraMode }),
   requestCameraReset: () =>
@@ -88,16 +90,11 @@ export const useViewerStore = create<ViewerState>((set) => ({
   toggleRulerFloorOnly: () => set((state) => ({ rulerFloorOnly: !state.rulerFloorOnly })),
   setRulerModifierHeld: (rulerModifierHeld) => set({ rulerModifierHeld }),
   setHeading: (heading) => set({ heading }),
-  setSunTime: (sunDate, sunMinutes) => set({ sunDate, sunMinutes }),
+  setSeason: (season) => set({ season }),
+  setSunMinutes: (sunMinutes) => set({ sunMinutes }),
 }));
 
 /** Floor-only measuring is the toolbar setting, inverted while the modifier key (Ctrl) is held. */
 export function isFloorOnly(state: Pick<ViewerState, 'rulerFloorOnly' | 'rulerModifierHeld'>) {
   return state.rulerFloorOnly !== state.rulerModifierHeld;
-}
-
-/** `YYYY-MM-DD` of a date in the browser's time zone. */
-export function localDate(date: Date): string {
-  const pad = (value: number) => String(value).padStart(2, '0');
-  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
 }

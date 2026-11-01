@@ -1,4 +1,5 @@
 :root {
+  --side-width: min(320px, calc(100vw - 32px));
   color-scheme: light dark;
   font-family:
     system-ui,
@@ -64,7 +65,7 @@ button[aria-pressed='true'] {
   position: absolute;
   bottom: 16px;
   left: 16px;
-  right: calc(min(320px, calc(100% - 32px)) + 32px);
+  right: calc(var(--side-width) + 32px);
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -130,7 +131,6 @@ button[aria-pressed='true'] {
 }
 
 .side-column {
-  --side-width: min(320px, calc(100% - 32px));
   position: absolute;
   top: 16px;
   right: 16px;
@@ -435,8 +435,6 @@ label.button:hover {
 
 .help-panel {
   flex: none;
-  align-self: flex-end;
-  max-width: 100%;
   padding: 8px 12px;
   border-radius: 10px;
   background: color-mix(in srgb, var(--surface) 92%, transparent);
@@ -493,11 +491,28 @@ kbd {
   background: var(--bg);
 }
 
+.top-right {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  pointer-events: none;
+}
+
+.top-right.with-panel {
+  right: calc(var(--side-width) + 24px);
+}
+
+.top-right > * {
+  pointer-events: auto;
+}
+
 .compass {
   flex: none;
-  align-self: flex-end;
-  width: 64px;
-  height: 64px;
+  width: 48px;
+  height: 48px;
 }
 
 .compass svg {
@@ -530,34 +545,40 @@ kbd {
 }
 
 .sun-clock {
-  flex: none;
-  align-self: flex-end;
-  width: min(280px, 100%);
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  padding: 8px 12px;
+  gap: 8px;
+  padding: 4px;
   border-radius: 10px;
   background: color-mix(in srgb, var(--surface) 92%, transparent);
   border: 1px solid var(--border);
   box-shadow: 0 4px 20px rgb(0 0 0 / 14%);
   font-size: 13px;
-  box-sizing: border-box;
 }
 
-.sun-clock-row {
+.sun-clock-open {
+  width: 280px;
+  padding: 4px 8px 8px;
+}
+
+.sun-clock-summary {
   display: flex;
   align-items: center;
   gap: 8px;
+  padding: 6px 8px;
+  border: 0;
+  background: none;
+  text-align: left;
 }
 
 .sun-clock-time {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
   font-variant-numeric: tabular-nums;
 }
 
 .sun-clock-sky {
+  margin-left: auto;
   opacity: 0.8;
 }
 
@@ -566,15 +587,10 @@ kbd {
   accent-color: var(--accent);
 }
 
-.sun-clock input[type='date'] {
+.sun-clock-seasons button {
   flex: 1;
-  font: inherit;
-  color: inherit;
   padding: 4px 6px;
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  background: var(--bg);
-  color-scheme: light dark;
+  font-size: 12px;
 }
 
 .visually-hidden {

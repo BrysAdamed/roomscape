@@ -1,77 +1,73 @@
-import { useId } from 'react';
+import { useId, useState } from 'react';
+import { SEASONS } from '../scene/lighting/seasons';
 import { compassPoint } from '../scene/lighting/solar';
-import { DEFAULT_LOCATION, useSun } from '../scene/lighting/useSun';
-import { useApartmentStore } from '../state/apartmentStore';
-import { localDate, useViewerStore } from '../state/viewerStore';
+import { useSun } from '../scene/lighting/useSun';
+import { useViewerStore } from '../state/viewerStore';
 
 const STEP_MINUTES = 5;
 const MINUTES_PER_DAY = 24 * 60;
+const NIGHT_ICON = '🌙';
 
+/** Time of day and season for the sun; a compact button that expands into the slider. */
 export function SunClock() {
+  const [open, setOpen] = useState(false);
   const timeId = useId();
-  const dateId = useId();
-  const date = useViewerStore((state) => state.sunDate);
+  const season = useViewerStore((state) => state.season);
   const minutes = useViewerStore((state) => state.sunMinutes);
-  const setSunTime = useViewerStore((state) => state.setSunTime);
-  const timeZone = useApartmentStore(
-    (state) => state.apartment?.location?.timeZone ?? DEFAULT_LOCATION.timeZone,
-  );
+  const setSeason = useViewerStore((state) => state.setSeason);
+  const setSunMinutes = useViewerStore((state) => state.setSunMinutes);
   const { position } = useSun();
-
-  const setNow = () => {
-    const now = new Date();
-    const parts = new Intl.DateTimeFormat('en-CA', {
-      timeZone,
-      hourCycle: 'h23',
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-      hour: '2-digit',
-      minute: '2-digit',
-    }).formatToParts(now);
-    const part = (type: Intl.DateTimeFormatPartTypes) =>
-      parts.find((candidate) => candidate.type === type)?.value ?? '00';
-    setSunTime(
-      `${part('year')}-${part('month')}-${part('day')}`,
-      Number(part('hour')) * 60 + Number(part('minute')),
-    );
-  };
+  const current = SEASONS.find((option) => option.season === season)!;
+  const icon = position.elevation > 0 ? current.icon : NIGHT_ICON;
 
   return (
-    <section className="sun-clock" aria-label="Sun position">
-      <div className="sun-clock-row">
-        <label htmlFor={timeId} className="sun-clock-time">
-          {formatTime(minutes)}
-        </label>
-        <span className="sun-clock-sky">
-          {position.elevation > 0
-            ? `Sun ${Math.round(position.elevation)}° high, from the ${compassPoint(position.azimuth)}`
-            : 'Night'}
-        </span>
-      </div>
-      <input
-        id={timeId}
-        type="range"
-        min={0}
-        max={MINUTES_PER_DAY - STEP_MINUTES}
-        step={STEP_MINUTES}
-        value={minutes}
-        onChange={(event) => setSunTime(date, Number(event.target.value))}
-      />
-      <div className="sun-clock-row">
-        <label htmlFor={dateId} className="visually-hidden">
-          Date
-        </label>
-        <input
-          id={dateId}
-          type="date"
-          value={date}
-          onChange={(event) => setSunTime(event.target.value || localDate(new Date()), minutes)}
-        />
-        <button type="button" onClick={setNow}>
-          Now
-        </button>
-      </div>
+    <section className={open ? 'sun-clock sun-clock-open' : 'sun-clock'} aria-label="Sun">
+      <button
+        type="button"
+        className="sun-clock-summary"
+        aria-expanded={open}
+        title={open ? 'Hide the sun settings' : 'Change the time of day and season'}
+        onClick={() => setOpen(!open)}
+      >
+        <span aria-hidden>{icon}</span>
+        <span className="sun-clock-time">{formatTime(minutes)}</span>
+        {open && (
+          <span className="sun-clock-sky">
+            {position.elevation > 0
+              ? `${Math.round(position.elevation)}° from the ${compassPoint(position.azimuth)}`
+              : 'Night'}
+          </span>
+        )}
+      </button>
+      {open && (
+        <>
+          <label htmlFor={timeId} className="visually-hidden">
+            Time of day
+          </label>
+          <input
+            id={timeId}
+            type="range"
+            min={0}
+            max={MINUTES_PER_DAY - STEP_MINUTES}
+            step={STEP_MINUTES}
+            value={minutes}
+            onChange={(event) => setSunMinutes(Number(event.target.value))}
+          />
+          <div className="segmented sun-clock-seasons" role="group" aria-label="Season">
+            {SEASONS.map((option) => (
+              <button
+                key={option.season}
+                type="button"
+                aria-pressed={option.season === season}
+                title={option.label}
+                onClick={() => setSeason(option.season)}
+              >
+                <span aria-hidden>{option.icon}</span> {option.label}
+              </button>
+            ))}
+          </div>
+        </>
+      )}
     </section>
   );
 }

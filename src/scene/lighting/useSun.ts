@@ -1,9 +1,10 @@
 import type { Location } from '../../schema/apartment';
 import { useApartmentStore } from '../../state/apartmentStore';
 import { useViewerStore } from '../../state/viewerStore';
+import { seasonDate } from './seasons';
 import { sunDirection, sunPosition, zonedTimeToUtc, type SunPosition } from './solar';
 
-export const DEFAULT_LOCATION: Required<Location> = {
+const DEFAULT_LOCATION: Required<Location> = {
   latitude: 52.23,
   longitude: 21.01,
   timeZone: 'Europe/Warsaw',
@@ -40,7 +41,8 @@ export function sunState(
 export function useSun(): SunState {
   const location = useApartmentStore((state) => state.apartment?.location);
   const north = useApartmentStore((state) => state.apartment?.north ?? 0);
-  const date = useViewerStore((state) => state.sunDate);
+  const season = useViewerStore((state) => state.season);
+  const date = seasonDate(season, new Date().getFullYear());
   const minutes = useViewerStore((state) => state.sunMinutes);
   return sunState(location, north, date, minutes);
 }
