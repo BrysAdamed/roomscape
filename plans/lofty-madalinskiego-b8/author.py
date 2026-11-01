@@ -251,12 +251,13 @@ def author() -> dict:
             floor['roof'] = ROOF
         if floor['id'] in RAILINGS:
             floor['railings'] = RAILINGS[floor['id']]
-        floor['furniture'] = floor['furniture'] + pendant_lamps(floor)
     for floor in apartment['floors']:
         for room_ in floor['rooms']:
             room_['name'] = english_room_name(room_['name'])
     apartment['floors'][0]['stairs'] = [
-        {'id': 'stairs-1', 'riserHeight': 0.1753, 'steps': stairs_steps(), 'material': 'wood-oak-natural'}]
+        {'id': 'stairs-1', 'riserHeight': 0.1753, 'steps': stairs_steps(), 'closed': True, 'material': 'wood-oak-natural'}]
+    for floor in apartment['floors']:
+        floor['furniture'] = floor['furniture'] + pendant_lamps(floor)
     return apartment
 
 

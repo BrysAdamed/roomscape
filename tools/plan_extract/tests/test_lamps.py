@@ -43,5 +43,14 @@ class LampTests(unittest.TestCase):
         self.assertGreater(lamp['position'][0], 3)
 
 
+    def test_lamps_keep_clear_of_stairs(self):
+        floor = {'height': 2.65, 'rooms': [{'id': 'room-hall', 'polygon': [[0, 0], [4, 0], [4, 2], [0, 2]]}],
+                 'stairs': [{'steps': [[[1, 0], [3, 0], [3, 2], [1, 2]]]}]}
+
+        lamp = pendant_lamps(floor)[0]
+
+        self.assertTrue(lamp['position'][0] <= 0.65 or lamp['position'][0] >= 3.34)
+
+
 if __name__ == '__main__':
     unittest.main()

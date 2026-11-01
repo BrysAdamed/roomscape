@@ -8,6 +8,8 @@ SHADE_HEIGHT = 0.22
 SHADE_BOTTOM = 2.1
 MIN_DROP = 0.1
 MAX_DROP = 0.8
+SHADE_CLEARANCE = 0.3
+STAIRS_CLEARANCE = 0.35
 
 
 def centroid(polygon: list[list[float]]) -> tuple[float, float]:
@@ -45,21 +47,30 @@ def distance_to_edges(polygon: list[list[float]], point: tuple[float, float]) ->
 
 
 def hanging_point(floor: dict[str, Any], polygon: list[list[float]], steps: int = 40) -> tuple[float, float] | None:
-    """The room centre, or under a sloped ceiling the nearest point with full lamp headroom (None if there is none)."""
+    """The room centre, or the nearest point where the lamp fits (None if there is none)."""
     centre = centroid(polygon)
-    headroom = SHADE_BOTTOM + SHADE_HEIGHT + MIN_DROP
-    if ceiling_at(floor, centre) >= headroom:
+    if fits(floor, polygon, centre):
         return centre
     xs, ys = [p[0] for p in polygon], [p[1] for p in polygon]
     step = max(max(xs) - min(xs), max(ys) - min(ys)) / steps
     candidates = [(min(xs) + step * (i + 0.5), min(ys) + step * (j + 0.5))
                   for i in range(steps) for j in range(steps)]
     tall = [point for point in candidates
-            if contains(polygon, point) and ceiling_at(floor, point) >= headroom
-            and distance_to_edges(polygon, point) > 0.4]
+            if contains(polygon, point) and distance_to_edges(polygon, point) > 0.4 and fits(floor, polygon, point)]
     if not tall:
         return None
     return min(tall, key=lambda point: math.dist(point, centre))
+
+
+def fits(floor: dict[str, Any], polygon: list[list[float]], point: tuple[float, float]) -> bool:
+    """Full headroom over the whole shade, and clear of the stairs rising through the storey."""
+    x, y = point
+    around = [(x + dx * SHADE_CLEARANCE, y + dy * SHADE_CLEARANCE) for dx, dy in ((0, 0), (1, 0), (-1, 0), (0, 1), (0, -1))]
+    headroom = SHADE_BOTTOM + SHADE_HEIGHT + MIN_DROP
+    if min(ceiling_at(floor, p) for p in around) < headroom:
+        return False
+    treads = [tread for stairs in floor.get('stairs', []) for tread in stairs['steps']]
+    return all(not contains(tread, point) and distance_to_edges(tread, point) > STAIRS_CLEARANCE for tread in treads)
 
 
 def contains(polygon: list[list[float]], point: tuple[float, float]) -> bool:

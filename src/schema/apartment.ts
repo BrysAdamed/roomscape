@@ -70,6 +70,7 @@ export const stairsSchema = z.object({
   id,
   riserHeight: positive,
   steps: z.array(z.array(planPointSchema).min(3)).min(1),
+  closed: z.boolean().optional(),
   material: materialRef,
 });
 

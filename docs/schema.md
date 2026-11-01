@@ -24,7 +24,7 @@ Opening   { id, wallId, kind, offset, width, height, sillHeight, frameMaterial?,
 Door      { hinge, opensTo, material? }
 Room      { id, name, polygon[], floorMaterial, outdoor? }
 Furniture { id, type, position, elevation?, rotation, params, materials }
-Stairs    { id, riserHeight, steps[][], material }
+Stairs    { id, riserHeight, steps[][], closed?, material }
 Railing   { id, points[], height?, style?, material? }
 Roof      { slopes[], dormers[]?, windows[]? }
 PlanImage { src, bounds }
@@ -72,6 +72,7 @@ PlanImage { src, bounds }
 ### Stairs
 
 - `steps`: one polygon per tread, bottom to top; tread `k` (1-based) tops out at `k × riserHeight`, the last riser leads onto the floor above. Any shape (straight, L, winders) is a list of polygons.
+- `closed`: risers, side stringers and a sloped soffit underneath (for stairs over a room, such as a WC below); open treads otherwise.
 - `material`: tread material.
 
 ### Railing

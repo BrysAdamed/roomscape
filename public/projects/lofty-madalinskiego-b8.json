@@ -576,17 +576,6 @@
           "materials": {}
         },
         {
-          "id": "lamp-wc-1",
-          "type": "pendant-lamp",
-          "position": [5.865, 8.287],
-          "elevation": 2.1,
-          "rotation": 0,
-          "params": {
-            "drop": 0.38
-          },
-          "materials": {}
-        },
-        {
           "id": "lamp-gabinet",
           "type": "pendant-lamp",
           "position": [8.994, 8.329],
@@ -699,6 +688,7 @@
               [5.591, 8.134]
             ]
           ],
+          "closed": true,
           "material": "wood-oak-natural"
         }
       ]
@@ -1467,22 +1457,22 @@
         {
           "id": "lamp-sypialnia-1",
           "type": "pendant-lamp",
-          "position": [7.887, 2.977],
+          "position": [7.461, 2.977],
           "elevation": 2.1,
           "rotation": 0,
           "params": {
-            "drop": 0.103
+            "drop": 0.28
           },
           "materials": {}
         },
         {
           "id": "lamp-sypialnia-2",
           "type": "pendant-lamp",
-          "position": [7.842, 7.473],
+          "position": [7.552, 7.473],
           "elevation": 2.1,
           "rotation": 0,
           "params": {
-            "drop": 0.126
+            "drop": 0.273
           },
           "materials": {}
         },
@@ -1500,18 +1490,18 @@
         {
           "id": "lamp-sypialnia-3",
           "type": "pendant-lamp",
-          "position": [2.966, 8.449],
+          "position": [3.26, 8.449],
           "elevation": 2.1,
           "rotation": 0,
           "params": {
-            "drop": 0.144
+            "drop": 0.28
           },
           "materials": {}
         },
         {
           "id": "lamp-sypialnia-4",
           "type": "pendant-lamp",
-          "position": [2.295, 3.657],
+          "position": [2.141, 3.964],
           "elevation": 2.1,
           "rotation": 0,
           "params": {

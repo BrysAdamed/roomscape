@@ -141,12 +141,14 @@ def author() -> dict:
             room['polygon'] = ROOM_POLYGONS.get(room['id'], room['polygon'])
             if room['id'] in TILED:
                 room['floorMaterial'] = 'tile-grey-concrete'
-        floor['furniture'] = FURNITURE[floor['id']] + pendant_lamps(floor)
+        floor['furniture'] = FURNITURE[floor['id']]
     for floor in apartment['floors']:
         for room_ in floor['rooms']:
             room_['name'] = english_room_name(room_['name'])
     floors['parter']['stairs'] = [
         {'id': 'stairs-1', 'riserHeight': 0.1825, 'steps': stairs_steps(), 'material': 'wood-oak-natural'}]
+    for floor in apartment['floors']:
+        floor['furniture'] = floor['furniture'] + pendant_lamps(floor)
     return apartment
 
 
