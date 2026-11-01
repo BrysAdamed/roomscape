@@ -524,6 +524,16 @@ kbd {
   flex: none;
   width: 48px;
   height: 48px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  cursor: pointer;
+}
+
+.compass:hover {
+  background: none;
+  filter: brightness(1.1);
 }
 
 .compass svg {

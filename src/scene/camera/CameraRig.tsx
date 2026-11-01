@@ -1,14 +1,16 @@
 import { useEffect, useLayoutEffect, useRef, type ComponentRef } from 'react';
 import { useThree } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
-import { Vector3 } from 'three';
+import { Quaternion, Vector3 } from 'three';
 import { useApartmentStore } from '../../state/apartmentStore';
 import { activeFloor } from '../../state/floors';
 import { useViewerStore } from '../../state/viewerStore';
 import type { CameraFraming } from './framing';
 import { FlyControls } from './FlyControls';
+import { cameraHeading } from './heading';
 
 const LOOK_AHEAD = 3;
+const UP = new Vector3(0, 1, 0);
 
 export function CameraRig({ framing }: { framing: CameraFraming }) {
   const camera = useThree((state) => state.camera);
@@ -48,6 +50,23 @@ export function CameraRig({ framing }: { framing: CameraFraming }) {
     orbit.current?.target.copy(orbitTarget.current);
     orbit.current?.update();
   }, [camera, framing, topViewRequest]);
+
+  const faceNorthRequest = useViewerStore((state) => state.faceNorthRequest);
+  useEffect(() => {
+    if (faceNorthRequest === 0) {
+      return;
+    }
+    const north = useApartmentStore.getState().apartment?.north ?? 0;
+    const angle = (-(north - cameraHeading(camera)) * Math.PI) / 180;
+    if (orbit.current) {
+      const offset = camera.position.clone().sub(orbitTarget.current).applyAxisAngle(UP, angle);
+      camera.position.copy(orbitTarget.current).add(offset);
+      camera.lookAt(orbitTarget.current);
+      orbit.current.update();
+    } else {
+      camera.quaternion.premultiply(new Quaternion().setFromAxisAngle(UP, angle));
+    }
+  }, [camera, faceNorthRequest]);
 
   useLayoutEffect(() => {
     if (mode !== 'orbit') {

@@ -21,7 +21,7 @@ export function FlyControls() {
   const domElement = useThree((state) => state.gl.domElement);
   const active = useRef(new Map<string, FlyAction>());
   const orientation = useRef(new Euler(0, 0, 0, 'YXZ'));
-  const syncedTopView = useRef(useViewerStore.getState().topViewRequest);
+  const syncedJumps = useRef(cameraJumps());
 
   useEffect(() => {
     orientation.current.setFromQuaternion(camera.quaternion, 'YXZ');
@@ -75,9 +75,9 @@ export function FlyControls() {
   }, [camera, domElement]);
 
   useFrame((state, delta) => {
-    const { topViewRequest } = useViewerStore.getState();
-    if (topViewRequest !== syncedTopView.current) {
-      syncedTopView.current = topViewRequest;
+    const jumps = cameraJumps();
+    if (jumps !== syncedJumps.current) {
+      syncedJumps.current = jumps;
       orientation.current.setFromQuaternion(state.camera.quaternion, 'YXZ');
       orientation.current.z = 0;
     }
@@ -112,6 +112,12 @@ export function FlyControls() {
   });
 
   return null;
+}
+
+/** Changes whenever something outside the fly controls turns the camera (top view, face north). */
+function cameraJumps(): string {
+  const { topViewRequest, faceNorthRequest } = useViewerStore.getState();
+  return `${topViewRequest}:${faceNorthRequest}`;
 }
 
 function rotate(euler: Euler, yaw: number, pitch: number) {

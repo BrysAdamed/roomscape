@@ -19,6 +19,7 @@ interface ViewerState {
   showPlan: boolean;
   cutaway: boolean;
   topViewRequest: number;
+  faceNorthRequest: number;
   tool: Tool;
   measurements: Measurement[];
   pendingPoint: Point3 | undefined;
@@ -35,6 +36,7 @@ interface ViewerState {
   togglePlan: () => void;
   toggleCutaway: () => void;
   requestTopView: () => void;
+  requestFaceNorth: () => void;
   setTool: (tool: Tool) => void;
   addMeasurePoint: (point: Point3) => void;
   clearMeasurements: () => void;
@@ -54,6 +56,7 @@ export const useViewerStore = create<ViewerState>((set) => ({
   showPlan: false,
   cutaway: false,
   topViewRequest: 0,
+  faceNorthRequest: 0,
   tool: 'select',
   measurements: [],
   pendingPoint: undefined,
@@ -71,6 +74,7 @@ export const useViewerStore = create<ViewerState>((set) => ({
   togglePlan: () => set((state) => ({ showPlan: !state.showPlan })),
   toggleCutaway: () => set((state) => ({ cutaway: !state.cutaway })),
   requestTopView: () => set((state) => ({ topViewRequest: state.topViewRequest + 1 })),
+  requestFaceNorth: () => set((state) => ({ faceNorthRequest: state.faceNorthRequest + 1 })),
   setTool: (tool) => set({ tool, pendingPoint: undefined, hoverPoint: undefined }),
   addMeasurePoint: (point) =>
     set((state) =>
