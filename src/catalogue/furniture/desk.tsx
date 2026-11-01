@@ -39,14 +39,25 @@ function Desk({ params, materials }: FurnitureRenderProps<Params, Slots>) {
   );
 }
 
+const tableSlots = {
+  top: { label: 'Top', categories: ['wood', 'stone'], default: 'wood-oak-light' },
+  legs: { label: 'Legs', categories: ['metal', 'wood'], default: 'metal-black' },
+} as const;
+
+export const table = defineFurniture<Params, Slots>({
+  id: 'table',
+  name: 'Table',
+  params: { width: 1.6, depth: 0.9, height: 0.75 },
+  slots: tableSlots,
+  size: ({ width, depth, height }) => [width, depth, height],
+  Component: Desk,
+});
+
 export const desk = defineFurniture<Params, Slots>({
   id: 'desk',
   name: 'Desk',
   params: { width: 1.2, depth: 0.6, height: 0.75 },
-  slots: {
-    top: { label: 'Top', categories: ['wood', 'stone'], default: 'wood-oak-light' },
-    legs: { label: 'Legs', categories: ['metal', 'wood'], default: 'metal-black' },
-  },
+  slots: tableSlots,
   size: ({ width, depth, height }) => [width, depth, height],
   Component: Desk,
 });

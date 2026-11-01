@@ -1,4 +1,5 @@
-export type MaterialCategory = 'paint' | 'wood' | 'tile' | 'stone' | 'fabric' | 'metal' | 'glass';
+export type MaterialCategory =
+  'paint' | 'wood' | 'tile' | 'stone' | 'fabric' | 'metal' | 'glass' | 'ceramic';
 
 export interface Material {
   id: string;
@@ -187,6 +188,30 @@ export const materials: readonly Material[] = [
     roughness: 0.05,
     metalness: 0,
     opacity: 0.25,
+  },
+  {
+    id: 'glass-black',
+    name: 'Black glass',
+    category: 'glass',
+    color: '#141516',
+    roughness: 0.08,
+    metalness: 0.2,
+  },
+  {
+    id: 'ceramic-white',
+    name: 'White ceramic',
+    category: 'ceramic',
+    color: '#f4f4f2',
+    roughness: 0.15,
+    metalness: 0,
+  },
+  {
+    id: 'ceramic-grey',
+    name: 'Grey ceramic',
+    category: 'ceramic',
+    color: '#9c9d9b',
+    roughness: 0.2,
+    metalness: 0,
   },
 ];
 

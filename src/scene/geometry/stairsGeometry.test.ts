@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { buildStairsGeometry } from './stairsGeometry';
 
 describe('buildStairsGeometry', () => {
-  it('stacks one block per tread up to the full rise', () => {
+  it('places one tread slab per step up to the full rise', () => {
     // Arrange
     const stairs = {
       id: 's',
@@ -26,7 +26,7 @@ describe('buildStairsGeometry', () => {
 
     // Assert
     expect(box.max.y).toBeCloseTo(0.6);
-    expect(box.min.y).toBeCloseTo(0);
+    expect(box.min.y).toBeCloseTo(0.15);
     expect(box.max.x).toBeCloseTo(0.75);
     expect(box.max.z).toBeCloseTo(1);
     expect(box.min.z).toBeCloseTo(0);

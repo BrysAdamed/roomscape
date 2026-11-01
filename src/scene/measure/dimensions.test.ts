@@ -41,7 +41,7 @@ describe('furnitureDimensions', () => {
   it('returns nothing for unknown types', () => {
     const item = {
       id: 'x',
-      type: 'sofa',
+      type: 'hammock',
       position: [0, 0] as [number, number],
       rotation: 0,
       params: {},
