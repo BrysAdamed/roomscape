@@ -70,8 +70,7 @@ export const useViewerStore = create<ViewerState>((set) => ({
   toggleLowerFloors: () => set((state) => ({ showLowerFloors: !state.showLowerFloors })),
   togglePlan: () => set((state) => ({ showPlan: !state.showPlan })),
   toggleCutaway: () => set((state) => ({ cutaway: !state.cutaway })),
-  requestTopView: () =>
-    set((state) => ({ cameraMode: 'orbit', topViewRequest: state.topViewRequest + 1 })),
+  requestTopView: () => set((state) => ({ topViewRequest: state.topViewRequest + 1 })),
   setTool: (tool) => set({ tool, pendingPoint: undefined, hoverPoint: undefined }),
   addMeasurePoint: (point) =>
     set((state) =>

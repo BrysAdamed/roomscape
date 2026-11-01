@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import { Euler, Vector3 } from 'three';
+import { useViewerStore } from '../../state/viewerStore';
 import { flyActionFor, type FlyAction } from './flyBindings';
 
 const LOOK_SENSITIVITY = 0.004;
@@ -20,6 +21,7 @@ export function FlyControls() {
   const domElement = useThree((state) => state.gl.domElement);
   const active = useRef(new Map<string, FlyAction>());
   const orientation = useRef(new Euler(0, 0, 0, 'YXZ'));
+  const syncedTopView = useRef(useViewerStore.getState().topViewRequest);
 
   useEffect(() => {
     orientation.current.setFromQuaternion(camera.quaternion, 'YXZ');
@@ -73,6 +75,12 @@ export function FlyControls() {
   }, [camera, domElement]);
 
   useFrame((state, delta) => {
+    const { topViewRequest } = useViewerStore.getState();
+    if (topViewRequest !== syncedTopView.current) {
+      syncedTopView.current = topViewRequest;
+      orientation.current.setFromQuaternion(state.camera.quaternion, 'YXZ');
+      orientation.current.z = 0;
+    }
     const actions = new Set(active.current.values());
     if (actions.size === 0) {
       return;
