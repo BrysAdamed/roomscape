@@ -8,6 +8,18 @@ const projectFiles = readdirSync(projectsDir).filter(
   (file) => file.endsWith('.json') && file !== 'index.json',
 );
 
+describe('project index', () => {
+  it('lists exactly the project files', () => {
+    const index = JSON.parse(readFileSync(join(projectsDir, 'index.json'), 'utf8')) as {
+      projects: { id: string }[];
+    };
+
+    expect(index.projects.map((project) => `${project.id}.json`).sort()).toEqual(
+      [...projectFiles].sort(),
+    );
+  });
+});
+
 describe('project files', () => {
   it.each(projectFiles)('%s is a valid apartment', (file) => {
     // Arrange

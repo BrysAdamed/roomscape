@@ -39,6 +39,6 @@ The build uses a relative base path, so `dist/` can be served from any sub-path 
 | `tools`           | Floor plan extraction (Python)           |
 | `docs`            | Schema reference and decisions           |
 
-Open a specific apartment with `/?project=<id>`. To turn a floor plan PDF into an apartment draft, see [tools/README.md](tools/README.md).
+The app starts with a project picker (projects are listed in `public/projects/index.json`); `/?project=<id>` opens one directly. An exported JSON can be opened from the picker or dropped anywhere on the page. To turn a floor plan PDF into an apartment draft, see [tools/README.md](tools/README.md).
 
 See [docs/schema.md](docs/schema.md) for the apartment format.

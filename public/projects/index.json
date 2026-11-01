@@ -1,0 +1,12 @@
+{
+  "projects": [
+    {
+      "id": "harmonia-ii-5-1-1",
+      "description": "Two-storey terraced unit, Parter + Piętro I (extracted from the developer's plan)"
+    },
+    {
+      "id": "pilot-bedroom",
+      "description": "Single-room pilot: bedroom 04 of unit 5.1.1"
+    }
+  ]
+}
