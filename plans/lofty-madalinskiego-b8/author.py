@@ -35,6 +35,25 @@ LISTED_AREAS = {
 HEADROOM_BANDS = [((-math.inf, 0.875), 0.0), ((0.875, 2.448), 0.5), ((8.33, 9.898), 0.5), ((9.898, math.inf), 0.0)]
 DORMERS = [(-math.inf, 3.582, 2.448, 5.623), (8.33, 3.829, math.inf, 5.871)]
 
+# The same roof for the viewer: slopes 1.4 m high at the H=140cm lines rising to 2.2 m at the H=220cm lines, dormers
+# kept at full height. Roof windows are the plan's dashed rectangles (1.03 m wide); the plan draws them from the knee
+# wall, a 1.6 m long window is aligned with their upper edge.
+ROOF_PITCH = math.degrees(math.atan((2.2 - 1.4) / (2.448 - 0.875)))
+ROOF_WINDOW = {'width': 1.03, 'length': 1.6}
+ROOF = {
+    'slopes': [
+        {'origin': [0.875, 0.0], 'uphill': [1.0, 0.0], 'height': 1.4, 'pitch': round(ROOF_PITCH, 3)},
+        {'origin': [9.898, 0.0], 'uphill': [-1.0, 0.0], 'height': 1.4, 'pitch': round(ROOF_PITCH, 3)},
+    ],
+    'dormers': [[-2.0, 3.582, 2.448, 5.623], [8.33, 3.829, 12.5, 5.871]],
+    'windows': [
+        {'id': 'roof-window-sypialnia-4', 'position': [1.315, 1.971], **ROOF_WINDOW},
+        {'id': 'roof-window-sypialnia-3', 'position': [1.315, 7.196], **ROOF_WINDOW},
+        {'id': 'roof-window-sypialnia-1', 'position': [9.472, 1.813], **ROOF_WINDOW},
+        {'id': 'roof-window-sypialnia-2', 'position': [9.472, 7.796], **ROOF_WINDOW},
+    ],
+}
+
 WALL_REMOVALS = {
     # The entrance jamb read as a wall across the vestibule, corner stubs of the garden wall, the split east wall.
     'parter': {'parter-w-02', 'parter-w-05', 'parter-w-06', 'parter-w-13', 'parter-w-26'},
@@ -72,8 +91,10 @@ NEW_OPENINGS = {
 }
 
 
-def room(room_id: str, name: str, polygon: list[list[float]], material: str = 'wood-oak-natural') -> dict:
-    return {'id': room_id, 'name': name, 'polygon': polygon, 'floorMaterial': material}
+def room(room_id: str, name: str, polygon: list[list[float]], material: str = 'wood-oak-natural',
+         outdoor: bool = False) -> dict:
+    result = {'id': room_id, 'name': name, 'polygon': polygon, 'floorMaterial': material}
+    return {**result, 'outdoor': True} if outdoor else result
 
 
 ROOMS = {
@@ -104,8 +125,10 @@ ROOMS = {
         room('room-lazienka', 'Łazienka',
              [[4.336, 0.203], [5.936, 0.203], [5.936, 0.783], [6.436, 0.783], [6.436, 3.083], [5.856, 3.083],
               [5.856, 3.863], [4.336, 3.863]], TILES),
-        room('room-balkon-1', 'Balkon', [[-1.111, 3.23], [-0.004, 3.23], [-0.004, 5.975], [-1.111, 5.975]], TILES),
-        room('room-balkon-2', 'Balkon', [[10.776, 3.477], [11.884, 3.477], [11.884, 6.222], [10.776, 6.222]], TILES),
+        room('room-balkon-1', 'Balkon', [[-1.111, 3.23], [-0.004, 3.23], [-0.004, 5.975], [-1.111, 5.975]], TILES,
+             outdoor=True),
+        room('room-balkon-2', 'Balkon', [[10.776, 3.477], [11.884, 3.477], [11.884, 6.222], [10.776, 6.222]], TILES,
+             outdoor=True),
     ],
 }
 
@@ -222,6 +245,8 @@ def author() -> dict:
         floor['openings'] = openings + NEW_OPENINGS.get(floor['id'], [])
         floor['rooms'] = ROOMS[floor['id']]
         floor['furniture'] = FURNITURE[floor['id']]
+        if floor['id'] == 'poddasze':
+            floor['roof'] = ROOF
         if floor['id'] in RAILINGS:
             floor['railings'] = RAILINGS[floor['id']]
     apartment['floors'][0]['stairs'] = [
@@ -264,7 +289,7 @@ def report(apartment: dict) -> None:
     for floor in apartment['floors']:
         for room_ in floor['rooms']:
             area = polygon_area([tuple(p) for p in room_['polygon']])
-            indoor = floor['id'] == 'poddasze' and not room_['id'].startswith('room-balkon')
+            indoor = floor['id'] == 'poddasze' and not room_.get('outdoor')
             counted = usable_area(room_['polygon']) if indoor else area
             listed = LISTED_AREAS[room_['id']]
             print(f"{floor['id']:9} {room_['id']:21} {area:6.2f} floor, {counted:6.2f} counted / {listed:6.2f} listed"

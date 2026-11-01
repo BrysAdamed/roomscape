@@ -171,6 +171,14 @@ function checkFloor(floor: Floor, floorPath: string, checks: FloorChecks) {
     }
   });
 
+  floor.roof?.windows?.forEach((roofWindow, index) => {
+    const path = `${floorPath}.roof.windows.${index}`;
+    claimId(roofWindow.id, `${path}.id`);
+    if (roofWindow.material) {
+      checkMaterial(roofWindow.material, `${path}.material`);
+    }
+  });
+
   floor.railings?.forEach((railing, index) => {
     const path = `${floorPath}.railings.${index}`;
     claimId(railing.id, `${path}.id`);

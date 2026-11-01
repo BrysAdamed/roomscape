@@ -10,11 +10,13 @@ import {
   DEFAULT_RAILING_MATERIAL,
   railingLength,
 } from '../scene/geometry/railingLayout';
+import { DEFAULT_ROOF_WINDOW_MATERIAL } from '../scene/geometry/roof';
 import type {
   FurnitureItem,
   Opening,
   PlanPoint,
   Railing,
+  RoofWindow,
   Room,
   Stairs,
   Wall,
@@ -62,6 +64,7 @@ export function ConfigPanel() {
       {element.kind === 'stairs' && <StairsSettings stairs={element.stairs} />}
       {element.kind === 'opening' && <OpeningSettings opening={element.opening} />}
       {element.kind === 'railing' && <RailingSettings railing={element.railing} />}
+      {element.kind === 'roof-window' && <RoofWindowSettings roofWindow={element.roofWindow} />}
     </aside>
   );
 }
@@ -78,6 +81,8 @@ function title(element: NonNullable<ReturnType<typeof findElement>>): string {
       return element.opening.kind === 'door' ? 'Door' : 'Window';
     case 'railing':
       return 'Railing';
+    case 'roof-window':
+      return 'Roof window';
     case 'furniture':
       return findFurnitureType(element.item.type)?.name ?? element.item.type;
   }
@@ -233,6 +238,26 @@ function RailingSettings({ railing }: { railing: Railing }) {
         value={railing.material ?? DEFAULT_RAILING_MATERIAL}
         categories={RAILING_CATEGORIES}
         onChange={(ref) => setRailingMaterial(railing.id, ref)}
+      />
+    </>
+  );
+}
+
+function RoofWindowSettings({ roofWindow }: { roofWindow: RoofWindow }) {
+  const setRoofWindowMaterial = useApartmentStore((state) => state.setRoofWindowMaterial);
+  return (
+    <>
+      <Facts
+        rows={[
+          ['Width', formatLength(roofWindow.width)],
+          ['Length', formatLength(roofWindow.length)],
+        ]}
+      />
+      <MaterialPicker
+        label="Frame"
+        value={roofWindow.material ?? DEFAULT_ROOF_WINDOW_MATERIAL}
+        categories={OPENING_CATEGORIES}
+        onChange={(ref) => setRoofWindowMaterial(roofWindow.id, ref)}
       />
     </>
   );

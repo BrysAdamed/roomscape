@@ -53,6 +53,7 @@ export const roomSchema = z.object({
   name: z.string().min(1),
   polygon: z.array(planPointSchema).min(3),
   floorMaterial: materialRef,
+  outdoor: z.boolean().optional(),
 });
 
 export const furnitureSchema = z.object({
@@ -70,6 +71,31 @@ export const stairsSchema = z.object({
   riserHeight: positive,
   steps: z.array(z.array(planPointSchema).min(3)).min(1),
   material: materialRef,
+});
+
+const unitVector = z
+  .tuple([z.number(), z.number()])
+  .refine(([x, y]) => Math.abs(Math.hypot(x, y) - 1) < 1e-3, 'must be a unit vector');
+
+export const roofSlopeSchema = z.object({
+  origin: planPointSchema,
+  uphill: unitVector,
+  height: z.number(),
+  pitch: z.number().gt(0).lt(90),
+});
+
+export const roofWindowSchema = z.object({
+  id,
+  position: planPointSchema,
+  width: positive,
+  length: positive,
+  material: materialRef.optional(),
+});
+
+export const roofSchema = z.object({
+  slopes: z.array(roofSlopeSchema).min(1),
+  dormers: z.array(z.tuple([z.number(), z.number(), z.number(), z.number()])).optional(),
+  windows: z.array(roofWindowSchema).optional(),
 });
 
 export const railingSchema = z.object({
@@ -96,6 +122,7 @@ export const floorSchema = z.object({
   furniture: z.array(furnitureSchema),
   stairs: z.array(stairsSchema).optional(),
   railings: z.array(railingSchema).optional(),
+  roof: roofSchema.optional(),
   planImage: planImageSchema.optional(),
 });
 
@@ -122,6 +149,9 @@ export type Room = z.infer<typeof roomSchema>;
 export type FurnitureItem = z.infer<typeof furnitureSchema>;
 export type Stairs = z.infer<typeof stairsSchema>;
 export type Railing = z.infer<typeof railingSchema>;
+export type Roof = z.infer<typeof roofSchema>;
+export type RoofSlope = z.infer<typeof roofSlopeSchema>;
+export type RoofWindow = z.infer<typeof roofWindowSchema>;
 export type PlanImage = z.infer<typeof planImageSchema>;
 export type Location = z.infer<typeof locationSchema>;
 export type Floor = z.infer<typeof floorSchema>;

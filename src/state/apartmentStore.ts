@@ -6,6 +6,7 @@ import {
   setRoomFloorMaterial,
   setOpeningMaterial,
   setRailingMaterial,
+  setRoofWindowMaterial,
   setStairsMaterial,
   setWallMaterial,
   type OpeningPart,
@@ -29,6 +30,7 @@ interface ApartmentState {
   setStairsMaterial: (stairsId: string, ref: string) => void;
   setOpeningMaterial: (openingId: string, part: OpeningPart, ref: string) => void;
   setRailingMaterial: (railingId: string, ref: string) => void;
+  setRoofWindowMaterial: (windowId: string, ref: string) => void;
 }
 
 export const useApartmentStore = create<ApartmentState>((set) => {
@@ -66,5 +68,7 @@ export const useApartmentStore = create<ApartmentState>((set) => {
       edit((apartment) => setOpeningMaterial(apartment, openingId, part, ref)),
     setRailingMaterial: (railingId, ref) =>
       edit((apartment) => setRailingMaterial(apartment, railingId, ref)),
+    setRoofWindowMaterial: (windowId, ref) =>
+      edit((apartment) => setRoofWindowMaterial(apartment, windowId, ref)),
   };
 });

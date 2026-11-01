@@ -1,4 +1,4 @@
-import type { Apartment, Floor, Opening, Railing, Stairs } from '../schema/apartment';
+import type { Apartment, Floor, Opening, Railing, RoofWindow, Stairs } from '../schema/apartment';
 
 export type WallSide = 'left' | 'right';
 
@@ -8,7 +8,8 @@ export type SelectableElement =
   | { kind: 'furniture'; floor: Floor; item: Floor['furniture'][number] }
   | { kind: 'stairs'; floor: Floor; stairs: Stairs }
   | { kind: 'opening'; floor: Floor; opening: Opening; wall: Floor['walls'][number] }
-  | { kind: 'railing'; floor: Floor; railing: Railing };
+  | { kind: 'railing'; floor: Floor; railing: Railing }
+  | { kind: 'roof-window'; floor: Floor; roofWindow: RoofWindow };
 
 export type OpeningPart = 'frame' | 'leaf';
 
@@ -27,6 +28,8 @@ export function findElement(apartment: Apartment, id: string): SelectableElement
     if (opening && host) return { kind: 'opening', floor, opening, wall: host };
     const railing = floor.railings?.find((candidate) => candidate.id === id);
     if (railing) return { kind: 'railing', floor, railing };
+    const roofWindow = floor.roof?.windows?.find((candidate) => candidate.id === id);
+    if (roofWindow) return { kind: 'roof-window', floor, roofWindow };
   }
   return undefined;
 }
@@ -125,6 +128,21 @@ export function setRailingMaterial(
     }
     const railings = replaceById(floor.railings, railingId, (item) => ({ ...item, material: ref }));
     return railings === floor.railings ? floor : { ...floor, railings };
+  });
+}
+
+export function setRoofWindowMaterial(
+  apartment: Apartment,
+  windowId: string,
+  ref: string,
+): Apartment {
+  return updateFloors(apartment, (floor) => {
+    const windows = floor.roof?.windows;
+    if (!floor.roof || !windows) {
+      return floor;
+    }
+    const updated = replaceById(windows, windowId, (item) => ({ ...item, material: ref }));
+    return updated === windows ? floor : { ...floor, roof: { ...floor.roof, windows: updated } };
   });
 }
 

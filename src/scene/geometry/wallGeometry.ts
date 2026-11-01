@@ -8,6 +8,7 @@ import {
   Vector3,
 } from 'three';
 import type { Opening } from '../../schema/apartment';
+import { profileAt, profileFrom, type ProfilePoint } from './roof';
 import { wallFrame } from './wallFrame';
 import type { WallSpan } from './wallLayout';
 
@@ -15,14 +16,21 @@ export const WALL_GROUP = { left: 0, right: 1, edges: 2 } as const;
 
 const EPSILON = 1e-6;
 
+/** Wall top: a flat height, or a profile along the wall from `wallTopProfile`. */
+export type WallTop = number | readonly ProfilePoint[];
+
 export function buildWallGeometry(
   span: WallSpan,
-  height: number,
+  top: WallTop,
   openings: readonly Opening[],
 ): BufferGeometry {
   const { wall } = span;
   const frame = wallFrame(wall);
-  const shapes = wallOutlines(span, frame.length, height, openings);
+  const profile =
+    typeof top === 'number'
+      ? flatProfile(-span.startExtension, frame.length + span.endExtension, top)
+      : top;
+  const shapes = wallOutlines(span, frame.length, profile, openings);
 
   const extruded = new ExtrudeGeometry(shapes, { depth: wall.thickness, bevelEnabled: false });
   const geometry = groupFacesBySide(extruded);
@@ -39,6 +47,13 @@ export function buildWallGeometry(
   return geometry;
 }
 
+function flatProfile(from: number, to: number, height: number): ProfilePoint[] {
+  return [
+    [from, height],
+    [to, height],
+  ];
+}
+
 interface Gap {
   start: number;
   end: number;
@@ -53,20 +68,27 @@ interface Gap {
 function wallOutlines(
   span: WallSpan,
   length: number,
-  height: number,
+  profile: readonly ProfilePoint[],
   openings: readonly Opening[],
 ): Shape[] {
+  const peak = Math.max(...profile.map(([, height]) => height));
+  const lowest = (start: number, end: number) =>
+    Math.min(
+      profileAt(profile, start),
+      profileAt(profile, end),
+      ...profile.filter(([x]) => x > start && x < end).map(([, height]) => height),
+    );
   const gaps: Gap[] = openings
     .map((opening) => ({
       start: opening.offset,
       end: opening.offset + opening.width,
       bottom: opening.sillHeight,
-      top: Math.min(opening.sillHeight + opening.height, height),
+      top: Math.min(opening.sillHeight + opening.height, peak),
     }))
-    .filter((gap) => gap.bottom < height - EPSILON)
+    .filter((gap) => gap.bottom < lowest(gap.start, gap.end) - EPSILON)
     .sort((a, b) => a.start - b.start);
   const reachesFloor = (gap: Gap) => gap.bottom < EPSILON;
-  const reachesTop = (gap: Gap) => gap.top > height - EPSILON;
+  const reachesTop = (gap: Gap) => gap.top > lowest(gap.start, gap.end) - EPSILON;
   const cuts = gaps.filter((gap) => reachesFloor(gap) && reachesTop(gap));
 
   const bounds = [
@@ -84,7 +106,7 @@ function wallOutlines(
     const inside = gaps.filter(
       (gap) => !cuts.includes(gap) && gap.start >= left - EPSILON && gap.end <= right + EPSILON,
     );
-    shapes.push(piece(left, right, height, inside, reachesFloor, reachesTop));
+    shapes.push(piece(left, right, profile, inside, reachesFloor, reachesTop));
   }
   return shapes;
 }
@@ -92,7 +114,7 @@ function wallOutlines(
 function piece(
   left: number,
   right: number,
-  height: number,
+  profile: readonly ProfilePoint[],
   gaps: readonly Gap[],
   reachesFloor: (gap: Gap) => boolean,
   reachesTop: (gap: Gap) => boolean,
@@ -106,14 +128,9 @@ function piece(
     shape.lineTo(gap.end, 0);
   }
   shape.lineTo(right, 0);
-  shape.lineTo(right, height);
-  for (const gap of gaps.filter(reachesTop).reverse()) {
-    shape.lineTo(gap.end, height);
-    shape.lineTo(gap.end, gap.bottom);
-    shape.lineTo(gap.start, gap.bottom);
-    shape.lineTo(gap.start, height);
+  for (const [x, y] of topEdge(left, right, profile, gaps.filter(reachesTop))) {
+    shape.lineTo(x, y);
   }
-  shape.lineTo(left, height);
   shape.lineTo(left, 0);
 
   for (const gap of gaps.filter((gap) => !reachesFloor(gap) && !reachesTop(gap))) {
@@ -126,6 +143,39 @@ function piece(
     shape.holes.push(hole);
   }
   return shape;
+}
+
+/** Top edge from right to left, following the profile and dipping into notches for openings that reach the top. */
+function topEdge(
+  left: number,
+  right: number,
+  profile: readonly ProfilePoint[],
+  notches: readonly Gap[],
+): ProfilePoint[] {
+  const inside = (x: number) =>
+    notches.some((gap) => x > gap.start - EPSILON && x < gap.end + EPSILON);
+  const vertices: ProfilePoint[] = [
+    [right, profileFrom(profile, right, 'below')],
+    ...profile.filter(([x]) => x > left + EPSILON && x < right - EPSILON).reverse(),
+    [left, profileFrom(profile, left, 'above')],
+  ];
+  const pending = [...notches].sort((a, b) => b.start - a.start);
+  const edge: ProfilePoint[] = [];
+  for (const vertex of vertices) {
+    while (pending.length > 0 && vertex[0] < pending[0]!.end + EPSILON) {
+      const gap = pending.shift()!;
+      edge.push(
+        [gap.end, profileAt(profile, gap.end)],
+        [gap.end, gap.bottom],
+        [gap.start, gap.bottom],
+        [gap.start, profileAt(profile, gap.start)],
+      );
+    }
+    if (!inside(vertex[0])) {
+      edge.push(vertex);
+    }
+  }
+  return edge;
 }
 
 function groupFacesBySide(source: BufferGeometry): BufferGeometry {

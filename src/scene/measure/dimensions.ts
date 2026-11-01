@@ -46,6 +46,8 @@ export function elementDimensions(apartment: Apartment, id: string): DimensionLi
       return openingDimensions(element.opening, element.wall, element.floor);
     case 'railing':
       return railingDimensions(element.railing, element.floor);
+    case 'roof-window':
+      return [];
   }
 }
 

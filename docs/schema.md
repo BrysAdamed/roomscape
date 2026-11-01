@@ -18,14 +18,15 @@ An apartment is a single JSON file in `public/projects/`. The viewer renders it,
 
 ```
 Apartment { schemaVersion, id, name, north?, location?, floors[] }
-Floor     { id, name, elevation, height, walls[], openings[], rooms[], furniture[], stairs[]?, railings[]?, planImage? }
+Floor     { id, name, elevation, height, walls[], openings[], rooms[], furniture[], stairs[]?, railings[]?, roof?, planImage? }
 Wall      { id, start, end, thickness, height?, materials { left, right } }
 Opening   { id, wallId, kind, offset, width, height, sillHeight, frameMaterial?, door? }
 Door      { hinge, opensTo, material? }
-Room      { id, name, polygon[], floorMaterial }
+Room      { id, name, polygon[], floorMaterial, outdoor? }
 Furniture { id, type, position, elevation?, rotation, params, materials }
 Stairs    { id, riserHeight, steps[][], material }
 Railing   { id, points[], height?, style?, material? }
+Roof      { slopes[], dormers[]?, windows[]? }
 PlanImage { src, bounds }
 ```
 
@@ -59,6 +60,7 @@ PlanImage { src, bounds }
 
 - `polygon`: floor outline (at least three points), usually traced along the inner wall faces.
 - `floorMaterial`: material of the floor surface.
+- `outdoor`: balconies, terraces and gardens; they get no ceiling under a roof.
 
 ### Furniture
 
@@ -75,6 +77,13 @@ PlanImage { src, bounds }
 ### Railing
 
 - Balcony and terrace railings. `points` is the railing's polyline (at least two plan points), usually inset a few centimetres from the balcony's open edges. `height` defaults to 1.1 m, `style` is `glass` (default) or `bars`, `material` is the frame (default black metal).
+
+### Roof
+
+- Sloped ceilings of an attic storey. The ceiling at a point is the lowest slope there, capped at the storey `height`; walls are cut to follow it and indoor rooms get a ceiling surface.
+- `slopes[]`: `{ origin, uphill, height, pitch }`: the slope is `height` metres above the floor along the line through `origin`, and rises at `pitch` degrees in the horizontal unit direction `uphill`.
+- `dormers[]`: plan rectangles `[x0, y0, x1, y1]` where the ceiling stays at full height.
+- `windows[]`: roof windows `{ id, position, width, length, material? }`, set into the slope above `position` (plan point of the window centre); `width` runs along the eaves, `length` up the slope.
 
 ### Plan image
 

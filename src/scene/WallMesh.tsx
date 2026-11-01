@@ -1,7 +1,7 @@
 import { useEffect, useMemo } from 'react';
 import type { Material } from 'three';
 import type { Opening } from '../schema/apartment';
-import { buildWallGeometry } from './geometry/wallGeometry';
+import { buildWallGeometry, type WallTop } from './geometry/wallGeometry';
 import type { WallSpan } from './geometry/wallLayout';
 import { meshMaterial } from './materials';
 
@@ -9,16 +9,13 @@ const EDGE_MATERIAL = 'paint-white';
 
 interface WallMeshProps {
   span: WallSpan;
-  height: number;
+  top: WallTop;
   openings: readonly Opening[];
   override?: Material;
 }
 
-export function WallMesh({ span, height, openings, override }: WallMeshProps) {
-  const geometry = useMemo(
-    () => buildWallGeometry(span, height, openings),
-    [span, height, openings],
-  );
+export function WallMesh({ span, top, openings, override }: WallMeshProps) {
+  const geometry = useMemo(() => buildWallGeometry(span, top, openings), [span, top, openings]);
   useEffect(() => () => geometry.dispose(), [geometry]);
 
   const { left, right } = span.wall.materials;

@@ -145,6 +145,26 @@ describe('buildWallGeometry', () => {
     expect(sideArea(withOpenings)).toBeCloseTo(solidArea - 1.2 - 1.8, 6);
   });
 
+  it('follows a sloped top profile and still cuts windows', () => {
+    // Arrange
+    const span = { wall: wall('w-1', [0, 0], [10, 0], 0.2), startExtension: 0, endExtension: 0 };
+    const profile: [number, number][] = [
+      [0, 1],
+      [3, 2.5],
+      [7, 2.5],
+      [10, 1],
+    ];
+
+    // Act
+    const sloped = buildWallGeometry(span, profile, [
+      opening({ id: 'win', offset: 4, width: 1, height: 1, sillHeight: 1 }),
+    ]);
+
+    // Assert
+    expect(sloped.boundingBox!.max.y).toBeCloseTo(2.5);
+    expect(sideArea(sloped)).toBeCloseTo(20.5 - 1, 6);
+  });
+
   it('splits a cut-down wall at doors and notches windows that reach the top', () => {
     // Arrange
     const span = { wall: wall('w-1', [0, 0], [4, 0], 0.2), startExtension: 0, endExtension: 0 };

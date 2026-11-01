@@ -1,13 +1,17 @@
 import { Fragment, Suspense, useMemo, type ReactNode } from 'react';
 import type { Floor, Opening } from '../schema/apartment';
+import { wallLength } from '../schema/validate';
 import { useViewerStore } from '../state/viewerStore';
+import { CeilingMesh } from './CeilingMesh';
 import { FurnitureMesh } from './FurnitureMesh';
+import { wallTopProfile } from './geometry/roof';
 import { layoutWalls } from './geometry/wallLayout';
 import { ghostMaterial } from './materials';
 import { OpeningMesh } from './OpeningMesh';
 import { hasOpeningMesh } from './openings';
 import { PlanOverlay } from './PlanOverlay';
 import { RailingMesh } from './RailingMesh';
+import { RoofWindowMesh } from './RoofWindowMesh';
 import { RoomFloor } from './RoomFloor';
 import { Selectable } from './selection/Selectable';
 import { StairsMesh } from './StairsMesh';
@@ -30,6 +34,23 @@ export function FloorView({ floor, ghost = false }: { floor: Floor; ghost?: bool
   const showPlan = useViewerStore((state) => state.showPlan);
   const cutaway = useViewerStore((state) => state.cutaway);
   const Wrap = ghost ? Passive : Selectable;
+  const tops = useMemo(
+    () =>
+      spans.map((span) => {
+        const cap = Math.min(span.wall.height ?? floor.height, cutaway ? CUTAWAY_HEIGHT : Infinity);
+        const length = wallLength(span.wall.start, span.wall.end);
+        return wallTopProfile(
+          floor.roof,
+          cap,
+          span.wall.start,
+          span.wall.end,
+          span.wall.thickness,
+          -span.startExtension,
+          length + span.endExtension,
+        );
+      }),
+    [spans, floor.roof, floor.height, cutaway],
+  );
 
   return (
     <group position={[0, floor.elevation, 0]}>
@@ -38,11 +59,11 @@ export function FloorView({ floor, ghost = false }: { floor: Floor; ghost?: bool
           <RoomFloor room={room} override={override} />
         </Wrap>
       ))}
-      {spans.map((span) => (
+      {spans.map((span, index) => (
         <Wrap key={span.wall.id} id={span.wall.id}>
           <WallMesh
             span={span}
-            height={Math.min(span.wall.height ?? floor.height, cutaway ? CUTAWAY_HEIGHT : Infinity)}
+            top={tops[index]!}
             openings={openingsByWall.get(span.wall.id) ?? NO_OPENINGS}
             override={override}
           />
@@ -59,6 +80,16 @@ export function FloorView({ floor, ghost = false }: { floor: Floor; ghost?: bool
               </Selectable>
             )),
         )}
+      {!ghost && !cutaway && floor.roof && (
+        <>
+          <CeilingMesh floor={floor} roof={floor.roof} />
+          {floor.roof.windows?.map((roofWindow) => (
+            <Selectable key={roofWindow.id} id={roofWindow.id}>
+              <RoofWindowMesh roofWindow={roofWindow} roof={floor.roof!} height={floor.height} />
+            </Selectable>
+          ))}
+        </>
+      )}
       {showPlan && !ghost && floor.planImage && (
         <Suspense fallback={null}>
           <PlanOverlay image={floor.planImage} />

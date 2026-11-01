@@ -1173,7 +1173,8 @@
             [-0.004, 5.975],
             [-1.111, 5.975]
           ],
-          "floorMaterial": "tile-grey-concrete"
+          "floorMaterial": "tile-grey-concrete",
+          "outdoor": true
         },
         {
           "id": "room-balkon-2",
@@ -1184,7 +1185,8 @@
             [11.884, 6.222],
             [10.776, 6.222]
           ],
-          "floorMaterial": "tile-grey-concrete"
+          "floorMaterial": "tile-grey-concrete",
+          "outdoor": true
         }
       ],
       "furniture": [
@@ -1411,6 +1413,52 @@
       "planImage": {
         "src": "projects/lofty-madalinskiego-b8/poddasze.png",
         "bounds": [-0.171, -0.248, 10.925, 10.848]
+      },
+      "roof": {
+        "slopes": [
+          {
+            "origin": [0.875, 0.0],
+            "uphill": [1.0, 0.0],
+            "height": 1.4,
+            "pitch": 26.957
+          },
+          {
+            "origin": [9.898, 0.0],
+            "uphill": [-1.0, 0.0],
+            "height": 1.4,
+            "pitch": 26.957
+          }
+        ],
+        "dormers": [
+          [-2.0, 3.582, 2.448, 5.623],
+          [8.33, 3.829, 12.5, 5.871]
+        ],
+        "windows": [
+          {
+            "id": "roof-window-sypialnia-4",
+            "position": [1.315, 1.971],
+            "width": 1.03,
+            "length": 1.6
+          },
+          {
+            "id": "roof-window-sypialnia-3",
+            "position": [1.315, 7.196],
+            "width": 1.03,
+            "length": 1.6
+          },
+          {
+            "id": "roof-window-sypialnia-1",
+            "position": [9.472, 1.813],
+            "width": 1.03,
+            "length": 1.6
+          },
+          {
+            "id": "roof-window-sypialnia-2",
+            "position": [9.472, 7.796],
+            "width": 1.03,
+            "length": 1.6
+          }
+        ]
       },
       "railings": [
         {

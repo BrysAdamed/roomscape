@@ -1147,7 +1147,8 @@
             [2.86, 0.0],
             [0.08, 0.0]
           ],
-          "floorMaterial": "tile-grey-concrete"
+          "floorMaterial": "tile-grey-concrete",
+          "outdoor": true
         }
       ],
       "furniture": [
