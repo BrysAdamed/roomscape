@@ -13,6 +13,7 @@ interface ViewerState {
   cameraMode: CameraMode;
   resetRequest: number;
   showWallLengths: boolean;
+  showLowerFloors: boolean;
   tool: Tool;
   measurements: Measurement[];
   pendingPoint: Point3 | undefined;
@@ -20,6 +21,7 @@ interface ViewerState {
   setCameraMode: (mode: CameraMode) => void;
   requestCameraReset: () => void;
   toggleWallLengths: () => void;
+  toggleLowerFloors: () => void;
   setTool: (tool: Tool) => void;
   addMeasurePoint: (point: Point3) => void;
   clearMeasurements: () => void;
@@ -30,6 +32,7 @@ export const useViewerStore = create<ViewerState>((set) => ({
   cameraMode: 'orbit',
   resetRequest: 0,
   showWallLengths: false,
+  showLowerFloors: true,
   tool: 'select',
   measurements: [],
   pendingPoint: undefined,
@@ -38,6 +41,7 @@ export const useViewerStore = create<ViewerState>((set) => ({
   requestCameraReset: () =>
     set((state) => ({ cameraMode: 'orbit', resetRequest: state.resetRequest + 1 })),
   toggleWallLengths: () => set((state) => ({ showWallLengths: !state.showWallLengths })),
+  toggleLowerFloors: () => set((state) => ({ showLowerFloors: !state.showLowerFloors })),
   setTool: (tool) => set({ tool, pendingPoint: undefined, hoverPoint: undefined }),
   addMeasurePoint: (point) =>
     set((state) =>

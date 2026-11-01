@@ -1,7 +1,8 @@
-import { useMemo } from 'react';
+import { Fragment, useMemo, type ReactNode } from 'react';
 import type { Floor, Opening } from '../schema/apartment';
 import { FurnitureMesh } from './FurnitureMesh';
 import { layoutWalls } from './geometry/wallLayout';
+import { ghostMaterial } from './materials';
 import { OpeningMesh } from './OpeningMesh';
 import { RoomFloor } from './RoomFloor';
 import { Selectable } from './selection/Selectable';
@@ -9,7 +10,8 @@ import { WallMesh } from './WallMesh';
 
 const NO_OPENINGS: readonly Opening[] = [];
 
-export function FloorView({ floor }: { floor: Floor }) {
+/** Renders one storey; a ghost floor is translucent context that cannot be selected. */
+export function FloorView({ floor, ghost = false }: { floor: Floor; ghost?: boolean }) {
   const spans = useMemo(() => layoutWalls(floor.walls), [floor.walls]);
   const openingsByWall = useMemo(() => {
     const grouped = new Map<string, Opening[]>();
@@ -18,33 +20,41 @@ export function FloorView({ floor }: { floor: Floor }) {
     }
     return grouped;
   }, [floor.openings]);
+  const override = ghost ? ghostMaterial : undefined;
+  const Wrap = ghost ? Passive : Selectable;
 
   return (
     <group position={[0, floor.elevation, 0]}>
       {floor.rooms.map((room) => (
-        <Selectable key={room.id} id={room.id}>
-          <RoomFloor room={room} />
-        </Selectable>
+        <Wrap key={room.id} id={room.id}>
+          <RoomFloor room={room} override={override} />
+        </Wrap>
       ))}
       {spans.map((span) => (
-        <Selectable key={span.wall.id} id={span.wall.id}>
+        <Wrap key={span.wall.id} id={span.wall.id}>
           <WallMesh
             span={span}
             height={span.wall.height ?? floor.height}
             openings={openingsByWall.get(span.wall.id) ?? NO_OPENINGS}
+            override={override}
           />
-        </Selectable>
+        </Wrap>
       ))}
-      {spans.flatMap((span) =>
-        (openingsByWall.get(span.wall.id) ?? NO_OPENINGS).map((opening) => (
-          <OpeningMesh key={opening.id} opening={opening} wall={span.wall} />
-        )),
-      )}
+      {!ghost &&
+        spans.flatMap((span) =>
+          (openingsByWall.get(span.wall.id) ?? NO_OPENINGS).map((opening) => (
+            <OpeningMesh key={opening.id} opening={opening} wall={span.wall} />
+          )),
+        )}
       {floor.furniture.map((item) => (
-        <Selectable key={item.id} id={item.id}>
-          <FurnitureMesh item={item} />
-        </Selectable>
+        <Wrap key={item.id} id={item.id}>
+          <FurnitureMesh item={item} override={override} />
+        </Wrap>
       ))}
     </group>
   );
+}
+
+function Passive({ children }: { id: string; children: ReactNode }) {
+  return <Fragment>{children}</Fragment>;
 }

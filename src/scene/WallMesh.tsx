@@ -1,4 +1,5 @@
 import { useEffect, useMemo } from 'react';
+import type { Material } from 'three';
 import type { Opening } from '../schema/apartment';
 import { buildWallGeometry } from './geometry/wallGeometry';
 import type { WallSpan } from './geometry/wallLayout';
@@ -10,9 +11,10 @@ interface WallMeshProps {
   span: WallSpan;
   height: number;
   openings: readonly Opening[];
+  override?: Material;
 }
 
-export function WallMesh({ span, height, openings }: WallMeshProps) {
+export function WallMesh({ span, height, openings, override }: WallMeshProps) {
   const geometry = useMemo(
     () => buildWallGeometry(span, height, openings),
     [span, height, openings],
@@ -25,5 +27,12 @@ export function WallMesh({ span, height, openings }: WallMeshProps) {
     [left, right],
   );
 
-  return <mesh geometry={geometry} material={materials} castShadow receiveShadow />;
+  return (
+    <mesh
+      geometry={geometry}
+      material={override ?? materials}
+      castShadow={!override}
+      receiveShadow={!override}
+    />
+  );
 }

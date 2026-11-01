@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import type { Material } from 'three';
 import { findFurnitureType } from '../catalogue/furniture/registry';
 import { resolveMaterialRefs, resolveParams } from '../catalogue/furniture/resolve';
 import type { FurnitureItem } from '../schema/apartment';
@@ -6,7 +7,7 @@ import { meshMaterial } from './materials';
 
 const PLACEHOLDER_SIZE = 0.4;
 
-export function FurnitureMesh({ item }: { item: FurnitureItem }) {
+export function FurnitureMesh({ item, override }: { item: FurnitureItem; override?: Material }) {
   const type = findFurnitureType(item.type);
   const params = useMemo(() => (type ? resolveParams(type, item) : {}), [type, item]);
   const materials = useMemo(
@@ -15,11 +16,11 @@ export function FurnitureMesh({ item }: { item: FurnitureItem }) {
         ? Object.fromEntries(
             Object.entries(resolveMaterialRefs(type, item)).map(([slot, ref]) => [
               slot,
-              meshMaterial(ref),
+              override ?? meshMaterial(ref),
             ]),
           )
         : {},
-    [type, item],
+    [type, item, override],
   );
 
   return (

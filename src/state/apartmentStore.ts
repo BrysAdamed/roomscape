@@ -12,9 +12,11 @@ interface ApartmentState {
   apartment: Apartment | undefined;
   selectedId: string | undefined;
   hoveredId: string | undefined;
+  activeFloorId: string | undefined;
   load: (apartment: Apartment) => void;
   select: (id: string | undefined) => void;
   hover: (id: string | undefined) => void;
+  setActiveFloor: (floorId: string) => void;
   setWallMaterial: (wallId: string, side: WallSide, ref: string) => void;
   setRoomFloorMaterial: (roomId: string, ref: string) => void;
   setFurnitureMaterial: (itemId: string, slot: string, ref: string) => void;
@@ -29,10 +31,18 @@ export const useApartmentStore = create<ApartmentState>((set) => {
     apartment: undefined,
     selectedId: undefined,
     hoveredId: undefined,
+    activeFloorId: undefined,
     load: (apartment) =>
-      set({ source: apartment, apartment, selectedId: undefined, hoveredId: undefined }),
+      set({
+        source: apartment,
+        apartment,
+        selectedId: undefined,
+        hoveredId: undefined,
+        activeFloorId: apartment.floors[0]?.id,
+      }),
     select: (selectedId) => set({ selectedId }),
     hover: (hoveredId) => set({ hoveredId }),
+    setActiveFloor: (activeFloorId) => set({ activeFloorId }),
     setWallMaterial: (wallId, side, ref) =>
       edit((apartment) => setWallMaterial(apartment, wallId, side, ref)),
     setRoomFloorMaterial: (roomId, ref) =>

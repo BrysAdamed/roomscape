@@ -4,6 +4,7 @@ import { useApartmentStore } from '../state/apartmentStore';
 import { useViewerStore } from '../state/viewerStore';
 import { CameraToolbar } from './CameraToolbar';
 import { ConfigPanel } from './ConfigPanel';
+import { FloorSwitcher } from './FloorSwitcher';
 import { ProjectBar } from './ProjectBar';
 import { useProject } from './useProject';
 
@@ -36,6 +37,7 @@ export function App() {
     <div className="app">
       <Viewport />
       <ProjectBar />
+      <FloorSwitcher />
       <CameraToolbar />
       <ConfigPanel />
       {project.status === 'loading' && <div className="overlay">Loading…</div>}

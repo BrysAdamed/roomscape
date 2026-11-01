@@ -8,6 +8,14 @@ const FALLBACK_COLOR = '#ff00ff';
 const CUSTOM_COLOR_ROUGHNESS = 0.9;
 const cache = new Map<string, MeshStandardMaterial>();
 
+export const ghostMaterial = new MeshStandardMaterial({
+  color: '#ffffff',
+  roughness: 1,
+  transparent: true,
+  opacity: 0.22,
+  depthWrite: false,
+});
+
 export function meshMaterial(ref: string, usage: SurfaceUsage = 'surface'): MeshStandardMaterial {
   const key = `${ref}|${usage}`;
   let material = cache.get(key);
