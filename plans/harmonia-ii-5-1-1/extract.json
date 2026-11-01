@@ -1,0 +1,29 @@
+{
+  "pdf": "plan.pdf",
+  "id": "harmonia-ii-5-1-1",
+  "name": "Harmonia II – 5.1.1",
+  "pointsPerMetre": 19.843,
+  "wallFill": [0.7529, 0.7529, 0.7529],
+  "defaults": {
+    "wallMaterial": "paint-white",
+    "floorMaterial": "wood-oak-natural"
+  },
+  "floors": [
+    {
+      "id": "parter",
+      "name": "Parter",
+      "elevation": 0,
+      "height": 2.65,
+      "clip": [90, 238, 275, 492],
+      "origin": [137.42, 245.46]
+    },
+    {
+      "id": "pietro-1",
+      "name": "Piętro I",
+      "elevation": 2.92,
+      "height": 2.65,
+      "clip": [340, 205, 490, 492],
+      "origin": [352.765, 245.46]
+    }
+  ]
+}

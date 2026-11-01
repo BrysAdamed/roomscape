@@ -1,0 +1,813 @@
+{
+  "schemaVersion": 1,
+  "id": "harmonia-ii-5-1-1",
+  "name": "Harmonia II – 5.1.1",
+  "floors": [
+    {
+      "id": "parter",
+      "name": "Parter",
+      "elevation": 0,
+      "height": 2.65,
+      "walls": [
+        {
+          "id": "parter-w-01",
+          "start": [0.195, 0.195],
+          "end": [6.306, 0.195],
+          "thickness": 0.39,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "parter-w-02",
+          "start": [0.195, 2.83],
+          "end": [6.306, 2.83],
+          "thickness": 0.08,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "parter-w-03",
+          "start": [0.005, 3],
+          "end": [0.283, 3],
+          "thickness": 0.26,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "parter-w-04",
+          "start": [5.365, 4.64],
+          "end": [6.306, 4.64],
+          "thickness": 0.1,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "parter-w-05",
+          "start": [0.283, 5.065],
+          "end": [6.306, 5.065],
+          "thickness": 0.19,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "parter-w-06",
+          "start": [0.277, 6.55],
+          "end": [2.325, 6.55],
+          "thickness": 0.1,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "parter-w-07",
+          "start": [1.785, 7.17],
+          "end": [2.325, 7.17],
+          "thickness": 0.1,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "parter-w-08",
+          "start": [-1.905, 9.69],
+          "end": [0.277, 9.69],
+          "thickness": 0.38,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "parter-w-09",
+          "start": [0.17, 11.805],
+          "end": [6.306, 11.805],
+          "thickness": 0.39,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "parter-w-10",
+          "start": [0.17, 9.69],
+          "end": [0.17, 11.805],
+          "thickness": 0.43,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "parter-w-11",
+          "start": [0.195, 0.195],
+          "end": [0.195, 2.83],
+          "thickness": 0.38,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "parter-w-12",
+          "start": [0.277, 6.55],
+          "end": [0.277, 9.69],
+          "thickness": 0.215,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "parter-w-13",
+          "start": [0.283, 3],
+          "end": [0.283, 6.45],
+          "thickness": 0.202,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "parter-w-14",
+          "start": [1.785, 6.55],
+          "end": [1.785, 7.17],
+          "thickness": 0.1,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "parter-w-15",
+          "start": [2.325, 6.55],
+          "end": [2.325, 7.17],
+          "thickness": 0.1,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "parter-w-16",
+          "start": [2.335, 2.83],
+          "end": [2.335, 5.065],
+          "thickness": 0.08,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "parter-w-17",
+          "start": [3.655, 2.83],
+          "end": [3.655, 5.065],
+          "thickness": 0.1,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "parter-w-18",
+          "start": [5.365, 4.64],
+          "end": [5.365, 5.065],
+          "thickness": 0.1,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "parter-w-19",
+          "start": [6.306, 0.195],
+          "end": [6.306, 11.805],
+          "thickness": 0.382,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        }
+      ],
+      "openings": [
+        {
+          "id": "parter-o-01",
+          "wallId": "parter-w-01",
+          "kind": "window",
+          "offset": 3.535,
+          "width": 1.575,
+          "height": 1.5,
+          "sillHeight": 0.85
+        },
+        {
+          "id": "parter-o-02",
+          "wallId": "parter-w-02",
+          "kind": "door",
+          "offset": 2.33,
+          "width": 0.9,
+          "height": 2.05,
+          "sillHeight": 0,
+          "door": {
+            "hinge": "start",
+            "opensTo": "left"
+          }
+        },
+        {
+          "id": "parter-o-03",
+          "wallId": "parter-w-05",
+          "kind": "door",
+          "offset": 0.981,
+          "width": 0.9,
+          "height": 2.05,
+          "sillHeight": 0,
+          "door": {
+            "hinge": "end",
+            "opensTo": "left"
+          }
+        },
+        {
+          "id": "parter-o-04",
+          "wallId": "parter-w-05",
+          "kind": "door",
+          "offset": 2.091,
+          "width": 1.23,
+          "height": 2.65,
+          "sillHeight": 0
+        },
+        {
+          "id": "parter-o-05",
+          "wallId": "parter-w-09",
+          "kind": "window",
+          "offset": 1.007,
+          "width": 0.873,
+          "height": 1.5,
+          "sillHeight": 0.85
+        },
+        {
+          "id": "parter-o-06",
+          "wallId": "parter-w-09",
+          "kind": "window",
+          "offset": 3.86,
+          "width": 1.772,
+          "height": 1.5,
+          "sillHeight": 0.85
+        },
+        {
+          "id": "parter-o-07",
+          "wallId": "parter-w-13",
+          "kind": "door",
+          "offset": 2.38,
+          "width": 1.02,
+          "height": 2.05,
+          "sillHeight": 0,
+          "door": {
+            "hinge": "end",
+            "opensTo": "left"
+          }
+        },
+        {
+          "id": "parter-o-08",
+          "wallId": "parter-w-17",
+          "kind": "door",
+          "offset": 0.78,
+          "width": 0.9,
+          "height": 2.05,
+          "sillHeight": 0,
+          "door": {
+            "hinge": "start",
+            "opensTo": "right"
+          }
+        }
+      ],
+      "rooms": [
+        {
+          "id": "room-01-02",
+          "name": "Komunikacja + Salon z aneksem",
+          "polygon": [
+            [0.385, 5.16],
+            [2.375, 5.16],
+            [2.375, 2.87],
+            [3.605, 2.87],
+            [3.605, 5.16],
+            [6.115, 5.16],
+            [6.115, 11.61],
+            [1.185, 11.61],
+            [1.185, 11.81],
+            [1.165, 11.81],
+            [1.165, 11.74],
+            [1.175, 11.74],
+            [1.175, 11.61],
+            [0.385, 11.61],
+            [0.385, 6.6],
+            [1.735, 6.6],
+            [1.735, 7.22],
+            [2.375, 7.22],
+            [2.375, 6.5],
+            [0.385, 6.5]
+          ],
+          "floorMaterial": "wood-oak-natural"
+        },
+        {
+          "id": "room-03",
+          "name": "Garderoba",
+          "polygon": [
+            [0.385, 2.87],
+            [2.295, 2.87],
+            [2.295, 4.96],
+            [2.165, 4.96],
+            [2.165, 4.97],
+            [1.265, 4.97],
+            [1.265, 4.96],
+            [0.385, 4.96]
+          ],
+          "floorMaterial": "wood-oak-natural"
+        },
+        {
+          "id": "room-04",
+          "name": "Sypialnia",
+          "polygon": [
+            [6.115, 0.39],
+            [6.115, 2.79],
+            [0.385, 2.79],
+            [0.385, 0.39]
+          ],
+          "floorMaterial": "wood-oak-natural"
+        },
+        {
+          "id": "room-05",
+          "name": "Łazienka",
+          "polygon": [
+            [5.315, 4.96],
+            [3.705, 4.96],
+            [3.705, 2.89],
+            [6.115, 2.89],
+            [6.115, 4.59],
+            [5.315, 4.59]
+          ],
+          "floorMaterial": "wood-oak-natural"
+        }
+      ],
+      "furniture": []
+    },
+    {
+      "id": "pietro-1",
+      "name": "Piętro I",
+      "elevation": 2.92,
+      "height": 2.65,
+      "walls": [
+        {
+          "id": "pietro-1-w-01",
+          "start": [0.192, 0.195],
+          "end": [6.307, 0.195],
+          "thickness": 0.39,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "pietro-1-w-02",
+          "start": [0.192, 2.83],
+          "end": [6.307, 2.83],
+          "thickness": 0.08,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "pietro-1-w-03",
+          "start": [0.002, 3],
+          "end": [0.287, 3],
+          "thickness": 0.26,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "pietro-1-w-04",
+          "start": [5.362, 4.64],
+          "end": [6.307, 4.64],
+          "thickness": 0.1,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "pietro-1-w-05",
+          "start": [1.902, 4.72],
+          "end": [2.332, 4.72],
+          "thickness": 0.1,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "pietro-1-w-06",
+          "start": [0.287, 5.07],
+          "end": [6.307, 5.07],
+          "thickness": 0.2,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "pietro-1-w-07",
+          "start": [0.287, 6.55],
+          "end": [2.322, 6.55],
+          "thickness": 0.1,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "pietro-1-w-08",
+          "start": [1.782, 7.17],
+          "end": [2.322, 7.17],
+          "thickness": 0.1,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "pietro-1-w-09",
+          "start": [2.332, 7.53],
+          "end": [6.307, 7.53],
+          "thickness": 0.08,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "pietro-1-w-10",
+          "start": [0.167, 11.805],
+          "end": [6.307, 11.805],
+          "thickness": 0.39,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "pietro-1-w-11",
+          "start": [0.167, 9.49],
+          "end": [0.167, 11.805],
+          "thickness": 0.43,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "pietro-1-w-12",
+          "start": [0.192, 0.195],
+          "end": [0.192, 2.83],
+          "thickness": 0.38,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "pietro-1-w-13",
+          "start": [0.287, 3],
+          "end": [0.287, 9.49],
+          "thickness": 0.19,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "pietro-1-w-14",
+          "start": [1.782, 6.55],
+          "end": [1.782, 7.17],
+          "thickness": 0.1,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "pietro-1-w-15",
+          "start": [1.902, 4.72],
+          "end": [1.902, 5.07],
+          "thickness": 0.1,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "pietro-1-w-16",
+          "start": [2.322, 4.72],
+          "end": [2.322, 7.17],
+          "thickness": 0.1,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "pietro-1-w-17",
+          "start": [2.332, 2.83],
+          "end": [2.332, 4.72],
+          "thickness": 0.08,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "pietro-1-w-18",
+          "start": [2.332, 7.17],
+          "end": [2.332, 7.53],
+          "thickness": 0.08,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "pietro-1-w-19",
+          "start": [3.532, 7.53],
+          "end": [3.532, 11.805],
+          "thickness": 0.08,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "pietro-1-w-20",
+          "start": [3.652, 2.83],
+          "end": [3.652, 5.07],
+          "thickness": 0.1,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "pietro-1-w-21",
+          "start": [5.362, 4.64],
+          "end": [5.362, 5.07],
+          "thickness": 0.1,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        },
+        {
+          "id": "pietro-1-w-22",
+          "start": [6.307, 0.195],
+          "end": [6.307, 11.805],
+          "thickness": 0.39,
+          "materials": {
+            "left": "paint-white",
+            "right": "paint-white"
+          }
+        }
+      ],
+      "openings": [
+        {
+          "id": "pietro-1-o-01",
+          "wallId": "pietro-1-w-01",
+          "kind": "window",
+          "offset": 0.605,
+          "width": 1.075,
+          "height": 1.5,
+          "sillHeight": 0.85
+        },
+        {
+          "id": "pietro-1-o-02",
+          "wallId": "pietro-1-w-01",
+          "kind": "window",
+          "offset": 4.035,
+          "width": 1.075,
+          "height": 1.5,
+          "sillHeight": 0.85
+        },
+        {
+          "id": "pietro-1-o-03",
+          "wallId": "pietro-1-w-02",
+          "kind": "door",
+          "offset": 2.33,
+          "width": 0.9,
+          "height": 2.05,
+          "sillHeight": 0,
+          "door": {
+            "hinge": "start",
+            "opensTo": "left"
+          }
+        },
+        {
+          "id": "pietro-1-o-04",
+          "wallId": "pietro-1-w-06",
+          "kind": "door",
+          "offset": 2.085,
+          "width": 1.23,
+          "height": 2.65,
+          "sillHeight": 0
+        },
+        {
+          "id": "pietro-1-o-05",
+          "wallId": "pietro-1-w-09",
+          "kind": "door",
+          "offset": 0.16,
+          "width": 0.9,
+          "height": 2.05,
+          "sillHeight": 0,
+          "door": {
+            "hinge": "end",
+            "opensTo": "right"
+          }
+        },
+        {
+          "id": "pietro-1-o-06",
+          "wallId": "pietro-1-w-09",
+          "kind": "door",
+          "offset": 1.33,
+          "width": 0.9,
+          "height": 2.05,
+          "sillHeight": 0,
+          "door": {
+            "hinge": "start",
+            "opensTo": "right"
+          }
+        },
+        {
+          "id": "pietro-1-o-07",
+          "wallId": "pietro-1-w-10",
+          "kind": "window",
+          "offset": 1.008,
+          "width": 1.573,
+          "height": 1.5,
+          "sillHeight": 0.85
+        },
+        {
+          "id": "pietro-1-o-08",
+          "wallId": "pietro-1-w-10",
+          "kind": "window",
+          "offset": 3.855,
+          "width": 0.877,
+          "height": 1.5,
+          "sillHeight": 0.85
+        },
+        {
+          "id": "pietro-1-o-09",
+          "wallId": "pietro-1-w-16",
+          "kind": "door",
+          "offset": 0.63,
+          "width": 0.9,
+          "height": 2.05,
+          "sillHeight": 0,
+          "door": {
+            "hinge": "start",
+            "opensTo": "left"
+          }
+        },
+        {
+          "id": "pietro-1-o-10",
+          "wallId": "pietro-1-w-17",
+          "kind": "door",
+          "offset": 0.81,
+          "width": 0.9,
+          "height": 2.05,
+          "sillHeight": 0,
+          "door": {
+            "hinge": "end",
+            "opensTo": "right"
+          }
+        },
+        {
+          "id": "pietro-1-o-11",
+          "wallId": "pietro-1-w-20",
+          "kind": "door",
+          "offset": 0.78,
+          "width": 0.9,
+          "height": 2.05,
+          "sillHeight": 0,
+          "door": {
+            "hinge": "start",
+            "opensTo": "right"
+          }
+        }
+      ],
+      "rooms": [
+        {
+          "id": "room-06",
+          "name": "Komunikacja",
+          "polygon": [
+            [6.112, 5.17],
+            [6.112, 7.49],
+            [2.372, 7.49],
+            [2.372, 2.87],
+            [3.602, 2.87],
+            [3.602, 5.17]
+          ],
+          "floorMaterial": "wood-oak-natural"
+        },
+        {
+          "id": "room-07",
+          "name": "Sypialnia",
+          "polygon": [
+            [6.112, 7.57],
+            [6.112, 11.61],
+            [3.572, 11.61],
+            [3.572, 7.57]
+          ],
+          "floorMaterial": "wood-oak-natural"
+        },
+        {
+          "id": "room-08",
+          "name": "Sypialnia",
+          "polygon": [
+            [3.492, 7.57],
+            [3.492, 11.61],
+            [1.182, 11.61],
+            [1.182, 11.81],
+            [1.162, 11.81],
+            [1.162, 11.76],
+            [1.172, 11.76],
+            [1.172, 11.61],
+            [0.382, 11.61],
+            [0.382, 6.6],
+            [1.732, 6.6],
+            [1.732, 7.22],
+            [2.292, 7.22],
+            [2.292, 7.57]
+          ],
+          "floorMaterial": "wood-oak-natural"
+        },
+        {
+          "id": "room-09",
+          "name": "Pralnia",
+          "polygon": [
+            [0.382, 6.5],
+            [0.382, 5.17],
+            [2.272, 5.17],
+            [2.272, 6.5]
+          ],
+          "floorMaterial": "wood-oak-natural"
+        },
+        {
+          "id": "room-10",
+          "name": "Garderoba",
+          "polygon": [
+            [2.292, 4.67],
+            [1.852, 4.67],
+            [1.852, 4.96],
+            [0.382, 4.96],
+            [0.382, 2.87],
+            [2.292, 2.87]
+          ],
+          "floorMaterial": "wood-oak-natural"
+        },
+        {
+          "id": "room-11",
+          "name": "Sypialnia",
+          "polygon": [
+            [6.112, 2.79],
+            [0.382, 2.79],
+            [0.382, 0.39],
+            [6.112, 0.39]
+          ],
+          "floorMaterial": "wood-oak-natural"
+        },
+        {
+          "id": "room-12",
+          "name": "Łazienka",
+          "polygon": [
+            [3.702, 4.96],
+            [3.702, 2.89],
+            [6.112, 2.89],
+            [6.112, 4.59],
+            [5.312, 4.59],
+            [5.312, 4.96]
+          ],
+          "floorMaterial": "wood-oak-natural"
+        }
+      ],
+      "furniture": []
+    }
+  ]
+}

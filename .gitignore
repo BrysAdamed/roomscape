@@ -4,3 +4,5 @@ dist
 .vite
 coverage
 .DS_Store
+__pycache__
+.debug

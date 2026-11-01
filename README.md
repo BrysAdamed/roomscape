@@ -35,6 +35,10 @@ The build uses a relative base path, so `dist/` can be served from any sub-path 
 | `src/scene`       | 3D scene components                      |
 | `src/ui`          | App shell and panels                     |
 | `public/projects` | Apartment JSON files                     |
+| `plans`           | Source floor plans and extraction config |
+| `tools`           | Floor plan extraction (Python)           |
 | `docs`            | Schema reference and decisions           |
+
+Open a specific apartment with `/?project=<id>`. To turn a floor plan PDF into an apartment draft, see [tools/README.md](tools/README.md).
 
 See [docs/schema.md](docs/schema.md) for the apartment format.

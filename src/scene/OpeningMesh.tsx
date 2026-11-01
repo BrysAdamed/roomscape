@@ -19,10 +19,10 @@ export function OpeningMesh({ opening, wall }: OpeningMeshProps) {
 
   return (
     <group position={[x, opening.sillHeight, z]} rotation={[0, frame.angle, 0]}>
-      {opening.kind === 'door' ? (
-        <DoorLeaf opening={opening} />
-      ) : (
+      {opening.kind === 'window' ? (
         <WindowPane opening={opening} depth={wall.thickness} />
+      ) : (
+        opening.door && <DoorLeaf opening={opening} />
       )}
     </group>
   );

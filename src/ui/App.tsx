@@ -7,9 +7,10 @@ import { ProjectBar } from './ProjectBar';
 import { useProject } from './useProject';
 
 const DEFAULT_PROJECT = 'pilot-bedroom';
+const projectId = new URLSearchParams(window.location.search).get('project') ?? DEFAULT_PROJECT;
 
 export function App() {
-  const project = useProject(DEFAULT_PROJECT);
+  const project = useProject(projectId);
   const load = useApartmentStore((state) => state.load);
   const select = useApartmentStore((state) => state.select);
 

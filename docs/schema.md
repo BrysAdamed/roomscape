@@ -43,7 +43,7 @@ Furniture { id, type, position, elevation?, rotation, params, materials }
 - `kind`: `door` or `window`.
 - `offset`: distance along the wall from `start` to the opening's near edge.
 - `width`, `height`: clear opening size. `sillHeight`: distance from the floor to the bottom of the opening (`0` for doors).
-- `door` (doors only): `hinge` is the wall end (`start` or `end`) the leaf hangs on; `opensTo` is the wall side (`left` or `right`) the leaf swings into.
+- `door` (doors only): `hinge` is the wall end (`start` or `end`) the leaf hangs on; `opensTo` is the wall side (`left` or `right`) the leaf swings into. A door without `door` settings is an open doorway (no leaf).
 
 ### Room
 
