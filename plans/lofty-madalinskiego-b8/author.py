@@ -18,6 +18,7 @@ from tools.plan_extract.config import load_config  # noqa: E402
 from tools.plan_extract.extract import extract_floor  # noqa: E402
 from tools.plan_extract.geometry import polygon_area  # noqa: E402
 from tools.plan_extract.lamps import pendant_lamps  # noqa: E402
+from tools.plan_extract.translate import english_room_name  # noqa: E402
 from tools.plan_extract.pdf import read_plan  # noqa: E402
 
 CONFIG = Path(__file__).with_name('extract.json')
@@ -251,6 +252,9 @@ def author() -> dict:
         if floor['id'] in RAILINGS:
             floor['railings'] = RAILINGS[floor['id']]
         floor['furniture'] = floor['furniture'] + pendant_lamps(floor)
+    for floor in apartment['floors']:
+        for room_ in floor['rooms']:
+            room_['name'] = english_room_name(room_['name'])
     apartment['floors'][0]['stairs'] = [
         {'id': 'stairs-1', 'riserHeight': 0.1753, 'steps': stairs_steps(), 'material': 'wood-oak-natural'}]
     return apartment

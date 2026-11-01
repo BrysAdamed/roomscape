@@ -11,7 +11,7 @@
   "floors": [
     {
       "id": "parter",
-      "name": "Parter",
+      "name": "Ground floor",
       "elevation": 0,
       "height": 2.7,
       "walls": [
@@ -297,7 +297,7 @@
       "rooms": [
         {
           "id": "room-komunikacja-1",
-          "name": "Komunikacja 1",
+          "name": "Hall 1",
           "polygon": [
             [6.581, 4.085],
             [8.221, 4.085],
@@ -316,7 +316,7 @@
         },
         {
           "id": "room-salon-z-aneksem",
-          "name": "Salon z aneksem",
+          "name": "Living room with kitchenette",
           "polygon": [
             [0.681, 5.945],
             [5.141, 5.945],
@@ -342,7 +342,7 @@
         },
         {
           "id": "room-gabinet",
-          "name": "Gabinet",
+          "name": "Study",
           "polygon": [
             [8.321, 6.095],
             [10.111, 6.095],
@@ -705,7 +705,7 @@
     },
     {
       "id": "poddasze",
-      "name": "Poddasze",
+      "name": "Attic",
       "elevation": 2.98,
       "height": 2.6,
       "walls": [
@@ -1110,7 +1110,7 @@
       "rooms": [
         {
           "id": "room-komunikacja-2",
-          "name": "Komunikacja 2",
+          "name": "Hall 2",
           "polygon": [
             [4.336, 3.963],
             [6.456, 3.963],
@@ -1123,7 +1123,7 @@
         },
         {
           "id": "room-sypialnia-1",
-          "name": "Sypialnia 1",
+          "name": "Bedroom 1",
           "polygon": [
             [6.536, 0.203],
             [10.406, 0.203],
@@ -1134,7 +1134,7 @@
         },
         {
           "id": "room-sypialnia-2",
-          "name": "Sypialnia 2",
+          "name": "Bedroom 2",
           "polygon": [
             [6.536, 5.973],
             [10.406, 5.973],
@@ -1145,7 +1145,7 @@
         },
         {
           "id": "room-garderoba",
-          "name": "Garderoba",
+          "name": "Wardrobe",
           "polygon": [
             [7.656, 9.143],
             [10.406, 9.143],
@@ -1171,7 +1171,7 @@
         },
         {
           "id": "room-sypialnia-3",
-          "name": "Sypialnia 3",
+          "name": "Bedroom 3",
           "polygon": [
             [0.376, 6.543],
             [4.236, 6.543],
@@ -1182,7 +1182,7 @@
         },
         {
           "id": "room-sypialnia-4",
-          "name": "Sypialnia 4",
+          "name": "Bedroom 4",
           "polygon": [
             [0.376, 0.203],
             [4.236, 0.203],
@@ -1195,7 +1195,7 @@
         },
         {
           "id": "room-lazienka",
-          "name": "Łazienka",
+          "name": "Bathroom",
           "polygon": [
             [4.336, 0.203],
             [5.936, 0.203],
@@ -1210,7 +1210,7 @@
         },
         {
           "id": "room-balkon-1",
-          "name": "Balkon",
+          "name": "Balcony",
           "polygon": [
             [-1.111, 3.23],
             [-0.004, 3.23],
@@ -1222,7 +1222,7 @@
         },
         {
           "id": "room-balkon-2",
-          "name": "Balkon",
+          "name": "Balcony",
           "polygon": [
             [10.776, 3.477],
             [11.884, 3.477],

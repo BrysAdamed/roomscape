@@ -8,6 +8,7 @@ from .config import Defaults, PlanConfig
 from .extract import FloorResult
 from .geometry import Point
 from .openings import OpeningCandidate
+from .translate import english_room_name
 
 PRIMITIVE_ARRAY = re.compile(
     r'\[\s*((?:-?[\d.e+-]+|"[^"]*"|true|false|null)(?:,\s*(?:-?[\d.e+-]+|"[^"]*"|true|false|null))*)\s*\]'
@@ -86,7 +87,7 @@ def _floor(config: PlanConfig, result: FloorResult, unit: float) -> dict[str, An
         'rooms': [
             {
                 'id': 'room-' + '-'.join(label.key for label in room.labels),
-                'name': ' + '.join(label.name for label in room.labels),
+                'name': english_room_name(' + '.join(label.name for label in room.labels)),
                 'polygon': [point(p) for p in room.polygon],
                 'floorMaterial': config.defaults.floor_material,
             }

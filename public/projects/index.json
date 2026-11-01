@@ -2,11 +2,11 @@
   "projects": [
     {
       "id": "harmonia-ii-5-1-1",
-      "description": "Two-storey terraced unit, Parter + Piętro I (extracted from the developer's plan)"
+      "description": "Two-storey terraced house unit: ground and first floor (extracted from the developer's plan)"
     },
     {
       "id": "lofty-madalinskiego-b8",
-      "description": "Two-storey unit B8, Parter + Poddasze under a sloped roof (extracted from the developer's plan)"
+      "description": "Two-storey unit B8: ground floor and an attic under a sloped roof (extracted from the developer's plan)"
     }
   ]
 }

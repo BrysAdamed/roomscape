@@ -13,7 +13,7 @@
   "floors": [
     {
       "id": "parter",
-      "name": "Parter",
+      "name": "Ground floor",
       "elevation": 0,
       "height": 2.7,
       "clip": [228, 85, 475, 245],
@@ -21,7 +21,7 @@
     },
     {
       "id": "poddasze",
-      "name": "Poddasze",
+      "name": "Attic",
       "elevation": 2.98,
       "height": 2.6,
       "clip": [228, 258, 470, 500],

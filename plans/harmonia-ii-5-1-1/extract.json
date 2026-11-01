@@ -13,7 +13,7 @@
   "floors": [
     {
       "id": "parter",
-      "name": "Parter",
+      "name": "Ground floor",
       "elevation": 0,
       "height": 2.65,
       "clip": [90, 238, 275, 492],
@@ -21,7 +21,7 @@
     },
     {
       "id": "pietro-1",
-      "name": "Piętro I",
+      "name": "First floor",
       "elevation": 2.92,
       "height": 2.65,
       "clip": [340, 205, 490, 492],
