@@ -26,7 +26,7 @@ export function FloorView({ floor, ghost = false }: { floor: Floor; ghost?: bool
   }, [floor.openings]);
   const override = ghost ? ghostMaterial : undefined;
   const showPlan = useViewerStore((state) => state.showPlan);
-  const cutaway = useViewerStore((state) => state.cutaway);
+  const cutaway = useViewerStore((state) => state.cutaway && state.cameraMode === 'orbit');
   const Wrap = ghost ? Passive : Selectable;
 
   return (
