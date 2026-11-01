@@ -18,13 +18,14 @@ An apartment is a single JSON file in `public/projects/`. The viewer renders it,
 
 ```
 Apartment { schemaVersion, id, name, north?, location?, floors[] }
-Floor     { id, name, elevation, height, walls[], openings[], rooms[], furniture[], stairs[]?, planImage? }
+Floor     { id, name, elevation, height, walls[], openings[], rooms[], furniture[], stairs[]?, railings[]?, planImage? }
 Wall      { id, start, end, thickness, height?, materials { left, right } }
 Opening   { id, wallId, kind, offset, width, height, sillHeight, frameMaterial?, door? }
 Door      { hinge, opensTo, material? }
 Room      { id, name, polygon[], floorMaterial }
 Furniture { id, type, position, elevation?, rotation, params, materials }
 Stairs    { id, riserHeight, steps[][], material }
+Railing   { id, points[], height?, style?, material? }
 PlanImage { src, bounds }
 ```
 
@@ -70,6 +71,10 @@ PlanImage { src, bounds }
 
 - `steps`: one polygon per tread, bottom to top; tread `k` (1-based) tops out at `k × riserHeight`, the last riser leads onto the floor above. Any shape (straight, L, winders) is a list of polygons.
 - `material`: tread material.
+
+### Railing
+
+- Balcony and terrace railings. `points` is the railing's polyline (at least two plan points), usually inset a few centimetres from the balcony's open edges. `height` defaults to 1.1 m, `style` is `glass` (default) or `bars`, `material` is the frame (default black metal).
 
 ### Plan image
 

@@ -117,6 +117,13 @@ def item(item_id: str, type_id: str, x: float, y: float, rotation: float = 0, el
     return {**placed, 'elevation': elevation} if elevation else placed
 
 
+RAILINGS = {
+    'poddasze': [
+        {'id': 'railing-balkon-1', 'points': [[-0.004, 3.26], [-1.081, 3.26], [-1.081, 5.945], [-0.004, 5.945]]},
+        {'id': 'railing-balkon-2', 'points': [[10.776, 3.507], [11.854, 3.507], [11.854, 6.192], [10.776, 6.192]]},
+    ],
+}
+
 FURNITURE = {
     'parter': [
         item('table-salon', 'table', 2.27, 6.83, 0, width=1.8, depth=0.8),
@@ -215,6 +222,8 @@ def author() -> dict:
         floor['openings'] = openings + NEW_OPENINGS.get(floor['id'], [])
         floor['rooms'] = ROOMS[floor['id']]
         floor['furniture'] = FURNITURE[floor['id']]
+        if floor['id'] in RAILINGS:
+            floor['railings'] = RAILINGS[floor['id']]
     apartment['floors'][0]['stairs'] = [
         {'id': 'stairs-1', 'riserHeight': 0.1753, 'steps': stairs_steps(), 'material': 'wood-oak-natural'}]
     return apartment

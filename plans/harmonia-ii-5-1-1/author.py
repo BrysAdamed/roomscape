@@ -40,6 +40,7 @@ ROOM_POLYGONS = {
 
 BALCONY = {'id': 'room-13', 'name': 'Balkon', 'polygon': [[0.08, -1.165], [2.86, -1.165], [2.86, 0.0], [0.08, 0.0]],
            'floorMaterial': 'tile-grey-concrete'}
+BALCONY_RAILING = {'id': 'railing-13', 'points': [[0.11, 0.0], [0.11, -1.135], [2.83, -1.135], [2.83, 0.0]]}
 
 TILED = {'room-05', 'room-09', 'room-12', 'room-13'}
 
@@ -132,6 +133,7 @@ def author() -> dict:
     floors = {floor['id']: floor for floor in apartment['floors']}
 
     floors['pietro-1']['rooms'].append(dict(BALCONY))
+    floors['pietro-1']['railings'] = [BALCONY_RAILING]
     for floor in apartment['floors']:
         for room in floor['rooms']:
             room['polygon'] = ROOM_POLYGONS.get(room['id'], room['polygon'])

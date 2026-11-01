@@ -5,12 +5,14 @@ import type {
   Floor,
   FurnitureItem,
   Opening,
+  Railing,
   Room,
   Stairs,
   Wall,
 } from '../../schema/apartment';
 import { wallLength } from '../../schema/validate';
 import { findElement } from '../../state/apartmentEdits';
+import { DEFAULT_RAILING_HEIGHT, railingLayout } from '../geometry/railingLayout';
 import { pointAlong, wallFrame } from '../geometry/wallFrame';
 
 export type Vec3 = [number, number, number];
@@ -42,7 +44,18 @@ export function elementDimensions(apartment: Apartment, id: string): DimensionLi
       return stairsDimensions(element.stairs, element.floor);
     case 'opening':
       return openingDimensions(element.opening, element.wall, element.floor);
+    case 'railing':
+      return railingDimensions(element.railing, element.floor);
   }
+}
+
+export function railingDimensions(railing: Railing, floor: Floor): DimensionLine[] {
+  const y = floor.elevation + (railing.height ?? DEFAULT_RAILING_HEIGHT) + OFFSET;
+  return railingLayout(railing).segments.map((segment) => ({
+    start: [segment.start[0], y, segment.start[1]],
+    end: [segment.end[0], y, segment.end[1]],
+    value: segment.length,
+  }));
 }
 
 export function openingDimensions(opening: Opening, wall: Wall, floor: Floor): DimensionLine[] {

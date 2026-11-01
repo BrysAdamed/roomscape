@@ -7,6 +7,7 @@ import { ghostMaterial } from './materials';
 import { OpeningMesh } from './OpeningMesh';
 import { hasOpeningMesh } from './openings';
 import { PlanOverlay } from './PlanOverlay';
+import { RailingMesh } from './RailingMesh';
 import { RoomFloor } from './RoomFloor';
 import { Selectable } from './selection/Selectable';
 import { StairsMesh } from './StairsMesh';
@@ -66,6 +67,11 @@ export function FloorView({ floor, ghost = false }: { floor: Floor; ghost?: bool
       {floor.stairs?.map((stairs) => (
         <Wrap key={stairs.id} id={stairs.id}>
           <StairsMesh stairs={stairs} override={override} />
+        </Wrap>
+      ))}
+      {floor.railings?.map((railing) => (
+        <Wrap key={railing.id} id={railing.id}>
+          <RailingMesh railing={railing} override={override} />
         </Wrap>
       ))}
       {floor.furniture.map((item) => (

@@ -170,4 +170,12 @@ function checkFloor(floor: Floor, floorPath: string, checks: FloorChecks) {
       errors.push(`${path}: stairs rise higher than the storey above`);
     }
   });
+
+  floor.railings?.forEach((railing, index) => {
+    const path = `${floorPath}.railings.${index}`;
+    claimId(railing.id, `${path}.id`);
+    if (railing.material) {
+      checkMaterial(railing.material, `${path}.material`);
+    }
+  });
 }

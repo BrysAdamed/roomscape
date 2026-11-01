@@ -5,7 +5,20 @@ import type { MaterialCategory } from '../catalogue/materials';
 import { polygonArea } from '../scene/geometry/floorGeometry';
 import { formatLength } from '../scene/measure/format';
 import { DEFAULT_OPENING_MATERIAL } from '../scene/openings';
-import type { FurnitureItem, Opening, PlanPoint, Room, Stairs, Wall } from '../schema/apartment';
+import {
+  DEFAULT_RAILING_HEIGHT,
+  DEFAULT_RAILING_MATERIAL,
+  railingLength,
+} from '../scene/geometry/railingLayout';
+import type {
+  FurnitureItem,
+  Opening,
+  PlanPoint,
+  Railing,
+  Room,
+  Stairs,
+  Wall,
+} from '../schema/apartment';
 import { wallLength } from '../schema/validate';
 import { findElement, type WallSide } from '../state/apartmentEdits';
 import { useApartmentStore } from '../state/apartmentStore';
@@ -18,6 +31,7 @@ const FLOOR_CATEGORIES: readonly MaterialCategory[] = ['wood', 'tile', 'stone'];
 const WALL_SIDES: readonly WallSide[] = ['left', 'right'];
 const STAIRS_CATEGORIES: readonly MaterialCategory[] = ['wood', 'stone', 'tile'];
 const OPENING_CATEGORIES: readonly MaterialCategory[] = ['wood', 'paint', 'metal'];
+const RAILING_CATEGORIES: readonly MaterialCategory[] = ['metal', 'paint', 'wood'];
 
 export function ConfigPanel() {
   const apartment = useApartmentStore((state) => state.apartment);
@@ -47,6 +61,7 @@ export function ConfigPanel() {
       {element.kind === 'furniture' && <FurnitureSettings item={element.item} />}
       {element.kind === 'stairs' && <StairsSettings stairs={element.stairs} />}
       {element.kind === 'opening' && <OpeningSettings opening={element.opening} />}
+      {element.kind === 'railing' && <RailingSettings railing={element.railing} />}
     </aside>
   );
 }
@@ -61,6 +76,8 @@ function title(element: NonNullable<ReturnType<typeof findElement>>): string {
       return 'Stairs';
     case 'opening':
       return element.opening.kind === 'door' ? 'Door' : 'Window';
+    case 'railing':
+      return 'Railing';
     case 'furniture':
       return findFurnitureType(element.item.type)?.name ?? element.item.type;
   }
@@ -196,6 +213,26 @@ function OpeningSettings({ opening }: { opening: Opening }) {
         value={opening.frameMaterial ?? DEFAULT_OPENING_MATERIAL}
         categories={OPENING_CATEGORIES}
         onChange={(ref) => setOpeningMaterial(opening.id, 'frame', ref)}
+      />
+    </>
+  );
+}
+
+function RailingSettings({ railing }: { railing: Railing }) {
+  const setRailingMaterial = useApartmentStore((state) => state.setRailingMaterial);
+  return (
+    <>
+      <Facts
+        rows={[
+          ['Length', formatLength(railingLength(railing))],
+          ['Height', formatLength(railing.height ?? DEFAULT_RAILING_HEIGHT)],
+        ]}
+      />
+      <MaterialPicker
+        label="Frame"
+        value={railing.material ?? DEFAULT_RAILING_MATERIAL}
+        categories={RAILING_CATEGORIES}
+        onChange={(ref) => setRailingMaterial(railing.id, ref)}
       />
     </>
   );
