@@ -28,7 +28,9 @@ export function sunState(
   minutes: number,
 ): SunState {
   const { latitude, longitude, timeZone } = { ...DEFAULT_LOCATION, ...location };
-  const position = sunPosition(zonedTimeToUtc(date, minutes, timeZone), latitude, longitude);
+  const whole = Math.floor(minutes);
+  const utc = zonedTimeToUtc(date, whole, timeZone) + (minutes - whole) * 60_000;
+  const position = sunPosition(utc, latitude, longitude);
   const t = (position.elevation - NIGHT_ELEVATION) / (DAY_ELEVATION - NIGHT_ELEVATION);
   const clamped = Math.min(1, Math.max(0, t));
   return {

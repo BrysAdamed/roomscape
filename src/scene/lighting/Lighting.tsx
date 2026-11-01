@@ -1,9 +1,12 @@
-import { useMemo } from 'react';
+import { useMemo, useRef } from 'react';
+import { useFrame } from '@react-three/fiber';
 import { Environment, Lightformer } from '@react-three/drei';
-import { Color, Object3D } from 'three';
+import { Color, Object3D, type DirectionalLight, type HemisphereLight } from 'three';
 import { useApartmentStore } from '../../state/apartmentStore';
 import { frameApartment } from '../camera/framing';
-import { useSun } from './useSun';
+import { useViewerStore } from '../../state/viewerStore';
+import { dateOfDay, dayOfYear, seasonDate } from './seasons';
+import { sunState } from './useSun';
 
 const SKY = new Color('#dfe4e8');
 const NIGHT_SKY = new Color('#1c2433');
@@ -14,25 +17,59 @@ const SUN_DISTANCE = 30;
 const SUN_INTENSITY = 1.7;
 const WARM_BELOW_ELEVATION = 25;
 
+const EASING = 6;
+const MINUTE_SNAP = 0.05;
+const DAY_SNAP = 0.5;
+
 export function Lighting() {
   const source = useApartmentStore((state) => state.source);
+  const location = useApartmentStore((state) => state.apartment?.location);
+  const north = useApartmentStore((state) => state.apartment?.north ?? 0);
+  const season = useViewerStore((state) => state.season);
+  const minutes = useViewerStore((state) => state.sunMinutes);
   const center = useMemo(() => frameApartment(source).target, [source]);
   const target = useMemo(() => new Object3D(), []);
-  const { direction, daylight, position } = useSun();
+  const sun = useRef<DirectionalLight>(null);
+  const hemisphere = useRef<HemisphereLight>(null);
+  const shown = useRef<{ day: number; minutes: number } | undefined>(undefined);
 
-  const warmth = 1 - Math.min(1, Math.max(0, position.elevation / WARM_BELOW_ELEVATION));
-  const sunColor = SUN.clone().lerp(LOW_SUN, warmth);
-  const sky = NIGHT_SKY.clone().lerp(SKY, daylight);
-  const sunPosition: [number, number, number] = [
-    center[0] + direction[0] * SUN_DISTANCE,
-    center[1] + direction[1] * SUN_DISTANCE,
-    center[2] + direction[2] * SUN_DISTANCE,
-  ];
+  useFrame(({ scene }, delta) => {
+    const year = new Date().getFullYear();
+    const goal = { day: dayOfYear(seasonDate(season, year)), minutes };
+    const current = shown.current ?? goal;
+    const t = 1 - Math.exp(-delta * EASING);
+    const next = {
+      day: ease(current.day, goal.day, t, DAY_SNAP),
+      minutes: ease(current.minutes, goal.minutes, t, MINUTE_SNAP),
+    };
+    shown.current = next;
+
+    const state = sunState(location, north, dateOfDay(year, Math.round(next.day)), next.minutes);
+    const warmth = 1 - Math.min(1, Math.max(0, state.position.elevation / WARM_BELOW_ELEVATION));
+    if (sun.current) {
+      const [dx, dy, dz] = state.direction;
+      sun.current.position.set(
+        center[0] + dx * SUN_DISTANCE,
+        center[1] + dy * SUN_DISTANCE,
+        center[2] + dz * SUN_DISTANCE,
+      );
+      sun.current.intensity = SUN_INTENSITY * state.daylight;
+      sun.current.color.copy(SUN).lerp(LOW_SUN, warmth);
+      sun.current.visible = state.daylight > 0;
+    }
+    if (hemisphere.current) {
+      hemisphere.current.intensity = 0.05 + 0.15 * state.daylight;
+    }
+    if (scene.background instanceof Color) {
+      scene.background.copy(NIGHT_SKY).lerp(SKY, state.daylight);
+    }
+    scene.environmentIntensity = 0.1 + 0.35 * state.daylight;
+  });
 
   return (
     <>
-      <color attach="background" args={[sky]} />
-      <Environment resolution={256} frames={1} environmentIntensity={0.1 + 0.35 * daylight}>
+      <color attach="background" args={[SKY]} />
+      <Environment resolution={256} frames={1}>
         <Lightformer
           form="rect"
           intensity={1.6}
@@ -65,14 +102,13 @@ export function Lighting() {
           rotation-x={-Math.PI / 2}
         />
       </Environment>
-      <hemisphereLight args={['#ffffff', GROUND, 0.05 + 0.15 * daylight]} />
+      <hemisphereLight ref={hemisphere} args={['#ffffff', GROUND, 0.2]} />
       <primitive object={target} position={center} />
       <directionalLight
-        position={sunPosition}
+        ref={sun}
         target={target}
-        intensity={SUN_INTENSITY * daylight}
-        color={sunColor}
-        visible={daylight > 0}
+        intensity={SUN_INTENSITY}
+        color={SUN}
         castShadow
         shadow-mapSize={[4096, 4096]}
         shadow-camera-left={-14}
@@ -91,4 +127,10 @@ export function Lighting() {
       </mesh>
     </>
   );
+}
+
+/** Moves towards the goal by a fraction t, snapping once within `snap`. */
+function ease(current: number, goal: number, t: number, snap: number): number {
+  const next = current + (goal - current) * t;
+  return Math.abs(goal - next) < snap ? goal : next;
 }

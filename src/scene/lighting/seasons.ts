@@ -29,3 +29,16 @@ export function seasonOf(date: Date): Season {
   if (month >= 9 && month <= 11) return 'autumn';
   return 'winter';
 }
+
+const DAY = 86_400_000;
+
+/** Day of the year (1 = 1 January) of a `YYYY-MM-DD` date. */
+export function dayOfYear(date: string): number {
+  const [year, month, day] = date.split('-').map(Number) as [number, number, number];
+  return Math.round((Date.UTC(year, month - 1, day) - Date.UTC(year, 0, 1)) / DAY) + 1;
+}
+
+/** `YYYY-MM-DD` of a day of the year. */
+export function dateOfDay(year: number, day: number): string {
+  return new Date(Date.UTC(year, 0, 1) + (day - 1) * DAY).toISOString().slice(0, 10);
+}
