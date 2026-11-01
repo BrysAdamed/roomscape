@@ -99,14 +99,28 @@ button[aria-pressed='true'] {
   background: color-mix(in srgb, var(--bg) 80%, transparent);
 }
 
-.project-bar {
+.top-left {
   position: absolute;
   top: 16px;
   left: 16px;
   display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  max-width: calc(100% - 32px);
+  pointer-events: none;
+}
+
+.top-left > * {
+  pointer-events: auto;
+}
+
+.project-bar {
+  display: flex;
   align-items: center;
   gap: 10px;
-  max-width: calc(100% - 32px);
+  max-width: 100%;
+  box-sizing: border-box;
   padding: 6px 6px 6px 12px;
   border-radius: 8px;
   background: color-mix(in srgb, var(--surface) 90%, transparent);
@@ -294,9 +308,6 @@ button[aria-pressed='true'] {
 }
 
 .floor-switcher {
-  position: absolute;
-  top: 64px;
-  left: 16px;
   display: flex;
   flex-direction: column;
   gap: 6px;

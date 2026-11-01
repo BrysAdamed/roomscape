@@ -85,8 +85,10 @@ export function App() {
       {showViewer && (
         <>
           <Viewport />
-          <ProjectBar origin={file?.name} onBack={() => openProject(undefined)} />
-          <FloorSwitcher />
+          <div className="top-left">
+            <ProjectBar origin={file?.name} onBack={() => openProject(undefined)} />
+            <FloorSwitcher />
+          </div>
           <CameraToolbar />
           <div className={panelOpen ? 'top-right with-panel' : 'top-right'}>
             <SunClock />
