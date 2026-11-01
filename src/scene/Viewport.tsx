@@ -3,6 +3,7 @@ import { Canvas } from '@react-three/fiber';
 import { useApartmentStore } from '../state/apartmentStore';
 import { ApartmentView } from './ApartmentView';
 import { CameraRig } from './camera/CameraRig';
+import { HeadingTracker } from './camera/HeadingTracker';
 import { frameApartment } from './camera/framing';
 import { AmbientOcclusion } from './lighting/AmbientOcclusion';
 import { Lighting } from './lighting/Lighting';
@@ -32,6 +33,7 @@ export function Viewport() {
       <DimensionOverlay />
       <Ruler />
       <CameraRig framing={framing} />
+      <HeadingTracker />
       <AmbientOcclusion />
     </Canvas>
   );

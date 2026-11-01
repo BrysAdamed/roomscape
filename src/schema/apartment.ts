@@ -94,6 +94,7 @@ export const apartmentSchema = z.object({
   schemaVersion: z.literal(SCHEMA_VERSION),
   id,
   name: z.string().min(1),
+  north: z.number().min(0).lt(360).optional(),
   floors: z.array(floorSchema).min(1),
 });
 

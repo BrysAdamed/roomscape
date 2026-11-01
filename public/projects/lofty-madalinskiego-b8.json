@@ -2,6 +2,7 @@
   "schemaVersion": 1,
   "id": "lofty-madalinskiego-b8",
   "name": "Lofty Madalińskiego – B8",
+  "north": 96,
   "floors": [
     {
       "id": "parter",

@@ -24,6 +24,7 @@ interface ViewerState {
   hoverPoint: Point3 | undefined;
   rulerFloorOnly: boolean;
   rulerModifierHeld: boolean;
+  heading: number;
   setCameraMode: (mode: CameraMode) => void;
   requestCameraReset: () => void;
   toggleWallLengths: () => void;
@@ -37,6 +38,7 @@ interface ViewerState {
   setHoverPoint: (point: Point3 | undefined) => void;
   toggleRulerFloorOnly: () => void;
   setRulerModifierHeld: (held: boolean) => void;
+  setHeading: (heading: number) => void;
 }
 
 export const useViewerStore = create<ViewerState>((set) => ({
@@ -53,6 +55,7 @@ export const useViewerStore = create<ViewerState>((set) => ({
   hoverPoint: undefined,
   rulerFloorOnly: false,
   rulerModifierHeld: false,
+  heading: 0,
   setCameraMode: (cameraMode) => set({ cameraMode }),
   requestCameraReset: () =>
     set((state) => ({ cameraMode: 'orbit', resetRequest: state.resetRequest + 1 })),
@@ -79,6 +82,7 @@ export const useViewerStore = create<ViewerState>((set) => ({
   setHoverPoint: (hoverPoint) => set({ hoverPoint }),
   toggleRulerFloorOnly: () => set((state) => ({ rulerFloorOnly: !state.rulerFloorOnly })),
   setRulerModifierHeld: (rulerModifierHeld) => set({ rulerModifierHeld }),
+  setHeading: (heading) => set({ heading }),
 }));
 
 /** Floor-only measuring is the toolbar setting, inverted while the modifier key (Ctrl) is held. */

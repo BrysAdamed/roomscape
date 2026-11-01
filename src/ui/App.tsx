@@ -3,6 +3,7 @@ import { Viewport } from '../scene/Viewport';
 import { useApartmentStore } from '../state/apartmentStore';
 import { useViewerStore } from '../state/viewerStore';
 import { CameraToolbar } from './CameraToolbar';
+import { Compass } from './Compass';
 import { ConfigPanel } from './ConfigPanel';
 import { HelpPanel } from './HelpPanel';
 import { FloorSwitcher } from './FloorSwitcher';
@@ -81,6 +82,7 @@ export function App() {
           <CameraToolbar />
           <div className="side-column">
             <ConfigPanel />
+            <Compass />
             <HelpPanel />
           </div>
         </>

@@ -2,6 +2,7 @@
   "schemaVersion": 1,
   "id": "harmonia-ii-5-1-1",
   "name": "Harmonia II – 5.1.1",
+  "north": 13.5,
   "floors": [
     {
       "id": "parter",

@@ -2,6 +2,7 @@
   "pdf": "plan.pdf",
   "id": "lofty-madalinskiego-b8",
   "name": "Lofty Madalińskiego – B8",
+  "north": 96,
   "pointsPerMetre": 21.81,
   "wallFill": [0, 0, 0],
   "defaults": {

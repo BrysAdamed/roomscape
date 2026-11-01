@@ -30,7 +30,10 @@ def build_apartment(
                 'bounds': [_metres(value - origin, points_per_metre) for value, origin in
                            ((clip.x0, ox), (clip.y0, oy), (clip.x1, ox), (clip.y1, oy))],
             }
-    return {'schemaVersion': 1, 'id': config.id, 'name': config.name, 'floors': floors}
+    apartment: dict[str, Any] = {'schemaVersion': 1, 'id': config.id, 'name': config.name}
+    if config.north is not None:
+        apartment['north'] = config.north
+    return {**apartment, 'floors': floors}
 
 
 def opening_ids(result: FloorResult) -> dict[int, str]:

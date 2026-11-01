@@ -44,6 +44,7 @@ One folder per plan in `plans/`, holding the PDF and an `extract.json`:
   "pdf": "plan.pdf",
   "id": "harmonia-ii-5-1-1",
   "name": "Harmonia II – 5.1.1",
+  "north": 13.5,
   "pointsPerMetre": 19.843,
   "wallFill": [0.7529, 0.7529, 0.7529],
   "defaults": { "wallMaterial": "paint-white", "floorMaterial": "wood-oak-natural" },
@@ -61,15 +62,16 @@ One folder per plan in `plans/`, holding the PDF and an `extract.json`:
 }
 ```
 
-| Field                | Meaning                                                                                                                                              |
-| -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `pointsPerMetre`     | PDF points per metre. Scale 1:N printed at P% is `72 / 0.0254 / N × P/100` (1:100 at 70% → 19.843). Check it against the fitted value in the report. |
-| `wallFill`           | RGB fill colour of cut walls (0–1).                                                                                                                  |
-| `floors[].clip`      | PDF rectangle `[x0, y0, x1, y1]` (points, y down) holding that floor's drawing and nothing else.                                                     |
-| `floors[].origin`    | PDF point that becomes plan `[0, 0]`. Pick the same building corner on every floor so the floors line up.                                            |
-| `floors[].elevation` | Floor level in metres (e.g. stairs 16 × 18.25 cm → 2.92).                                                                                            |
-| `defaults`           | Materials and opening sizes: `doorHeight` 2.05, `windowSill` 0.85, `windowHeight` 1.5, `glazedHeight` 2.2.                                           |
-| `overrides.openings` | Fields merged into a generated opening by id (`null` removes a field). Window sills and heights are not on plans, so they live here.                 |
+| Field                | Meaning                                                                                                                                                                                           |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `pointsPerMetre`     | PDF points per metre. Scale 1:N printed at P% is `72 / 0.0254 / N × P/100` (1:100 at 70% → 19.843). Check it against the fitted value in the report.                                              |
+| `north`              | Optional bearing of north in degrees, clockwise from the top of the drawing. Read it from the north arrow (the direction of its pointer in page coordinates) and copy it into the apartment JSON. |
+| `wallFill`           | RGB fill colour of cut walls (0–1).                                                                                                                                                               |
+| `floors[].clip`      | PDF rectangle `[x0, y0, x1, y1]` (points, y down) holding that floor's drawing and nothing else.                                                                                                  |
+| `floors[].origin`    | PDF point that becomes plan `[0, 0]`. Pick the same building corner on every floor so the floors line up.                                                                                         |
+| `floors[].elevation` | Floor level in metres (e.g. stairs 16 × 18.25 cm → 2.92).                                                                                                                                         |
+| `defaults`           | Materials and opening sizes: `doorHeight` 2.05, `windowSill` 0.85, `windowHeight` 1.5, `glazedHeight` 2.2.                                                                                        |
+| `overrides.openings` | Fields merged into a generated opening by id (`null` removes a field). Window sills and heights are not on plans, so they live here.                                                              |
 
 Finding clips and colours: list the drawings with PyMuPDF (`page.get_drawings()`) and look for the fill colour used by walls only.
 

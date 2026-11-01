@@ -17,7 +17,7 @@ An apartment is a single JSON file in `public/projects/`. The viewer renders it,
 ## Structure
 
 ```
-Apartment { schemaVersion, id, name, floors[] }
+Apartment { schemaVersion, id, name, north?, floors[] }
 Floor     { id, name, elevation, height, walls[], openings[], rooms[], furniture[], stairs[]?, planImage? }
 Wall      { id, start, end, thickness, height?, materials { left, right } }
 Opening   { id, wallId, kind, offset, width, height, sillHeight, frameMaterial?, door? }
@@ -27,6 +27,10 @@ Furniture { id, type, position, elevation?, rotation, params, materials }
 Stairs    { id, riserHeight, steps[][], material }
 PlanImage { src, bounds }
 ```
+
+### Apartment
+
+- `north`: optional bearing of north in degrees, clockwise from plan up (the top of the drawing, -y). Read it from the plan's north arrow; the viewer shows a compass when it is set.
 
 ### Floor
 

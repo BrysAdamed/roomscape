@@ -39,6 +39,7 @@ class PlanConfig:
     floors: list[FloorConfig]
     defaults: Defaults = Defaults()
     opening_overrides: dict[str, dict[str, Any]] = field(default_factory=dict)
+    north: float | None = None
 
 
 def load_config(path: Path) -> PlanConfig:
@@ -71,4 +72,5 @@ def load_config(path: Path) -> PlanConfig:
             glazed_height=defaults.get('glazedHeight', Defaults.glazed_height),
         ),
         opening_overrides=raw.get('overrides', {}).get('openings', {}),
+        north=raw.get('north'),
     )
