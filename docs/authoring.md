@@ -42,7 +42,8 @@ Add an entry to `src/catalogue/materials.ts` with a unique id, category, colour,
 ## Adding a furniture type
 
 1. Create `src/catalogue/furniture/<type>.tsx` with `defineFurniture`: `id`, `name`, default `params` (metres), material `slots` (label, allowed categories, default material), `size(params)` returning `[width, depth, height]`, and the component. Build it from `Box` (metre UVs, shadows) and place it with its footprint centred on the origin, standing on y = 0, front towards +z.
-2. Register it in `src/catalogue/furniture/registry.ts`. The registry test checks slot defaults.
+2. Register it in a group in `furnitureGroups` (`src/catalogue/furniture/registry.ts`). The registry test checks slot defaults; the furniture showroom (`?project=showroom`) picks it up automatically, so check it there.
+3. Optional: `controls` expose parameters as sliders in the side panel (the kitchen counter's sink and hob positions).
 
 ## Conventions worth knowing
 

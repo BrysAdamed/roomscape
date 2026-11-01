@@ -43,3 +43,19 @@ The agent follows [docs/authoring.md](docs/authoring.md):
 It works best with vector PDFs exported from CAD software (most developer plans are). Scanned plans need far more manual work.
 
 To change an existing apartment, edit it in the viewer, export the JSON and hand it to the agent along with what you changed. The agent then writes the changes into that apartment's `author.py`, so they survive the next regeneration.
+
+## How to add or modify furniture
+
+Furniture is drawn in code, not loaded from model files: each type (sofa, wardrobe, kitchen counter, ...) is a small component in [`src/catalogue/furniture/`](src/catalogue/furniture/) built from simple shapes, with sizes in metres and material slots you can recolour in the viewer.
+
+To see everything that exists, open the **Furniture showroom** from the project picker (or `/?project=showroom`). It lays out every type on one floor, grouped by room, with its name and type id above it; select a piece to see its dimensions and materials.
+
+The easiest way to change furniture is again to ask the agent, for example:
+
+> Put the bed from the showroom in the study instead of the desk.
+
+> Add a round dining table and an armchair to the catalogue and use them in the living room.
+
+> Make the kitchen counter in Lofty B8 longer and move the sink under the window.
+
+Asking for more variety is welcome: the agent adds a new furniture type (following [docs/authoring.md](docs/authoring.md#adding-a-furniture-type)), it shows up in the showroom automatically, and it can then be placed in any apartment.
