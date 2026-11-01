@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { SHOWROOM_DESCRIPTION, SHOWROOM_ID } from '../catalogue/showroom';
 import type { Apartment } from '../schema/apartment';
 import { PlanThumbnail } from './PlanThumbnail';
 import { fetchApartment, fetchProjectIndex } from './projects';
@@ -27,10 +28,12 @@ export function ProjectPicker({ onOpen, onOpenFile }: ProjectPickerProps) {
     fetchProjectIndex(controller.signal)
       .then((index) =>
         Promise.all(
-          index.projects.map(async (project) => {
-            const result = await fetchApartment(project.id, controller.signal);
-            return { ...project, apartment: result.success ? result.apartment : undefined };
-          }),
+          [...index.projects, { id: SHOWROOM_ID, description: SHOWROOM_DESCRIPTION }].map(
+            async (project) => {
+              const result = await fetchApartment(project.id, controller.signal);
+              return { ...project, apartment: result.success ? result.apartment : undefined };
+            },
+          ),
         ),
       )
       .then((entries) => setState({ status: 'ready', entries }))

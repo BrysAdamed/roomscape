@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { buildShowroom, SHOWROOM_ID } from '../catalogue/showroom';
 import type { Apartment } from '../schema/apartment';
 import { validateApartment } from '../schema/validate';
 
@@ -20,6 +21,9 @@ export async function fetchProjectIndex(signal?: AbortSignal): Promise<ProjectIn
 }
 
 export async function fetchApartment(projectId: string, signal?: AbortSignal): Promise<LoadResult> {
+  if (projectId === SHOWROOM_ID) {
+    return validateApartment(buildShowroom());
+  }
   const response = await fetch(`projects/${projectId}.json`, { signal });
   if (!response.ok) {
     return {

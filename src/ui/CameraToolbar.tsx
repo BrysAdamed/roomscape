@@ -15,6 +15,8 @@ export function CameraToolbar() {
   const setTool = useViewerStore((state) => state.setTool);
   const showWallLengths = useViewerStore((state) => state.showWallLengths);
   const toggleWallLengths = useViewerStore((state) => state.toggleWallLengths);
+  const showLabels = useViewerStore((state) => state.showLabels);
+  const setShowLabels = useViewerStore((state) => state.setShowLabels);
   const hasMeasurements = useViewerStore(
     (state) => state.measurements.length > 0 || state.pendingPoint !== undefined,
   );
@@ -100,6 +102,14 @@ export function CameraToolbar() {
         title="Show the length of every wall"
       >
         Wall lengths
+      </button>
+      <button
+        type="button"
+        aria-pressed={showLabels}
+        onClick={() => setShowLabels(!showLabels)}
+        title="Show the name and type id of every piece of furniture"
+      >
+        Labels
       </button>
     </div>
   );

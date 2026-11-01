@@ -15,6 +15,7 @@ interface ViewerState {
   cameraMode: CameraMode;
   resetRequest: number;
   showWallLengths: boolean;
+  showLabels: boolean;
   showLowerFloors: boolean;
   showPlan: boolean;
   cutaway: boolean;
@@ -32,6 +33,7 @@ interface ViewerState {
   setCameraMode: (mode: CameraMode) => void;
   requestCameraReset: () => void;
   toggleWallLengths: () => void;
+  setShowLabels: (show: boolean) => void;
   toggleLowerFloors: () => void;
   togglePlan: () => void;
   toggleCutaway: () => void;
@@ -52,6 +54,7 @@ export const useViewerStore = create<ViewerState>((set) => ({
   cameraMode: 'orbit',
   resetRequest: 0,
   showWallLengths: false,
+  showLabels: false,
   showLowerFloors: true,
   showPlan: false,
   cutaway: false,
@@ -70,6 +73,7 @@ export const useViewerStore = create<ViewerState>((set) => ({
   requestCameraReset: () =>
     set((state) => ({ cameraMode: 'orbit', resetRequest: state.resetRequest + 1 })),
   toggleWallLengths: () => set((state) => ({ showWallLengths: !state.showWallLengths })),
+  setShowLabels: (showLabels) => set({ showLabels }),
   toggleLowerFloors: () => set((state) => ({ showLowerFloors: !state.showLowerFloors })),
   togglePlan: () => set((state) => ({ showPlan: !state.showPlan })),
   toggleCutaway: () => set((state) => ({ cutaway: !state.cutaway })),

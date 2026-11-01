@@ -8,6 +8,7 @@ import { frameApartment } from './camera/framing';
 import { AmbientOcclusion } from './lighting/AmbientOcclusion';
 import { Lighting } from './lighting/Lighting';
 import { DimensionOverlay } from './measure/DimensionOverlay';
+import { FurnitureLabels } from './measure/FurnitureLabels';
 import { Ruler } from './measure/Ruler';
 import { SelectionHighlight } from './selection/SelectionHighlight';
 
@@ -31,6 +32,7 @@ export function Viewport() {
       {apartment && <ApartmentView apartment={apartment} />}
       <SelectionHighlight />
       <DimensionOverlay />
+      <FurnitureLabels />
       <Ruler />
       <CameraRig framing={framing} />
       <HeadingTracker />

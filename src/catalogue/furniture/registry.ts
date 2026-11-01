@@ -8,25 +8,22 @@ import { sofa, tvUnit } from './living';
 import type { FurnitureType } from './types';
 import { wardrobe } from './wardrobe';
 
-export const furnitureTypes: readonly FurnitureType[] = [
-  bathtub,
-  bed,
-  chair,
-  cookerHood,
-  desk,
-  fridge,
-  kitchenCounter,
-  pendantLamp,
-  shower,
-  sofa,
-  table,
-  toilet,
-  tvUnit,
-  wallCabinet,
-  wardrobe,
-  washbasin,
-  washingMachine,
+export interface FurnitureGroup {
+  name: string;
+  types: readonly FurnitureType[];
+}
+
+/** The catalogue grouped by the room it usually goes in; the furniture showroom lays it out this way. */
+export const furnitureGroups: readonly FurnitureGroup[] = [
+  { name: 'Living room', types: [sofa, tvUnit, table, chair, pendantLamp] },
+  { name: 'Kitchen', types: [kitchenCounter, wallCabinet, cookerHood, fridge] },
+  { name: 'Bedroom and study', types: [bed, wardrobe, desk] },
+  { name: 'Bathroom', types: [bathtub, shower, toilet, washbasin, washingMachine] },
 ];
+
+export const furnitureTypes: readonly FurnitureType[] = furnitureGroups.flatMap(
+  (group) => group.types,
+);
 
 const byId = new Map(furnitureTypes.map((type) => [type.id, type]));
 

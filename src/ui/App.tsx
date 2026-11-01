@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
+import { SHOWROOM_ID } from '../catalogue/showroom';
 import { Viewport } from '../scene/Viewport';
 import { findElement } from '../state/apartmentEdits';
 import { useApartmentStore } from '../state/apartmentStore';
@@ -62,6 +63,9 @@ export function App() {
   useEffect(() => {
     if (apartment) {
       load(apartment);
+      if (apartment.id === SHOWROOM_ID) {
+        useViewerStore.getState().setShowLabels(true);
+      }
     }
   }, [apartment, load]);
 

@@ -49,7 +49,11 @@ export function ConfigPanel() {
     <aside className="config-panel" aria-label="Element settings">
       <header>
         <div>
-          <div className="config-kind">{element.floor.name}</div>
+          <div className="config-kind">
+            {element.kind === 'furniture'
+              ? `${element.floor.name} · ${element.item.type}`
+              : element.floor.name}
+          </div>
           <h2>{title(element)}</h2>
         </div>
         <button type="button" aria-label="Close" onClick={() => select(undefined)}>

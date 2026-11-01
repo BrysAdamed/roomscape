@@ -8,9 +8,10 @@ export interface CameraFraming {
 const FALLBACK: CameraFraming = { target: [0, 0, 0], position: [6, 6, 6] };
 
 export function frameApartment(apartment: Apartment | undefined): CameraFraming {
-  const points = apartment?.floors.flatMap((floor) =>
-    floor.walls.flatMap((wall) => [wall.start, wall.end]),
-  );
+  const points = apartment?.floors.flatMap((floor) => [
+    ...floor.walls.flatMap((wall) => [wall.start, wall.end]),
+    ...floor.rooms.flatMap((room) => room.polygon),
+  ]);
   if (!points || points.length === 0) {
     return FALLBACK;
   }
