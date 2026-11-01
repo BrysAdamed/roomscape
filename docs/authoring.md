@@ -25,7 +25,7 @@ How an apartment goes from a floor plan to `public/projects/<id>.json`, and how 
 5. Furniture: the report lists candidates per room (centre and footprint). Map each to a furniture type and add it to the floor's `furniture` array. Rotation `0` means the front faces +y (down the plan).
 6. Open `/?project=<id>`, check both floors, measure a few things with the ruler against the plan.
 
-Once furniture or materials were edited by hand, do not regenerate the JSON from the extractor over it; change walls and openings by hand from then on.
+Keep the manual decisions reproducible in `plans/<id>/author.py` (see `plans/harmonia-ii-5-1-1/author.py`): it reruns the extraction and then applies stairs, room fixes, materials and furniture, so the JSON can be rebuilt at any time. Changes the user makes in the viewer come back as exported JSON; fold them into `author.py` too, or the next rebuild drops them.
 
 ## Applying a user's exported JSON
 

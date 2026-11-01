@@ -207,8 +207,8 @@
           "kind": "window",
           "offset": 3.535,
           "width": 1.575,
-          "height": 1.5,
-          "sillHeight": 0.85
+          "height": 2.2,
+          "sillHeight": 0
         },
         {
           "id": "parter-o-02",
@@ -260,8 +260,8 @@
           "kind": "window",
           "offset": 3.86,
           "width": 1.772,
-          "height": 1.5,
-          "sillHeight": 0.85
+          "height": 2.2,
+          "sillHeight": 0
         },
         {
           "id": "parter-o-07",
@@ -302,12 +302,6 @@
             [3.605, 5.16],
             [6.115, 5.16],
             [6.115, 11.61],
-            [1.185, 11.61],
-            [1.185, 11.81],
-            [1.165, 11.81],
-            [1.165, 11.74],
-            [1.175, 11.74],
-            [1.175, 11.61],
             [0.385, 11.61],
             [0.385, 6.6],
             [1.735, 6.6],
@@ -355,10 +349,229 @@
             [6.115, 4.59],
             [5.315, 4.59]
           ],
-          "floorMaterial": "wood-oak-natural"
+          "floorMaterial": "tile-grey-concrete"
         }
       ],
-      "furniture": [],
+      "furniture": [
+        {
+          "id": "desk-04",
+          "type": "desk",
+          "position": [2.19, 0.69],
+          "rotation": 0,
+          "params": {},
+          "materials": {}
+        },
+        {
+          "id": "chair-04",
+          "type": "chair",
+          "position": [2.19, 1.12],
+          "rotation": 180,
+          "params": {},
+          "materials": {}
+        },
+        {
+          "id": "wardrobe-04",
+          "type": "wardrobe",
+          "position": [1.39, 2.48],
+          "rotation": 180,
+          "params": {
+            "width": 2.0,
+            "depth": 0.6,
+            "doors": 3
+          },
+          "materials": {}
+        },
+        {
+          "id": "bed-04",
+          "type": "bed",
+          "position": [5.12, 2.33],
+          "rotation": -90,
+          "params": {
+            "width": 0.9,
+            "length": 2.0
+          },
+          "materials": {}
+        },
+        {
+          "id": "shelves-03-west",
+          "type": "wardrobe",
+          "position": [0.635, 3.92],
+          "rotation": 90,
+          "params": {
+            "width": 1.9,
+            "depth": 0.5,
+            "doors": 3
+          },
+          "materials": {}
+        },
+        {
+          "id": "shelves-03-north",
+          "type": "wardrobe",
+          "position": [1.63, 3.12],
+          "rotation": 0,
+          "params": {
+            "width": 1.2,
+            "depth": 0.5,
+            "doors": 2
+          },
+          "materials": {}
+        },
+        {
+          "id": "washbasin-05",
+          "type": "washbasin",
+          "position": [4.26, 3.12],
+          "rotation": 0,
+          "params": {},
+          "materials": {}
+        },
+        {
+          "id": "toilet-05",
+          "type": "toilet",
+          "position": [4.5, 4.29],
+          "rotation": 180,
+          "params": {},
+          "materials": {}
+        },
+        {
+          "id": "bathtub-05",
+          "type": "bathtub",
+          "position": [5.76, 3.68],
+          "rotation": 90,
+          "params": {
+            "width": 1.5,
+            "depth": 0.7
+          },
+          "materials": {}
+        },
+        {
+          "id": "counter-west",
+          "type": "kitchen-counter",
+          "position": [0.685, 8.0],
+          "rotation": 90,
+          "params": {
+            "width": 2.8,
+            "sinkOffset": 1.25
+          },
+          "materials": {}
+        },
+        {
+          "id": "counter-north",
+          "type": "kitchen-counter",
+          "position": [1.06, 6.9],
+          "rotation": 0,
+          "params": {
+            "width": 1.35,
+            "hobOffset": 0.7
+          },
+          "materials": {}
+        },
+        {
+          "id": "pantry",
+          "type": "wardrobe",
+          "position": [0.685, 10.45],
+          "rotation": 90,
+          "params": {
+            "width": 2.2,
+            "depth": 0.6,
+            "height": 2.3,
+            "doors": 4
+          },
+          "materials": {}
+        },
+        {
+          "id": "table-02",
+          "type": "table",
+          "position": [4.545, 7.315],
+          "rotation": 0,
+          "params": {
+            "width": 1.6,
+            "depth": 0.8
+          },
+          "materials": {}
+        },
+        {
+          "id": "chair-02-n1",
+          "type": "chair",
+          "position": [3.945, 6.81],
+          "rotation": 0,
+          "params": {},
+          "materials": {}
+        },
+        {
+          "id": "chair-02-n2",
+          "type": "chair",
+          "position": [4.545, 6.81],
+          "rotation": 0,
+          "params": {},
+          "materials": {}
+        },
+        {
+          "id": "chair-02-n3",
+          "type": "chair",
+          "position": [5.145, 6.81],
+          "rotation": 0,
+          "params": {},
+          "materials": {}
+        },
+        {
+          "id": "chair-02-s1",
+          "type": "chair",
+          "position": [3.945, 7.82],
+          "rotation": 180,
+          "params": {},
+          "materials": {}
+        },
+        {
+          "id": "chair-02-s2",
+          "type": "chair",
+          "position": [4.545, 7.82],
+          "rotation": 180,
+          "params": {},
+          "materials": {}
+        },
+        {
+          "id": "chair-02-s3",
+          "type": "chair",
+          "position": [5.145, 7.82],
+          "rotation": 180,
+          "params": {},
+          "materials": {}
+        },
+        {
+          "id": "sofa-02",
+          "type": "sofa",
+          "position": [2.375, 9.94],
+          "rotation": 90,
+          "params": {
+            "width": 2.24,
+            "depth": 0.95,
+            "chaise": 2.0
+          },
+          "materials": {}
+        },
+        {
+          "id": "coffee-table-02",
+          "type": "table",
+          "position": [3.375, 9.6],
+          "rotation": 0,
+          "params": {
+            "width": 0.55,
+            "depth": 0.85,
+            "height": 0.4
+          },
+          "materials": {}
+        },
+        {
+          "id": "tv-02",
+          "type": "tv-unit",
+          "position": [5.91, 9.6],
+          "rotation": -90,
+          "params": {
+            "width": 1.6
+          },
+          "materials": {}
+        }
+      ],
       "stairs": [
         {
           "id": "stairs-1",
@@ -687,8 +900,8 @@
           "kind": "window",
           "offset": 0.605,
           "width": 1.075,
-          "height": 1.5,
-          "sillHeight": 0.85
+          "height": 2.2,
+          "sillHeight": 0
         },
         {
           "id": "pietro-1-o-02",
@@ -753,8 +966,8 @@
           "kind": "window",
           "offset": 1.008,
           "width": 1.573,
-          "height": 1.5,
-          "sillHeight": 0.85
+          "height": 2.2,
+          "sillHeight": 0
         },
         {
           "id": "pietro-1-o-08",
@@ -810,12 +1023,12 @@
           "id": "room-06",
           "name": "Komunikacja",
           "polygon": [
-            [6.112, 5.17],
-            [6.112, 7.49],
+            [3.602, 6.49],
+            [4.77, 6.49],
+            [4.77, 7.49],
             [2.372, 7.49],
             [2.372, 2.87],
-            [3.602, 2.87],
-            [3.602, 5.17]
+            [3.602, 2.87]
           ],
           "floorMaterial": "wood-oak-natural"
         },
@@ -836,12 +1049,6 @@
           "polygon": [
             [3.492, 7.57],
             [3.492, 11.61],
-            [1.182, 11.61],
-            [1.182, 11.81],
-            [1.162, 11.81],
-            [1.162, 11.76],
-            [1.172, 11.76],
-            [1.172, 11.61],
             [0.382, 11.61],
             [0.382, 6.6],
             [1.732, 6.6],
@@ -860,7 +1067,7 @@
             [2.272, 5.17],
             [2.272, 6.5]
           ],
-          "floorMaterial": "wood-oak-natural"
+          "floorMaterial": "tile-grey-concrete"
         },
         {
           "id": "room-10",
@@ -897,10 +1104,190 @@
             [5.312, 4.59],
             [5.312, 4.96]
           ],
-          "floorMaterial": "wood-oak-natural"
+          "floorMaterial": "tile-grey-concrete"
+        },
+        {
+          "id": "room-13",
+          "name": "Balkon",
+          "polygon": [
+            [0.08, -1.165],
+            [2.86, -1.165],
+            [2.86, 0.0],
+            [0.08, 0.0]
+          ],
+          "floorMaterial": "tile-grey-concrete"
         }
       ],
-      "furniture": []
+      "furniture": [
+        {
+          "id": "desk-11",
+          "type": "desk",
+          "position": [2.59, 0.69],
+          "rotation": 0,
+          "params": {},
+          "materials": {}
+        },
+        {
+          "id": "chair-11",
+          "type": "chair",
+          "position": [2.59, 1.12],
+          "rotation": 180,
+          "params": {},
+          "materials": {}
+        },
+        {
+          "id": "wardrobe-11",
+          "type": "wardrobe",
+          "position": [1.39, 2.48],
+          "rotation": 180,
+          "params": {
+            "width": 2.0,
+            "depth": 0.6,
+            "doors": 3
+          },
+          "materials": {}
+        },
+        {
+          "id": "bed-11",
+          "type": "bed",
+          "position": [5.12, 2.33],
+          "rotation": -90,
+          "params": {
+            "width": 0.9,
+            "length": 2.0
+          },
+          "materials": {}
+        },
+        {
+          "id": "shelves-10-west",
+          "type": "wardrobe",
+          "position": [0.632, 3.9],
+          "rotation": 90,
+          "params": {
+            "width": 2.0,
+            "depth": 0.5,
+            "doors": 3
+          },
+          "materials": {}
+        },
+        {
+          "id": "shelves-10-north",
+          "type": "wardrobe",
+          "position": [1.6, 3.12],
+          "rotation": 0,
+          "params": {
+            "width": 1.2,
+            "depth": 0.5,
+            "doors": 2
+          },
+          "materials": {}
+        },
+        {
+          "id": "washbasin-12",
+          "type": "washbasin",
+          "position": [4.26, 3.12],
+          "rotation": 0,
+          "params": {},
+          "materials": {}
+        },
+        {
+          "id": "toilet-12",
+          "type": "toilet",
+          "position": [4.5, 4.29],
+          "rotation": 180,
+          "params": {},
+          "materials": {}
+        },
+        {
+          "id": "bathtub-12",
+          "type": "bathtub",
+          "position": [5.76, 3.69],
+          "rotation": 90,
+          "params": {
+            "width": 1.5,
+            "depth": 0.7
+          },
+          "materials": {}
+        },
+        {
+          "id": "washer-09",
+          "type": "washing-machine",
+          "position": [0.672, 5.5],
+          "rotation": 90,
+          "params": {},
+          "materials": {}
+        },
+        {
+          "id": "dryer-09",
+          "type": "washing-machine",
+          "position": [0.672, 6.12],
+          "rotation": 90,
+          "params": {},
+          "materials": {}
+        },
+        {
+          "id": "wardrobe-08",
+          "type": "wardrobe",
+          "position": [1.06, 6.9],
+          "rotation": 0,
+          "params": {
+            "width": 1.34,
+            "depth": 0.6,
+            "doors": 2
+          },
+          "materials": {}
+        },
+        {
+          "id": "bed-08",
+          "type": "bed",
+          "position": [1.38, 9.49],
+          "rotation": 90,
+          "params": {
+            "width": 1.6,
+            "length": 2.0
+          },
+          "materials": {}
+        },
+        {
+          "id": "wardrobe-07",
+          "type": "wardrobe",
+          "position": [5.42, 7.88],
+          "rotation": 0,
+          "params": {
+            "width": 1.4,
+            "depth": 0.6,
+            "doors": 2
+          },
+          "materials": {}
+        },
+        {
+          "id": "desk-07",
+          "type": "desk",
+          "position": [3.87, 9.91],
+          "rotation": 90,
+          "params": {},
+          "materials": {}
+        },
+        {
+          "id": "chair-07",
+          "type": "chair",
+          "position": [4.32, 9.91],
+          "rotation": -90,
+          "params": {},
+          "materials": {}
+        },
+        {
+          "id": "bed-07",
+          "type": "bed",
+          "position": [5.67, 10.61],
+          "rotation": 0,
+          "params": {
+            "width": 0.9,
+            "length": 2.0
+          },
+          "materials": {}
+        }
+      ]
     }
   ]
 }

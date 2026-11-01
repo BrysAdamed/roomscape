@@ -25,5 +25,13 @@
       "clip": [340, 205, 490, 492],
       "origin": [352.765, 245.46]
     }
-  ]
+  ],
+  "overrides": {
+    "openings": {
+      "parter-o-01": { "sillHeight": 0, "height": 2.2 },
+      "parter-o-06": { "sillHeight": 0, "height": 2.2 },
+      "pietro-1-o-01": { "sillHeight": 0, "height": 2.2 },
+      "pietro-1-o-07": { "sillHeight": 0, "height": 2.2 }
+    }
+  }
 }
