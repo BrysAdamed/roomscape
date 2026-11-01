@@ -1,9 +1,11 @@
-import { Fragment, useMemo, type ReactNode } from 'react';
+import { Fragment, Suspense, useMemo, type ReactNode } from 'react';
 import type { Floor, Opening } from '../schema/apartment';
+import { useViewerStore } from '../state/viewerStore';
 import { FurnitureMesh } from './FurnitureMesh';
 import { layoutWalls } from './geometry/wallLayout';
 import { ghostMaterial } from './materials';
 import { OpeningMesh } from './OpeningMesh';
+import { PlanOverlay } from './PlanOverlay';
 import { RoomFloor } from './RoomFloor';
 import { Selectable } from './selection/Selectable';
 import { StairsMesh } from './StairsMesh';
@@ -22,6 +24,7 @@ export function FloorView({ floor, ghost = false }: { floor: Floor; ghost?: bool
     return grouped;
   }, [floor.openings]);
   const override = ghost ? ghostMaterial : undefined;
+  const showPlan = useViewerStore((state) => state.showPlan);
   const Wrap = ghost ? Passive : Selectable;
 
   return (
@@ -47,6 +50,11 @@ export function FloorView({ floor, ghost = false }: { floor: Floor; ghost?: bool
             <OpeningMesh key={opening.id} opening={opening} wall={span.wall} />
           )),
         )}
+      {showPlan && !ghost && floor.planImage && (
+        <Suspense fallback={null}>
+          <PlanOverlay image={floor.planImage} />
+        </Suspense>
+      )}
       {floor.stairs?.map((stairs) => (
         <Wrap key={stairs.id} id={stairs.id}>
           <StairsMesh stairs={stairs} override={override} />

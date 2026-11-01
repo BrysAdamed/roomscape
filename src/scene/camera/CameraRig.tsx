@@ -41,6 +41,20 @@ export function CameraRig({ framing }: { framing: CameraFraming }) {
     orbit.current?.update();
   }, [camera, elevation]);
 
+  const topViewRequest = useViewerStore((state) => state.topViewRequest);
+  useEffect(() => {
+    if (topViewRequest === 0) {
+      return;
+    }
+    const [tx, ty, tz] = framing.target;
+    const distance = new Vector3(...framing.position).distanceTo(new Vector3(...framing.target));
+    orbitTarget.current.set(tx, ty + shownElevation.current, tz);
+    camera.position.set(tx, ty + shownElevation.current + distance, tz + 0.001);
+    camera.lookAt(orbitTarget.current);
+    orbit.current?.target.copy(orbitTarget.current);
+    orbit.current?.update();
+  }, [camera, framing, topViewRequest]);
+
   useLayoutEffect(() => {
     if (mode !== 'orbit') {
       return;

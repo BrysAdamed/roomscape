@@ -572,6 +572,10 @@
           "materials": {}
         }
       ],
+      "planImage": {
+        "src": "projects/harmonia-ii-5-1-1/parter.png",
+        "bounds": [-2.39, -0.376, 6.933, 12.425]
+      },
       "stairs": [
         {
           "id": "stairs-1",
@@ -1287,7 +1291,11 @@
           },
           "materials": {}
         }
-      ]
+      ],
+      "planImage": {
+        "src": "projects/harmonia-ii-5-1-1/pietro-1.png",
+        "bounds": [-0.643, -2.039, 6.916, 12.425]
+      }
     }
   ]
 }

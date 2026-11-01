@@ -1,3 +1,5 @@
+import { useApartmentStore } from '../state/apartmentStore';
+import { activeFloor } from '../state/floors';
 import { useViewerStore, type CameraMode } from '../state/viewerStore';
 
 const MODES: { mode: CameraMode; label: string }[] = [
@@ -24,6 +26,14 @@ export function CameraToolbar() {
     (state) => state.measurements.length > 0 || state.pendingPoint !== undefined,
   );
   const clearMeasurements = useViewerStore((state) => state.clearMeasurements);
+  const requestTopView = useViewerStore((state) => state.requestTopView);
+  const showPlan = useViewerStore((state) => state.showPlan);
+  const togglePlan = useViewerStore((state) => state.togglePlan);
+  const hasPlan = useApartmentStore(
+    (state) =>
+      state.apartment !== undefined &&
+      activeFloor(state.apartment, state.activeFloorId)?.planImage !== undefined,
+  );
 
   return (
     <div className="toolbar">
@@ -42,6 +52,19 @@ export function CameraToolbar() {
       <button type="button" onClick={requestReset}>
         Reset view
       </button>
+      <button type="button" onClick={requestTopView} title="Look straight down at the floor">
+        Top view
+      </button>
+      {hasPlan && (
+        <button
+          type="button"
+          aria-pressed={showPlan}
+          onClick={togglePlan}
+          title="Show the source floor plan under the model"
+        >
+          Plan
+        </button>
+      )}
       <button
         type="button"
         aria-pressed={tool === 'ruler'}

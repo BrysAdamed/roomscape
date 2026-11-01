@@ -70,6 +70,12 @@ def render_debug(
         canvas.get_pixmap(clip=pymupdf.Rect(clip.x0, clip.y0, clip.x1, clip.y1), dpi=dpi).save(output)
 
 
+def render_clip(path: Path, clip: Rect, output: Path, dpi: int = 200, page_number: int = 0) -> None:
+    with pymupdf.open(path) as document:
+        pixmap = document[page_number].get_pixmap(clip=pymupdf.Rect(clip.x0, clip.y0, clip.x1, clip.y1), dpi=dpi)
+        pixmap.save(output)
+
+
 def _rect(rect: pymupdf.Rect) -> Rect:
     return Rect(rect.x0, rect.y0, rect.x1, rect.y1)
 

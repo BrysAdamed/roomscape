@@ -14,13 +14,23 @@ PRIMITIVE_ARRAY = re.compile(
 )
 
 
-def build_apartment(config: PlanConfig, results: list[FloorResult], points_per_metre: float) -> dict[str, Any]:
-    return {
-        'schemaVersion': 1,
-        'id': config.id,
-        'name': config.name,
-        'floors': [_floor(config, result, points_per_metre) for result in results],
-    }
+def build_apartment(
+    config: PlanConfig,
+    results: list[FloorResult],
+    points_per_metre: float,
+    plan_images: dict[str, str] | None = None,
+) -> dict[str, Any]:
+    """plan_images maps floor ids to image paths (relative to the web root) rendered from each floor's clip."""
+    floors = [_floor(config, result, points_per_metre) for result in results]
+    for floor, result in zip(floors, results):
+        if plan_images and result.floor.id in plan_images:
+            clip, (ox, oy) = result.floor.clip, result.floor.origin
+            floor['planImage'] = {
+                'src': plan_images[result.floor.id],
+                'bounds': [_metres(value - origin, points_per_metre) for value, origin in
+                           ((clip.x0, ox), (clip.y0, oy), (clip.x1, ox), (clip.y1, oy))],
+            }
+    return {'schemaVersion': 1, 'id': config.id, 'name': config.name, 'floors': floors}
 
 
 def opening_ids(result: FloorResult) -> dict[int, str]:

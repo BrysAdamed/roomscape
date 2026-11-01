@@ -12,6 +12,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
+from tools.plan_extract.__main__ import write_plan_images  # noqa: E402
 from tools.plan_extract.apartment import build_apartment, serialize  # noqa: E402
 from tools.plan_extract.config import load_config  # noqa: E402
 from tools.plan_extract.extract import extract_floor  # noqa: E402
@@ -122,7 +123,8 @@ def author() -> dict:
     config = load_config(CONFIG)
     results = [extract_floor(read_plan(config.pdf, f.clip, config.wall_fill, config.page), f, config.points_per_metre)
                for f in config.floors]
-    apartment = build_apartment(config, results, config.points_per_metre)
+    images = write_plan_images(config, OUTPUT.with_suffix(''), ROOT / 'public')
+    apartment = build_apartment(config, results, config.points_per_metre, images)
     floors = {floor['id']: floor for floor in apartment['floors']}
 
     floors['pietro-1']['rooms'].append(dict(BALCONY))

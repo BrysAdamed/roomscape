@@ -71,6 +71,11 @@ export const stairsSchema = z.object({
   material: materialRef,
 });
 
+export const planImageSchema = z.object({
+  src: z.string().min(1),
+  bounds: z.tuple([z.number(), z.number(), z.number(), z.number()]),
+});
+
 export const floorSchema = z.object({
   id,
   name: z.string().min(1),
@@ -81,6 +86,7 @@ export const floorSchema = z.object({
   rooms: z.array(roomSchema),
   furniture: z.array(furnitureSchema),
   stairs: z.array(stairsSchema).optional(),
+  planImage: planImageSchema.optional(),
 });
 
 export const apartmentSchema = z.object({
@@ -97,5 +103,6 @@ export type Opening = z.infer<typeof openingSchema>;
 export type Room = z.infer<typeof roomSchema>;
 export type FurnitureItem = z.infer<typeof furnitureSchema>;
 export type Stairs = z.infer<typeof stairsSchema>;
+export type PlanImage = z.infer<typeof planImageSchema>;
 export type Floor = z.infer<typeof floorSchema>;
 export type Apartment = z.infer<typeof apartmentSchema>;

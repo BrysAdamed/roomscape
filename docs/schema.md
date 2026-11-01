@@ -18,12 +18,14 @@ An apartment is a single JSON file in `public/projects/`. The viewer renders it,
 
 ```
 Apartment { schemaVersion, id, name, floors[] }
-Floor     { id, name, elevation, height, walls[], openings[], rooms[], furniture[] }
+Floor     { id, name, elevation, height, walls[], openings[], rooms[], furniture[], stairs[]?, planImage? }
 Wall      { id, start, end, thickness, height?, materials { left, right } }
 Opening   { id, wallId, kind, offset, width, height, sillHeight, door? }
 Door      { hinge, opensTo, material? }
 Room      { id, name, polygon[], floorMaterial }
 Furniture { id, type, position, elevation?, rotation, params, materials }
+Stairs    { id, riserHeight, steps[][], material }
+PlanImage { src, bounds }
 ```
 
 ### Floor
@@ -56,6 +58,15 @@ Furniture { id, type, position, elevation?, rotation, params, materials }
 - `position`: plan point of the item's footprint centre. `elevation`: optional height above the floor (e.g. wall cabinets).
 - `params`: type-specific values such as dimensions (`width`, `depth`, `height`).
 - `materials`: map of the type's material slots (e.g. `frame`, `bedding`) to material ids.
+
+### Stairs
+
+- `steps`: one polygon per tread, bottom to top; tread `k` (1-based) tops out at `k × riserHeight`, the last riser leads onto the floor above. Any shape (straight, L, winders) is a list of polygons.
+- `material`: tread material.
+
+### Plan image
+
+- Optional source plan for the floor, shown under the model by the viewer's Plan toggle. `src` is relative to the web root; `bounds` is `[x0, y0, x1, y1]` in plan metres. The extractor writes both (`--plan-images`).
 
 ## Validation
 

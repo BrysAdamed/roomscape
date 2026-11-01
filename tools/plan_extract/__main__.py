@@ -7,7 +7,7 @@ from pathlib import Path
 from .apartment import build_apartment, opening_ids, serialize, wall_ids
 from .config import PlanConfig, load_config
 from .extract import FloorResult, extract_floor
-from .pdf import read_plan, render_debug
+from .pdf import read_plan, render_clip, render_debug
 from .rooms import calibrate
 
 
@@ -16,6 +16,7 @@ def main() -> int:
     parser.add_argument('config', type=Path, help='plan extraction config (JSON)')
     parser.add_argument('--out', type=Path, help='write the apartment JSON here')
     parser.add_argument('--debug-dir', type=Path, help='write an overlay PNG per floor here')
+    parser.add_argument('--plan-images', type=Path, help='render each floor''s plan into this folder under public/ and reference it')
     args = parser.parse_args()
 
     config = load_config(args.config)
@@ -25,8 +26,10 @@ def main() -> int:
     ]
     print_report(config, results)
 
+    plan_images = write_plan_images(config, args.plan_images) if args.plan_images else None
     if args.out:
-        args.out.write_text(serialize(build_apartment(config, results, config.points_per_metre)), encoding='utf-8', newline='\n')
+        apartment = build_apartment(config, results, config.points_per_metre, plan_images)
+        args.out.write_text(serialize(apartment), encoding='utf-8', newline='\n')
         print(f'\nwrote {args.out}')
     if args.debug_dir:
         args.debug_dir.mkdir(parents=True, exist_ok=True)
@@ -34,6 +37,16 @@ def main() -> int:
             write_debug(config, result, args.debug_dir / f'{config.id}-{result.floor.id}.png')
             print(f'wrote {args.debug_dir / f"{config.id}-{result.floor.id}.png"}')
     return 0
+
+
+def write_plan_images(config: PlanConfig, folder: Path, web_root: Path = Path('public')) -> dict[str, str]:
+    folder.mkdir(parents=True, exist_ok=True)
+    images = {}
+    for floor in config.floors:
+        output = folder / f'{floor.id}.png'
+        render_clip(config.pdf, floor.clip, output, page_number=config.page)
+        images[floor.id] = output.resolve().relative_to(web_root.resolve()).as_posix()
+    return images
 
 
 def print_report(config: PlanConfig, results: list[FloorResult]) -> None:
