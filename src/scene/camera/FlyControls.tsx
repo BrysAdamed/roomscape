@@ -1,9 +1,12 @@
 import { useEffect, useRef } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import { Euler, Vector3 } from 'three';
+import { flyActionFor, type FlyAction } from './flyBindings';
 
 const LOOK_SENSITIVITY = 0.004;
 const WALK_SPEED = 2.5;
+const TURN_SPEED = 1.6;
+const PITCH_SPEED = 1.2;
 const SPRINT_MULTIPLIER = 3;
 const MIN_HEIGHT = 0.2;
 const MAX_PITCH = Math.PI / 2 - 0.01;
@@ -12,23 +15,10 @@ const forward = new Vector3();
 const right = new Vector3();
 const move = new Vector3();
 
-const MOVE_KEYS: Record<string, [number, number, number]> = {
-  KeyW: [0, 0, 1],
-  ArrowUp: [0, 0, 1],
-  KeyS: [0, 0, -1],
-  ArrowDown: [0, 0, -1],
-  KeyA: [-1, 0, 0],
-  ArrowLeft: [-1, 0, 0],
-  KeyD: [1, 0, 0],
-  ArrowRight: [1, 0, 0],
-  KeyE: [0, 1, 0],
-  KeyQ: [0, -1, 0],
-};
-
 export function FlyControls() {
   const camera = useThree((state) => state.camera);
   const domElement = useThree((state) => state.gl.domElement);
-  const pressed = useRef(new Set<string>());
+  const active = useRef(new Map<string, FlyAction>());
   const orientation = useRef(new Euler(0, 0, 0, 'YXZ'));
 
   useEffect(() => {
@@ -48,21 +38,23 @@ export function FlyControls() {
       if (!dragging) {
         return;
       }
-      const euler = orientation.current;
-      euler.y -= event.movementX * LOOK_SENSITIVITY;
-      euler.x = Math.max(
-        -MAX_PITCH,
-        Math.min(MAX_PITCH, euler.x - event.movementY * LOOK_SENSITIVITY),
+      rotate(
+        orientation.current,
+        -event.movementX * LOOK_SENSITIVITY,
+        -event.movementY * LOOK_SENSITIVITY,
       );
-      camera.quaternion.setFromEuler(euler);
+      camera.quaternion.setFromEuler(orientation.current);
     };
     const onKeyDown = (event: KeyboardEvent) => {
-      if (!isTyping(event)) {
-        pressed.current.add(event.code);
+      const action = flyActionFor(event.code);
+      if (!action || isTyping(event) || event.ctrlKey || event.metaKey) {
+        return;
       }
+      event.preventDefault();
+      active.current.set(event.code, action);
     };
-    const onKeyUp = (event: KeyboardEvent) => pressed.current.delete(event.code);
-    const onBlur = () => pressed.current.clear();
+    const onKeyUp = (event: KeyboardEvent) => active.current.delete(event.code);
+    const onBlur = () => active.current.clear();
 
     domElement.addEventListener('pointerdown', onPointerDown);
     domElement.addEventListener('pointerup', onPointerUp);
@@ -81,24 +73,29 @@ export function FlyControls() {
   }, [camera, domElement]);
 
   useFrame((state, delta) => {
-    move.set(0, 0, 0);
-    for (const code of pressed.current) {
-      const direction = MOVE_KEYS[code];
-      if (direction) {
-        move.x += direction[0];
-        move.y += direction[1];
-        move.z += direction[2];
-      }
+    const actions = new Set(active.current.values());
+    if (actions.size === 0) {
+      return;
     }
+    const axis = (positive: FlyAction, negative: FlyAction) =>
+      (actions.has(positive) ? 1 : 0) - (actions.has(negative) ? 1 : 0);
+    const speed = actions.has('sprint') ? SPRINT_MULTIPLIER : 1;
+
+    const turn = axis('turnLeft', 'turnRight');
+    const pitch = axis('lookUp', 'lookDown');
+    if (turn !== 0 || pitch !== 0) {
+      rotate(orientation.current, turn * TURN_SPEED * delta, pitch * PITCH_SPEED * delta);
+      state.camera.quaternion.setFromEuler(orientation.current);
+    }
+
+    move.set(axis('right', 'left'), axis('up', 'down'), axis('forward', 'back'));
     if (move.lengthSq() === 0) {
       return;
     }
-
     const yaw = orientation.current.y;
     forward.set(-Math.sin(yaw), 0, -Math.cos(yaw));
     right.set(Math.cos(yaw), 0, -Math.sin(yaw));
-    const sprint = pressed.current.has('ShiftLeft') || pressed.current.has('ShiftRight');
-    const step = WALK_SPEED * (sprint ? SPRINT_MULTIPLIER : 1) * delta;
+    const step = WALK_SPEED * speed * delta;
     const { x, y, z } = move.normalize();
 
     const { position } = state.camera;
@@ -107,6 +104,11 @@ export function FlyControls() {
   });
 
   return null;
+}
+
+function rotate(euler: Euler, yaw: number, pitch: number) {
+  euler.y += yaw;
+  euler.x = Math.max(-MAX_PITCH, Math.min(MAX_PITCH, euler.x + pitch));
 }
 
 function isTyping(event: KeyboardEvent): boolean {

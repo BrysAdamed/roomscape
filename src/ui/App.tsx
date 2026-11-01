@@ -4,6 +4,7 @@ import { useApartmentStore } from '../state/apartmentStore';
 import { useViewerStore } from '../state/viewerStore';
 import { CameraToolbar } from './CameraToolbar';
 import { ConfigPanel } from './ConfigPanel';
+import { HelpPanel } from './HelpPanel';
 import { FloorSwitcher } from './FloorSwitcher';
 import { ProjectBar } from './ProjectBar';
 import { ProjectPicker } from './ProjectPicker';
@@ -78,7 +79,10 @@ export function App() {
           <ProjectBar origin={file?.name} onBack={() => openProject(undefined)} />
           <FloorSwitcher />
           <CameraToolbar />
-          <ConfigPanel />
+          <div className="side-column">
+            <ConfigPanel />
+            <HelpPanel />
+          </div>
         </>
       )}
       {project.status === 'loading' && <div className="overlay">Loading…</div>}

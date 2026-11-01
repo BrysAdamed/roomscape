@@ -7,13 +7,6 @@ const MODES: { mode: CameraMode; label: string }[] = [
   { mode: 'fly', label: 'Fly' },
 ];
 
-const HINTS: Record<CameraMode, string> = {
-  orbit: 'Drag to rotate · right-drag to pan · scroll to zoom',
-  fly: 'Drag to look · WASD to move · Q/E down/up · Shift to speed up',
-};
-
-const RULER_HINT = 'Click two points to measure · Esc clears';
-
 export function CameraToolbar() {
   const mode = useViewerStore((state) => state.cameraMode);
   const setMode = useViewerStore((state) => state.setCameraMode);
@@ -96,7 +89,6 @@ export function CameraToolbar() {
       >
         Wall lengths
       </button>
-      <span className="hint">{tool === 'ruler' ? RULER_HINT : HINTS[mode]}</span>
     </div>
   );
 }
