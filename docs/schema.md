@@ -20,7 +20,7 @@ An apartment is a single JSON file in `public/projects/`. The viewer renders it,
 Apartment { schemaVersion, id, name, floors[] }
 Floor     { id, name, elevation, height, walls[], openings[], rooms[], furniture[], stairs[]?, planImage? }
 Wall      { id, start, end, thickness, height?, materials { left, right } }
-Opening   { id, wallId, kind, offset, width, height, sillHeight, door? }
+Opening   { id, wallId, kind, offset, width, height, sillHeight, frameMaterial?, door? }
 Door      { hinge, opensTo, material? }
 Room      { id, name, polygon[], floorMaterial }
 Furniture { id, type, position, elevation?, rotation, params, materials }
@@ -45,7 +45,9 @@ PlanImage { src, bounds }
 - `kind`: `door` or `window`.
 - `offset`: distance along the wall from `start` to the opening's near edge.
 - `width`, `height`: clear opening size. `sillHeight`: distance from the floor to the bottom of the opening (`0` for doors).
+- `frameMaterial`: optional material of the window frame or the door lining and architraves (default white lacquer).
 - `door` (doors only): `hinge` is the wall end (`start` or `end`) the leaf hangs on; `opensTo` is the wall side (`left` or `right`) the leaf swings into. A door without `door` settings is an open doorway (no leaf).
+- `door.material`: optional leaf material (default white lacquer).
 
 ### Room
 

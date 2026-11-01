@@ -3,6 +3,7 @@ import type { Apartment } from '../schema/apartment';
 import {
   findElement,
   setFurnitureMaterial,
+  setOpeningMaterial,
   setRoomFloorMaterial,
   setWallMaterial,
 } from './apartmentEdits';
@@ -34,7 +35,27 @@ function apartment(): Apartment {
             materials: { left: 'paint-white', right: 'paint-white' },
           },
         ],
-        openings: [],
+        openings: [
+          {
+            id: 'door-1',
+            wallId: 'w-1',
+            kind: 'door',
+            offset: 1,
+            width: 0.9,
+            height: 2,
+            sillHeight: 0,
+            door: { hinge: 'start', opensTo: 'left' },
+          },
+          {
+            id: 'win-1',
+            wallId: 'w-2',
+            kind: 'window',
+            offset: 1,
+            width: 1,
+            height: 1.2,
+            sillHeight: 0.9,
+          },
+        ],
         rooms: [
           {
             id: 'room-1',
@@ -78,10 +99,12 @@ describe('findElement', () => {
     const flat = apartment();
 
     // Act
-    const found = ['w-2', 'room-1', 'bed-1', 'missing'].map((id) => findElement(flat, id)?.kind);
+    const found = ['w-2', 'room-1', 'bed-1', 'door-1', 'missing'].map(
+      (id) => findElement(flat, id)?.kind,
+    );
 
     // Assert
-    expect(found).toEqual(['wall', 'room', 'furniture', undefined]);
+    expect(found).toEqual(['wall', 'room', 'furniture', 'opening', undefined]);
   });
 });
 
@@ -116,6 +139,32 @@ describe('edits', () => {
 
     // Assert
     expect(edited.floors[0]!.furniture[0]!.materials).toEqual({ bedding: 'fabric-navy' });
+  });
+
+  it('sets door leaf and frame materials', () => {
+    // Act
+    const edited = setOpeningMaterial(
+      setOpeningMaterial(apartment(), 'door-1', 'leaf', 'wood-walnut'),
+      'door-1',
+      'frame',
+      '#222222',
+    );
+
+    // Assert
+    const door = edited.floors[0]!.openings[0]!;
+    expect(door.door).toEqual({ hinge: 'start', opensTo: 'left', material: 'wood-walnut' });
+    expect(door.frameMaterial).toBe('#222222');
+  });
+
+  it('ignores a leaf material for a window', () => {
+    // Arrange
+    const flat = apartment();
+
+    // Act
+    const edited = setOpeningMaterial(flat, 'win-1', 'leaf', 'wood-walnut');
+
+    // Assert
+    expect(edited).toBe(flat);
   });
 
   it('returns the same apartment when the id does not exist', () => {

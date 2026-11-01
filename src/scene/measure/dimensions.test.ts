@@ -1,6 +1,11 @@
 import { describe, expect, it } from 'vitest';
 import type { Floor } from '../../schema/apartment';
-import { furnitureDimensions, roomDimensions, wallDimensions } from './dimensions';
+import {
+  furnitureDimensions,
+  openingDimensions,
+  roomDimensions,
+  wallDimensions,
+} from './dimensions';
 import { formatLength } from './format';
 
 const floor: Floor = {
@@ -15,6 +20,37 @@ const floor: Floor = {
 };
 
 const round = (values: number[]) => values.map((v) => +v.toFixed(6) + 0);
+
+describe('openingDimensions', () => {
+  it('measures a window on the wall face above and beside it', () => {
+    // Arrange
+    const wall = {
+      id: 'w',
+      start: [0, 0] as [number, number],
+      end: [4, 0] as [number, number],
+      thickness: 0.2,
+      materials: { left: 'paint-white', right: 'paint-white' },
+    };
+    const window = {
+      id: 'o',
+      wallId: 'w',
+      kind: 'window' as const,
+      offset: 1,
+      width: 1.5,
+      height: 1.2,
+      sillHeight: 0.9,
+    };
+
+    // Act
+    const [width, height] = openingDimensions(window, wall, floor);
+
+    // Assert
+    expect([width!.value, height!.value]).toEqual([1.5, 1.2]);
+    expect(round(width!.start)).toEqual([1, 5.16, 0.16]);
+    expect(round(width!.end)).toEqual([2.5, 5.16, 0.16]);
+    expect(round(height!.start)).toEqual([2.5, 3.9, 0.16]);
+  });
+});
 
 describe('furnitureDimensions', () => {
   it('measures width, depth and height of a rotated piece in world space', () => {

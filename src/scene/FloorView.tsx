@@ -5,6 +5,7 @@ import { FurnitureMesh } from './FurnitureMesh';
 import { layoutWalls } from './geometry/wallLayout';
 import { ghostMaterial } from './materials';
 import { OpeningMesh } from './OpeningMesh';
+import { hasOpeningMesh } from './openings';
 import { PlanOverlay } from './PlanOverlay';
 import { RoomFloor } from './RoomFloor';
 import { Selectable } from './selection/Selectable';
@@ -49,9 +50,13 @@ export function FloorView({ floor, ghost = false }: { floor: Floor; ghost?: bool
       {!ghost &&
         !cutaway &&
         spans.flatMap((span) =>
-          (openingsByWall.get(span.wall.id) ?? NO_OPENINGS).map((opening) => (
-            <OpeningMesh key={opening.id} opening={opening} wall={span.wall} />
-          )),
+          (openingsByWall.get(span.wall.id) ?? NO_OPENINGS)
+            .filter(hasOpeningMesh)
+            .map((opening) => (
+              <Selectable key={opening.id} id={opening.id}>
+                <OpeningMesh opening={opening} wall={span.wall} />
+              </Selectable>
+            )),
         )}
       {showPlan && !ghost && floor.planImage && (
         <Suspense fallback={null}>

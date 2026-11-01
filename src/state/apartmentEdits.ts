@@ -1,4 +1,4 @@
-import type { Apartment, Floor, Stairs } from '../schema/apartment';
+import type { Apartment, Floor, Opening, Stairs } from '../schema/apartment';
 
 export type WallSide = 'left' | 'right';
 
@@ -6,7 +6,10 @@ export type SelectableElement =
   | { kind: 'wall'; floor: Floor; wall: Floor['walls'][number] }
   | { kind: 'room'; floor: Floor; room: Floor['rooms'][number] }
   | { kind: 'furniture'; floor: Floor; item: Floor['furniture'][number] }
-  | { kind: 'stairs'; floor: Floor; stairs: Stairs };
+  | { kind: 'stairs'; floor: Floor; stairs: Stairs }
+  | { kind: 'opening'; floor: Floor; opening: Opening; wall: Floor['walls'][number] };
+
+export type OpeningPart = 'frame' | 'leaf';
 
 export function findElement(apartment: Apartment, id: string): SelectableElement | undefined {
   for (const floor of apartment.floors) {
@@ -18,6 +21,9 @@ export function findElement(apartment: Apartment, id: string): SelectableElement
     if (item) return { kind: 'furniture', floor, item };
     const stairs = floor.stairs?.find((candidate) => candidate.id === id);
     if (stairs) return { kind: 'stairs', floor, stairs };
+    const opening = floor.openings.find((candidate) => candidate.id === id);
+    const host = opening && floor.walls.find((candidate) => candidate.id === opening.wallId);
+    if (opening && host) return { kind: 'opening', floor, opening, wall: host };
   }
   return undefined;
 }
@@ -66,6 +72,27 @@ export function setStairsMaterial(apartment: Apartment, stairsId: string, ref: s
     }
     const stairs = replaceById(floor.stairs, stairsId, (item) => ({ ...item, material: ref }));
     return stairs === floor.stairs ? floor : { ...floor, stairs };
+  });
+}
+
+/** Sets the frame material of a door or window, or the leaf material of a door with a leaf. */
+export function setOpeningMaterial(
+  apartment: Apartment,
+  openingId: string,
+  part: OpeningPart,
+  ref: string,
+): Apartment {
+  return updateFloors(apartment, (floor) => {
+    const target = floor.openings.find((opening) => opening.id === openingId);
+    if (part === 'leaf' && !target?.door) {
+      return floor;
+    }
+    const openings = replaceById(floor.openings, openingId, (opening) =>
+      part === 'frame'
+        ? { ...opening, frameMaterial: ref }
+        : { ...opening, door: { ...opening.door!, material: ref } },
+    );
+    return openings === floor.openings ? floor : { ...floor, openings };
   });
 }
 

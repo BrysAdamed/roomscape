@@ -44,6 +44,7 @@ export const openingSchema = z.object({
   width: positive,
   height: positive,
   sillHeight: nonNegative,
+  frameMaterial: materialRef.optional(),
   door: doorSchema.optional(),
 });
 

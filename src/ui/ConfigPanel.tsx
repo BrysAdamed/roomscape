@@ -4,7 +4,8 @@ import { resolveMaterialRefs, resolveParams } from '../catalogue/furniture/resol
 import type { MaterialCategory } from '../catalogue/materials';
 import { polygonArea } from '../scene/geometry/floorGeometry';
 import { formatLength } from '../scene/measure/format';
-import type { FurnitureItem, PlanPoint, Room, Stairs, Wall } from '../schema/apartment';
+import { DEFAULT_OPENING_MATERIAL } from '../scene/openings';
+import type { FurnitureItem, Opening, PlanPoint, Room, Stairs, Wall } from '../schema/apartment';
 import { wallLength } from '../schema/validate';
 import { findElement, type WallSide } from '../state/apartmentEdits';
 import { useApartmentStore } from '../state/apartmentStore';
@@ -15,6 +16,7 @@ const WALL_CATEGORIES: readonly MaterialCategory[] = ['paint', 'tile', 'stone', 
 const FLOOR_CATEGORIES: readonly MaterialCategory[] = ['wood', 'tile', 'stone'];
 const WALL_SIDES: readonly WallSide[] = ['left', 'right'];
 const STAIRS_CATEGORIES: readonly MaterialCategory[] = ['wood', 'stone', 'tile'];
+const OPENING_CATEGORIES: readonly MaterialCategory[] = ['wood', 'paint', 'metal'];
 
 export function ConfigPanel() {
   const apartment = useApartmentStore((state) => state.apartment);
@@ -43,6 +45,7 @@ export function ConfigPanel() {
       {element.kind === 'room' && <RoomSettings room={element.room} />}
       {element.kind === 'furniture' && <FurnitureSettings item={element.item} />}
       {element.kind === 'stairs' && <StairsSettings stairs={element.stairs} />}
+      {element.kind === 'opening' && <OpeningSettings opening={element.opening} />}
     </aside>
   );
 }
@@ -55,6 +58,8 @@ function title(element: NonNullable<ReturnType<typeof findElement>>): string {
       return element.room.name;
     case 'stairs':
       return 'Stairs';
+    case 'opening':
+      return element.opening.kind === 'door' ? 'Door' : 'Window';
     case 'furniture':
       return findFurnitureType(element.item.type)?.name ?? element.item.type;
   }
@@ -150,6 +155,36 @@ function StairsSettings({ stairs }: { stairs: Stairs }) {
         value={stairs.material}
         categories={STAIRS_CATEGORIES}
         onChange={(ref) => setStairsMaterial(stairs.id, ref)}
+      />
+    </>
+  );
+}
+
+function OpeningSettings({ opening }: { opening: Opening }) {
+  const setOpeningMaterial = useApartmentStore((state) => state.setOpeningMaterial);
+  const rows: [string, string][] = [
+    ['Width', formatLength(opening.width)],
+    ['Height', formatLength(opening.height)],
+  ];
+  if (opening.kind === 'window') {
+    rows.push(['Sill height', formatLength(opening.sillHeight)]);
+  }
+  return (
+    <>
+      <Facts rows={rows} />
+      {opening.door && (
+        <MaterialPicker
+          label="Leaf"
+          value={opening.door.material ?? DEFAULT_OPENING_MATERIAL}
+          categories={OPENING_CATEGORIES}
+          onChange={(ref) => setOpeningMaterial(opening.id, 'leaf', ref)}
+        />
+      )}
+      <MaterialPicker
+        label="Frame"
+        value={opening.frameMaterial ?? DEFAULT_OPENING_MATERIAL}
+        categories={OPENING_CATEGORIES}
+        onChange={(ref) => setOpeningMaterial(opening.id, 'frame', ref)}
       />
     </>
   );

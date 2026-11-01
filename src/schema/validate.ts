@@ -116,6 +116,9 @@ function checkFloor(floor: Floor, floorPath: string, checks: FloorChecks) {
     if (opening.door?.material) {
       checkMaterial(opening.door.material, `${path}.door.material`);
     }
+    if (opening.frameMaterial) {
+      checkMaterial(opening.frameMaterial, `${path}.frameMaterial`);
+    }
   });
 
   floor.rooms.forEach((room, index) => {

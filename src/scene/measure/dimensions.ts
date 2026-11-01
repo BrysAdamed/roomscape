@@ -1,8 +1,17 @@
 import { findFurnitureType } from '../../catalogue/furniture/registry';
 import { resolveParams } from '../../catalogue/furniture/resolve';
-import type { Apartment, Floor, FurnitureItem, Room, Stairs, Wall } from '../../schema/apartment';
+import type {
+  Apartment,
+  Floor,
+  FurnitureItem,
+  Opening,
+  Room,
+  Stairs,
+  Wall,
+} from '../../schema/apartment';
 import { wallLength } from '../../schema/validate';
 import { findElement } from '../../state/apartmentEdits';
+import { pointAlong, wallFrame } from '../geometry/wallFrame';
 
 export type Vec3 = [number, number, number];
 
@@ -31,7 +40,26 @@ export function elementDimensions(apartment: Apartment, id: string): DimensionLi
       return furnitureDimensions(element.item, element.floor);
     case 'stairs':
       return stairsDimensions(element.stairs, element.floor);
+    case 'opening':
+      return openingDimensions(element.opening, element.wall, element.floor);
   }
+}
+
+export function openingDimensions(opening: Opening, wall: Wall, floor: Floor): DimensionLine[] {
+  const frame = wallFrame(wall);
+  const [dx, dz] = frame.direction;
+  const away = wall.thickness / 2 + OFFSET;
+  const at = (distance: number, height: number): Vec3 => {
+    const [x, z] = pointAlong(frame, distance);
+    return [x - dz * away, floor.elevation + height, z + dx * away];
+  };
+  const left = opening.offset;
+  const right = opening.offset + opening.width;
+  const top = opening.sillHeight + opening.height;
+  return [
+    { start: at(left, top + OFFSET), end: at(right, top + OFFSET), value: opening.width },
+    { start: at(right, opening.sillHeight), end: at(right, top), value: opening.height },
+  ];
 }
 
 export function wallLengthLine(wall: Wall, floor: Floor): DimensionLine {
