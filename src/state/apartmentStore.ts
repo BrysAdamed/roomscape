@@ -53,7 +53,8 @@ export const useApartmentStore = create<ApartmentState>((set) => {
       }),
     select: (selectedId) => set({ selectedId }),
     hover: (hoveredId) => set({ hoveredId }),
-    setActiveFloor: (activeFloorId) => set({ activeFloorId }),
+    setActiveFloor: (activeFloorId) =>
+      set({ activeFloorId, selectedId: undefined, hoveredId: undefined }),
     setWallMaterial: (wallId, side, ref) =>
       edit((apartment) => setWallMaterial(apartment, wallId, side, ref)),
     setRoomFloorMaterial: (roomId, ref) =>
