@@ -110,9 +110,11 @@ ROOMS = {
 }
 
 
-def item(item_id: str, type_id: str, x: float, y: float, rotation: float = 0, **params: float) -> dict:
-    return {'id': item_id, 'type': type_id, 'position': [x, y], 'rotation': rotation, 'params': params,
-            'materials': {}}
+def item(item_id: str, type_id: str, x: float, y: float, rotation: float = 0, elevation: float = 0,
+         **params: float) -> dict:
+    placed = {'id': item_id, 'type': type_id, 'position': [x, y], 'rotation': rotation, 'params': params,
+              'materials': {}}
+    return {**placed, 'elevation': elevation} if elevation else placed
 
 
 FURNITURE = {
@@ -125,6 +127,8 @@ FURNITURE = {
         item('fridge-kitchen', 'fridge', 4.816, 7.5, -90),
         item('counter-east', 'kitchen-counter', 4.841, 9.123, -90, width=2.645, sinkOffset=1.32),
         item('counter-south', 'kitchen-counter', 3.911, 10.145, 180, width=1.26, hobOffset=0.63),
+        item('wall-cabinets-east', 'wall-cabinet', 4.966, 9.1225, -90, 1.45, width=2.645),
+        item('hood', 'cooker-hood', 3.911, 10.195, 180, 1.55, chimney=1.07),
         item('washbasin-wc-1', 'washbasin', 5.4, 8.13, 90, width=0.4, depth=0.3),
         item('toilet-wc-1', 'toilet', 5.91, 8.98, 180),
         item('wardrobe-komunikacja-1', 'wardrobe', 7.916, 6.415, -90, width=1.47, depth=0.6, doors=2),

@@ -44,9 +44,11 @@ BALCONY = {'id': 'room-13', 'name': 'Balkon', 'polygon': [[0.08, -1.165], [2.86,
 TILED = {'room-05', 'room-09', 'room-12', 'room-13'}
 
 
-def item(item_id: str, type_id: str, x: float, y: float, rotation: float = 0, **params: float) -> dict:
-    return {'id': item_id, 'type': type_id, 'position': [x, y], 'rotation': rotation, 'params': params,
-            'materials': {}}
+def item(item_id: str, type_id: str, x: float, y: float, rotation: float = 0, elevation: float = 0,
+         **params: float) -> dict:
+    placed = {'id': item_id, 'type': type_id, 'position': [x, y], 'rotation': rotation, 'params': params,
+              'materials': {}}
+    return {**placed, 'elevation': elevation} if elevation else placed
 
 
 FURNITURE = {
@@ -62,6 +64,8 @@ FURNITURE = {
         item('bathtub-05', 'bathtub', 5.76, 3.68, 90, width=1.5, depth=0.7),
         item('counter-west', 'kitchen-counter', 0.685, 8.0, 90, width=2.8, sinkOffset=1.25),
         item('counter-north', 'kitchen-counter', 1.06, 6.9, 0, width=1.35, hobOffset=0.7),
+        item('wall-cabinets-west', 'wall-cabinet', 0.56, 8.0, 90, 1.45, width=2.8),
+        item('hood', 'cooker-hood', 1.085, 6.85, 0, 1.55, chimney=1.02),
         item('pantry', 'wardrobe', 0.685, 10.45, 90, width=2.2, depth=0.6, height=2.3, doors=4),
         item('table-02', 'table', 4.545, 7.315, 0, width=1.6, depth=0.8),
         *[item(f'chair-02-n{i}', 'chair', x, 6.81) for i, x in enumerate((3.945, 4.545, 5.145), 1)],

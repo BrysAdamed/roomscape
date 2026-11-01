@@ -470,6 +470,28 @@
           "materials": {}
         },
         {
+          "id": "wall-cabinets-east",
+          "type": "wall-cabinet",
+          "position": [4.966, 9.1225],
+          "rotation": -90,
+          "params": {
+            "width": 2.645
+          },
+          "materials": {},
+          "elevation": 1.45
+        },
+        {
+          "id": "hood",
+          "type": "cooker-hood",
+          "position": [3.911, 10.195],
+          "rotation": 180,
+          "params": {
+            "chimney": 1.07
+          },
+          "materials": {},
+          "elevation": 1.55
+        },
+        {
           "id": "washbasin-wc-1",
           "type": "washbasin",
           "position": [5.4, 8.13],

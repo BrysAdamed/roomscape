@@ -3,6 +3,7 @@ import type { Apartment } from '../schema/apartment';
 import {
   findElement,
   setFurnitureMaterial,
+  setFurnitureParam,
   setOpeningMaterial,
   setRoomFloorMaterial,
   setWallMaterial,
@@ -139,6 +140,14 @@ describe('edits', () => {
 
     // Assert
     expect(edited.floors[0]!.furniture[0]!.materials).toEqual({ bedding: 'fabric-navy' });
+  });
+
+  it('sets a furniture parameter', () => {
+    // Act
+    const edited = setFurnitureParam(apartment(), 'bed-1', 'width', 1.8);
+
+    // Assert
+    expect(edited.floors[0]!.furniture[0]!.params).toEqual({ width: 1.8 });
   });
 
   it('sets door leaf and frame materials', () => {

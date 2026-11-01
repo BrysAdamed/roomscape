@@ -65,6 +65,21 @@ export function setFurnitureMaterial(
   });
 }
 
+export function setFurnitureParam(
+  apartment: Apartment,
+  itemId: string,
+  param: string,
+  value: number,
+): Apartment {
+  return updateFloors(apartment, (floor) => {
+    const furniture = replaceById(floor.furniture, itemId, (item) => ({
+      ...item,
+      params: { ...item.params, [param]: value },
+    }));
+    return furniture === floor.furniture ? floor : { ...floor, furniture };
+  });
+}
+
 export function setStairsMaterial(apartment: Apartment, stairsId: string, ref: string): Apartment {
   return updateFloors(apartment, (floor) => {
     if (!floor.stairs) {

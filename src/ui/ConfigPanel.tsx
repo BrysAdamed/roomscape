@@ -10,6 +10,7 @@ import { wallLength } from '../schema/validate';
 import { findElement, type WallSide } from '../state/apartmentEdits';
 import { useApartmentStore } from '../state/apartmentStore';
 import { MaterialPicker } from './MaterialPicker';
+import { ParamSlider } from './ParamSlider';
 import { wallFaceDirection } from './wallFaces';
 
 const WALL_CATEGORIES: readonly MaterialCategory[] = ['paint', 'tile', 'stone', 'wood'];
@@ -111,12 +112,14 @@ function RoomSettings({ room }: { room: Room }) {
 
 function FurnitureSettings({ item }: { item: FurnitureItem }) {
   const setFurnitureMaterial = useApartmentStore((state) => state.setFurnitureMaterial);
+  const setFurnitureParam = useApartmentStore((state) => state.setFurnitureParam);
   const type = findFurnitureType(item.type);
   if (!type) {
     return <p className="config-facts">Unknown furniture type '{item.type}'.</p>;
   }
   const refs = resolveMaterialRefs(type, item);
-  const [width, depth, height] = type.size(resolveParams(type, item));
+  const params = resolveParams(type, item);
+  const [width, depth, height] = type.size(params);
   return (
     <>
       <Facts
@@ -126,6 +129,14 @@ function FurnitureSettings({ item }: { item: FurnitureItem }) {
           ['Height', formatLength(height)],
         ]}
       />
+      {type.controls?.map((control) => (
+        <ParamSlider
+          key={control.param}
+          control={control}
+          params={params}
+          onChange={(value) => setFurnitureParam(item.id, control.param, value)}
+        />
+      ))}
       {Object.entries(type.slots).map(([slot, definition]) => (
         <MaterialPicker
           key={slot}

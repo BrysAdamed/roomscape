@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import type { Apartment } from '../schema/apartment';
 import {
   setFurnitureMaterial,
+  setFurnitureParam,
   setRoomFloorMaterial,
   setOpeningMaterial,
   setStairsMaterial,
@@ -23,6 +24,7 @@ interface ApartmentState {
   setWallMaterial: (wallId: string, side: WallSide, ref: string) => void;
   setRoomFloorMaterial: (roomId: string, ref: string) => void;
   setFurnitureMaterial: (itemId: string, slot: string, ref: string) => void;
+  setFurnitureParam: (itemId: string, param: string, value: number) => void;
   setStairsMaterial: (stairsId: string, ref: string) => void;
   setOpeningMaterial: (openingId: string, part: OpeningPart, ref: string) => void;
 }
@@ -54,6 +56,8 @@ export const useApartmentStore = create<ApartmentState>((set) => {
       edit((apartment) => setRoomFloorMaterial(apartment, roomId, ref)),
     setFurnitureMaterial: (itemId, slot, ref) =>
       edit((apartment) => setFurnitureMaterial(apartment, itemId, slot, ref)),
+    setFurnitureParam: (itemId, param, value) =>
+      edit((apartment) => setFurnitureParam(apartment, itemId, param, value)),
     setStairsMaterial: (stairsId, ref) =>
       edit((apartment) => setStairsMaterial(apartment, stairsId, ref)),
     setOpeningMaterial: (openingId, part, ref) =>

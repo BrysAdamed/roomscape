@@ -472,6 +472,28 @@
           "materials": {}
         },
         {
+          "id": "wall-cabinets-west",
+          "type": "wall-cabinet",
+          "position": [0.56, 8.0],
+          "rotation": 90,
+          "params": {
+            "width": 2.8
+          },
+          "materials": {},
+          "elevation": 1.45
+        },
+        {
+          "id": "hood",
+          "type": "cooker-hood",
+          "position": [1.085, 6.85],
+          "rotation": 0,
+          "params": {
+            "chimney": 1.02
+          },
+          "materials": {},
+          "elevation": 1.55
+        },
+        {
           "id": "pantry",
           "type": "wardrobe",
           "position": [0.685, 10.45],

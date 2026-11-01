@@ -585,3 +585,31 @@ kbd {
   clip: rect(0 0 0 0);
   white-space: nowrap;
 }
+
+.param-slider {
+  margin: 14px 0 0;
+}
+
+.param-slider-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.param-slider-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 400;
+}
+
+.param-slider input[type='range'] {
+  width: 100%;
+  accent-color: var(--accent);
+}
+
+.param-slider-label .material-current {
+  margin-left: auto;
+}
