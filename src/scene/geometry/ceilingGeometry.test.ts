@@ -19,6 +19,28 @@ function ceilingArea(geometry: ReturnType<typeof buildCeilingGeometry>): number 
 }
 
 describe('buildCeilingGeometry', () => {
+  it('closes the step between a slope and a dormer with vertical faces', () => {
+    // Arrange
+    const dormerRoof: Roof = { ...roof, dormers: [[-1, 1, 2, 2]] };
+
+    // Act
+    const geometry = buildCeilingGeometry(dormerRoof, 2.5, [
+      [
+        [0, 0],
+        [4, 0],
+        [4, 3],
+        [0, 3],
+      ],
+    ]);
+
+    // Assert
+    const normal = geometry.getAttribute('normal');
+    const vertical = Array.from({ length: normal.count }, (_, index) => normal.getY(index)).filter(
+      (y) => Math.abs(y) < 1e-6,
+    );
+    expect(vertical.length).toBeGreaterThan(0);
+  });
+
   it('leaves openings out of a flat ceiling', () => {
     // Act
     const geometry = buildCeilingGeometry(
