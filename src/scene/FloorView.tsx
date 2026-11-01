@@ -6,6 +6,7 @@ import { CeilingMesh } from './CeilingMesh';
 import { FurnitureMesh } from './FurnitureMesh';
 import { wallTopProfile } from './geometry/roof';
 import { layoutWalls } from './geometry/wallLayout';
+import { LampLights } from './lighting/LampLights';
 import { ghostMaterial } from './materials';
 import { OpeningMesh } from './OpeningMesh';
 import { hasOpeningMesh } from './openings';
@@ -81,6 +82,7 @@ export function FloorView({ floor, ghost = false }: { floor: Floor; ghost?: bool
             )),
         )}
       {!ghost && !cutaway && <CeilingMesh floor={floor} />}
+      {!ghost && <LampLights furniture={floor.furniture} />}
       {!ghost && !cutaway && floor.roof && (
         <>
           {floor.roof.windows?.map((roofWindow) => (

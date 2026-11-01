@@ -5,6 +5,7 @@ import { Color, Object3D, type DirectionalLight, type HemisphereLight } from 'th
 import { useApartmentStore } from '../../state/apartmentStore';
 import { frameApartment } from '../camera/framing';
 import { useViewerStore } from '../../state/viewerStore';
+import { shownDaylight } from './daylight';
 import { dateOfDay, dayOfYear, seasonDate } from './seasons';
 import { sunState } from './useSun';
 
@@ -64,6 +65,7 @@ export function Lighting() {
       scene.background.copy(NIGHT_SKY).lerp(SKY, state.daylight);
     }
     scene.environmentIntensity = 0.1 + 0.35 * state.daylight;
+    shownDaylight.value = state.daylight;
   });
 
   return (
