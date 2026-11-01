@@ -20,26 +20,20 @@ export function CameraRig({ framing }: { framing: CameraFraming }) {
   const elevation = useApartmentStore((state) =>
     state.apartment ? (activeFloor(state.apartment, state.activeFloorId)?.elevation ?? 0) : 0,
   );
-  const shownElevation = useRef(0);
+  const activeElevation = useRef(elevation);
+  useEffect(() => {
+    activeElevation.current = elevation;
+  }, [elevation]);
 
   useEffect(() => {
     const [x, y, z] = framing.position;
     const [tx, ty, tz] = framing.target;
-    camera.position.set(x, y + shownElevation.current, z);
-    orbitTarget.current.set(tx, ty + shownElevation.current, tz);
+    camera.position.set(x, y + activeElevation.current, z);
+    orbitTarget.current.set(tx, ty + activeElevation.current, tz);
     camera.lookAt(orbitTarget.current);
     orbit.current?.target.copy(orbitTarget.current);
     orbit.current?.update();
   }, [camera, framing, resetRequest]);
-
-  useEffect(() => {
-    const delta = elevation - shownElevation.current;
-    shownElevation.current = elevation;
-    camera.position.setY(camera.position.y + delta);
-    orbitTarget.current.setY(orbitTarget.current.y + delta);
-    orbit.current?.target.copy(orbitTarget.current);
-    orbit.current?.update();
-  }, [camera, elevation]);
 
   const topViewRequest = useViewerStore((state) => state.topViewRequest);
   useEffect(() => {
@@ -48,8 +42,8 @@ export function CameraRig({ framing }: { framing: CameraFraming }) {
     }
     const [tx, ty, tz] = framing.target;
     const distance = new Vector3(...framing.position).distanceTo(new Vector3(...framing.target));
-    orbitTarget.current.set(tx, ty + shownElevation.current, tz);
-    camera.position.set(tx, ty + shownElevation.current + distance, tz + 0.001);
+    orbitTarget.current.set(tx, ty + activeElevation.current, tz);
+    camera.position.set(tx, ty + activeElevation.current + distance, tz + 0.001);
     camera.lookAt(orbitTarget.current);
     orbit.current?.target.copy(orbitTarget.current);
     orbit.current?.update();
