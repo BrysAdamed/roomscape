@@ -59,5 +59,6 @@ export const wardrobe = defineFurniture<Params, Slots>({
     doors: { label: 'Doors', categories: ['wood', 'glass'], default: 'wood-white-lacquer' },
     handles: { label: 'Handles', categories: ['metal'], default: 'metal-brushed-steel' },
   },
+  size: ({ width, depth, height }) => [width, depth, height],
   Component: Wardrobe,
 });

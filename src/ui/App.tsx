@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { Viewport } from '../scene/Viewport';
 import { useApartmentStore } from '../state/apartmentStore';
+import { useViewerStore } from '../state/viewerStore';
 import { CameraToolbar } from './CameraToolbar';
 import { ConfigPanel } from './ConfigPanel';
 import { ProjectBar } from './ProjectBar';
@@ -24,6 +25,7 @@ export function App() {
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         select(undefined);
+        useViewerStore.getState().clearMeasurements();
       }
     };
     window.addEventListener('keydown', onKeyDown);

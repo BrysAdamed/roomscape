@@ -53,5 +53,6 @@ export const chair = defineFurniture<Params, Slots>({
     seat: { label: 'Seat', categories: ['fabric', 'wood'], default: 'fabric-charcoal' },
     frame: { label: 'Frame', categories: ['metal', 'wood'], default: 'metal-black' },
   },
+  size: ({ width, depth, height }) => [width, depth, height],
   Component: Chair,
 });

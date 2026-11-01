@@ -1,8 +1,10 @@
+import { Fragment } from 'react';
 import { findFurnitureType } from '../catalogue/furniture/registry';
-import { resolveMaterialRefs } from '../catalogue/furniture/resolve';
+import { resolveMaterialRefs, resolveParams } from '../catalogue/furniture/resolve';
 import type { MaterialCategory } from '../catalogue/materials';
 import { polygonArea } from '../scene/geometry/floorGeometry';
-import type { FurnitureItem, Room, Wall } from '../schema/apartment';
+import { formatLength } from '../scene/measure/format';
+import type { FurnitureItem, PlanPoint, Room, Wall } from '../schema/apartment';
 import { wallLength } from '../schema/validate';
 import { findElement, type WallSide } from '../state/apartmentEdits';
 import { useApartmentStore } from '../state/apartmentStore';
@@ -34,7 +36,9 @@ export function ConfigPanel() {
           ✕
         </button>
       </header>
-      {element.kind === 'wall' && <WallSettings wall={element.wall} />}
+      {element.kind === 'wall' && (
+        <WallSettings wall={element.wall} height={element.wall.height ?? element.floor.height} />
+      )}
       {element.kind === 'room' && <RoomSettings room={element.room} />}
       {element.kind === 'furniture' && <FurnitureSettings item={element.item} />}
     </aside>
@@ -52,14 +56,17 @@ function title(element: NonNullable<ReturnType<typeof findElement>>): string {
   }
 }
 
-function WallSettings({ wall }: { wall: Wall }) {
+function WallSettings({ wall, height }: { wall: Wall; height: number }) {
   const setWallMaterial = useApartmentStore((state) => state.setWallMaterial);
   return (
     <>
-      <p className="config-facts">
-        {format(wallLength(wall.start, wall.end))} m long · {format(wall.thickness * 100, 0)} cm
-        thick
-      </p>
+      <Facts
+        rows={[
+          ['Length (axis)', formatLength(wallLength(wall.start, wall.end))],
+          ['Thickness', formatLength(wall.thickness)],
+          ['Height', formatLength(height)],
+        ]}
+      />
       {WALL_SIDES.map((side) => (
         <MaterialPicker
           key={side}
@@ -77,7 +84,12 @@ function RoomSettings({ room }: { room: Room }) {
   const setRoomFloorMaterial = useApartmentStore((state) => state.setRoomFloorMaterial);
   return (
     <>
-      <p className="config-facts">{format(polygonArea(room.polygon))} m²</p>
+      <Facts
+        rows={[
+          ['Area', `${format(polygonArea(room.polygon))} m²`],
+          ['Extent', extent(room.polygon)],
+        ]}
+      />
       <MaterialPicker
         label="Floor"
         value={room.floorMaterial}
@@ -95,8 +107,16 @@ function FurnitureSettings({ item }: { item: FurnitureItem }) {
     return <p className="config-facts">Unknown furniture type '{item.type}'.</p>;
   }
   const refs = resolveMaterialRefs(type, item);
+  const [width, depth, height] = type.size(resolveParams(type, item));
   return (
     <>
+      <Facts
+        rows={[
+          ['Width', formatLength(width)],
+          ['Depth', formatLength(depth)],
+          ['Height', formatLength(height)],
+        ]}
+      />
       {Object.entries(type.slots).map(([slot, definition]) => (
         <MaterialPicker
           key={slot}
@@ -115,4 +135,25 @@ function format(value: number, digits = 2): string {
     minimumFractionDigits: digits,
     maximumFractionDigits: digits,
   });
+}
+
+function Facts({ rows }: { rows: [string, string][] }) {
+  return (
+    <dl className="config-dimensions">
+      {rows.map(([label, value]) => (
+        <Fragment key={label}>
+          <dt>{label}</dt>
+          <dd>{value}</dd>
+        </Fragment>
+      ))}
+    </dl>
+  );
+}
+
+function extent(polygon: readonly PlanPoint[]): string {
+  const xs = polygon.map(([x]) => x);
+  const ys = polygon.map(([, y]) => y);
+  const width = Math.max(...xs) - Math.min(...xs);
+  const depth = Math.max(...ys) - Math.min(...ys);
+  return `${formatLength(width)} × ${formatLength(depth)}`;
 }

@@ -47,5 +47,6 @@ export const desk = defineFurniture<Params, Slots>({
     top: { label: 'Top', categories: ['wood', 'stone'], default: 'wood-oak-light' },
     legs: { label: 'Legs', categories: ['metal', 'wood'], default: 'metal-black' },
   },
+  size: ({ width, depth, height }) => [width, depth, height],
   Component: Desk,
 });

@@ -6,6 +6,8 @@ import { CameraRig } from './camera/CameraRig';
 import { frameApartment } from './camera/framing';
 import { AmbientOcclusion } from './lighting/AmbientOcclusion';
 import { Lighting } from './lighting/Lighting';
+import { DimensionOverlay } from './measure/DimensionOverlay';
+import { Ruler } from './measure/Ruler';
 import { SelectionHighlight } from './selection/SelectionHighlight';
 
 export function Viewport() {
@@ -27,6 +29,8 @@ export function Viewport() {
       <Lighting />
       {apartment && <ApartmentView apartment={apartment} />}
       <SelectionHighlight />
+      <DimensionOverlay />
+      <Ruler />
       <CameraRig framing={framing} />
       <AmbientOcclusion />
     </Canvas>

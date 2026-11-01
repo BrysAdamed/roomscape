@@ -49,5 +49,6 @@ export const bed = defineFurniture<Params, Slots>({
     frame: { label: 'Frame', categories: ['wood', 'fabric', 'metal'], default: 'wood-oak-natural' },
     bedding: { label: 'Bedding', categories: ['fabric'], default: 'fabric-linen' },
   },
+  size: ({ width, length, height }) => [width, length, Math.max(height + 0.1, HEADBOARD_HEIGHT)],
   Component: Bed,
 });

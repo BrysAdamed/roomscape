@@ -248,3 +248,32 @@ button[aria-pressed='true'] {
   font-family: ui-monospace, monospace;
   font-size: 13px;
 }
+
+.dimension-label {
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgb(255 255 255 / 92%);
+  color: #1f1f1f;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 25%);
+}
+
+.config-dimensions {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 2px 12px;
+  margin: 10px 0 4px;
+  font-size: 13px;
+}
+
+.config-dimensions dt {
+  opacity: 0.65;
+}
+
+.config-dimensions dd {
+  margin: 0;
+  font-weight: 600;
+}

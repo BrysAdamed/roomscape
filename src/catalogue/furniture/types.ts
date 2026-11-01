@@ -18,6 +18,8 @@ export interface FurnitureType<P extends string = string, S extends string = str
   name: string;
   params: Readonly<Record<P, number>>;
   slots: Readonly<Record<S, MaterialSlot>>;
+  /** Overall size as [width (x), depth (z), height] in metres. */
+  size: (params: Readonly<Record<P, number>>) => [number, number, number];
   Component: ComponentType<FurnitureRenderProps<P, S>>;
 }
 

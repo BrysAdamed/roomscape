@@ -10,10 +10,20 @@ const HINTS: Record<CameraMode, string> = {
   fly: 'Drag to look · WASD to move · Q/E down/up · Shift to speed up',
 };
 
+const RULER_HINT = 'Click two points to measure · Esc clears';
+
 export function CameraToolbar() {
   const mode = useViewerStore((state) => state.cameraMode);
   const setMode = useViewerStore((state) => state.setCameraMode);
   const requestReset = useViewerStore((state) => state.requestCameraReset);
+  const tool = useViewerStore((state) => state.tool);
+  const setTool = useViewerStore((state) => state.setTool);
+  const showWallLengths = useViewerStore((state) => state.showWallLengths);
+  const toggleWallLengths = useViewerStore((state) => state.toggleWallLengths);
+  const hasMeasurements = useViewerStore(
+    (state) => state.measurements.length > 0 || state.pendingPoint !== undefined,
+  );
+  const clearMeasurements = useViewerStore((state) => state.clearMeasurements);
 
   return (
     <div className="toolbar">
@@ -32,7 +42,28 @@ export function CameraToolbar() {
       <button type="button" onClick={requestReset}>
         Reset view
       </button>
-      <span className="hint">{HINTS[mode]}</span>
+      <button
+        type="button"
+        aria-pressed={tool === 'ruler'}
+        onClick={() => setTool(tool === 'ruler' ? 'select' : 'ruler')}
+        title="Measure the distance between two points"
+      >
+        Ruler
+      </button>
+      {hasMeasurements && (
+        <button type="button" onClick={clearMeasurements}>
+          Clear measurements
+        </button>
+      )}
+      <button
+        type="button"
+        aria-pressed={showWallLengths}
+        onClick={toggleWallLengths}
+        title="Show the length of every wall"
+      >
+        Wall lengths
+      </button>
+      <span className="hint">{tool === 'ruler' ? RULER_HINT : HINTS[mode]}</span>
     </div>
   );
 }
