@@ -1,10 +1,19 @@
 # Roomscape
 
-Browser-based 3D apartment visualizer: free camera, selectable/configurable elements, apartments generated from floor plans.
+Walk through an apartment before it exists. Roomscape turns a developer's floor plan PDF into a 3D model you can explore in the browser.
 
-## Stack
+**Live demo:** https://brysadamed.github.io/roomscape/
 
-TypeScript, React, Three.js via React Three Fiber + drei, Vite, zod, Vitest.
+## What it does
+
+- **Explore in 3D.** Orbit around the whole apartment or switch to first-person and walk through the rooms. Preset views include a top view for comparing the model against the plan.
+- **Realistic enough to judge a space.** Wood floors, tiles, plaster and fabrics are generated procedurally at real-world scale. Sunlight casts soft shadows through the windows, and ambient occlusion shades corners and the gaps under furniture.
+- **Measure anything.** Select a wall, room or piece of furniture to see its dimensions in the side panel and in the scene. Toggle labels for every wall length, or use the ruler to measure between any two points, for example from the sofa to the TV.
+- **Try out finishes.** Pick paint for each side of a wall, and choose floor finishes, furniture and stair materials from a catalogue. Export the result as JSON to keep it.
+- **Multi-storey apartments.** Switch between floors while the floor below shows through faintly. Stairs are modelled from the plan. A cutaway view lowers the walls to see into the rooms from above.
+- **Check against the source.** Lay the original floor plan under the model to see how well it lines up.
+
+Each apartment is a single JSON file (walls, doors, windows, rooms, furniture, stairs; see [docs/schema.md](docs/schema.md)). A Python tool reads the PDF's vector drawing to get the walls, openings and rooms. It works out the scale from the room areas printed on the plan, and an AI agent finishes the model: it fixes what the extraction got wrong and furnishes the rooms.
 
 ## Running
 
@@ -15,30 +24,22 @@ npm install
 npm run dev
 ```
 
-| Script            | Purpose                         |
-| ----------------- | ------------------------------- |
-| `npm run dev`     | Dev server with hot reload      |
-| `npm run build`   | Type-check and production build |
-| `npm run preview` | Serve the production build      |
-| `npm test`        | Unit tests                      |
-| `npm run lint`    | ESLint                          |
-| `npm run format`  | Prettier                        |
+Open the printed URL and pick a project. `/?project=<id>` opens one directly. You can also open an exported JSON file from the picker or drop it anywhere on the page.
 
-The build uses a relative base path, so `dist/` can be served from any sub-path (e.g. GitHub Pages).
+## How to add a new apartment
 
-## Layout
+Ask a coding agent (for example Claude Code) working in this repository to do it, and give it the plan:
 
-| Path              | Contents                                 |
-| ----------------- | ---------------------------------------- |
-| `src/schema`      | Apartment JSON schema and validation     |
-| `src/catalogue`   | Material catalogue (and furniture types) |
-| `src/scene`       | 3D scene components                      |
-| `src/ui`          | App shell and panels                     |
-| `public/projects` | Apartment JSON files                     |
-| `plans`           | Source floor plans and extraction config |
-| `tools`           | Floor plan extraction (Python)           |
-| `docs`            | Schema reference and decisions           |
+> Add a new apartment from `C:\path\to\plan.pdf`.
 
-The app starts with a project picker (projects are listed in `public/projects/index.json`); `/?project=<id>` opens one directly. An exported JSON can be opened from the picker or dropped anywhere on the page. To turn a floor plan PDF into an apartment draft, see [tools/README.md](tools/README.md).
+The agent follows [docs/authoring.md](docs/authoring.md):
 
-See [docs/schema.md](docs/schema.md) for the apartment format.
+1. Copy the PDF into `plans/<id>/`.
+2. Run the extraction tool ([tools/README.md](tools/README.md)), which needs Python 3 and PyMuPDF.
+3. Correct the result and furnish the rooms in a per-apartment `author.py` script.
+4. Check the room areas against the plan's area table.
+5. Register the project in `public/projects/index.json`.
+
+It works best with vector PDFs exported from CAD software (most developer plans are). Scanned plans need far more manual work.
+
+To change an existing apartment, edit it in the viewer, export the JSON and hand it to the agent along with what you changed. The agent then writes the changes into that apartment's `author.py`, so they survive the next regeneration.

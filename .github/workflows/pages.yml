@@ -16,8 +16,6 @@ concurrency:
 
 jobs:
   build:
-    # Pages needs a public repository (or a paid plan); skip pushes while the repo is private.
-    if: ${{ !github.event.repository.private || github.event_name == 'workflow_dispatch' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
