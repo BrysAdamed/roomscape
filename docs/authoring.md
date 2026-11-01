@@ -35,6 +35,10 @@ The user changes materials in the viewer, exports, and sends the file back.
 2. Diff it against the committed file (`git diff --no-index public/projects/<id>.json <export>.json`). Thanks to the shared layout, each change is one line.
 3. Copy it over the project file (the export is the complete apartment), review the diff once more, commit with a message that lists the changes.
 
+## Variants
+
+Variants live in `VARIANTS` in `plans/<id>/author.py` and are written into the apartment JSON (format: [schema.md](schema.md#variants)). Keep each one a short list of changes against the base, reusing the base's ids, so that regenerating the base keeps them working. When the user exports a variant from the viewer (the export is the flattened apartment), diff it against the base and write the differences as `remove`, `add` and `update` changes.
+
 ## Adding a material
 
 Add an entry to `src/catalogue/materials.ts` with a unique id, category, colour, roughness and metalness. The category decides the procedural texture (`src/scene/textures/patterns.ts`) and in which pickers it appears. Ids are referenced from apartments, so never rename or remove one that is in use.

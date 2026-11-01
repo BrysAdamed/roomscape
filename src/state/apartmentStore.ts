@@ -12,14 +12,20 @@ import {
   type OpeningPart,
   type WallSide,
 } from './apartmentEdits';
+import { applyVariant } from './variants';
 
 interface ApartmentState {
+  /** The apartment as loaded, with its variants. */
+  base: Apartment | undefined;
+  variantId: string | undefined;
+  /** The base with the active variant applied: what the viewer shows before the user's edits. */
   source: Apartment | undefined;
   apartment: Apartment | undefined;
   selectedId: string | undefined;
   hoveredId: string | undefined;
   activeFloorId: string | undefined;
-  load: (apartment: Apartment) => void;
+  load: (apartment: Apartment, variantId?: string) => void;
+  setVariant: (variantId: string | undefined) => void;
   select: (id: string | undefined) => void;
   hover: (id: string | undefined) => void;
   setActiveFloor: (floorId: string) => void;
@@ -43,13 +49,35 @@ export const useApartmentStore = create<ApartmentState>((set) => {
     selectedId: undefined,
     hoveredId: undefined,
     activeFloorId: undefined,
-    load: (apartment) =>
+    base: undefined,
+    variantId: undefined,
+    load: (base, variantId) => {
+      const shown = applyVariant(base, variantId).apartment;
       set({
-        source: apartment,
-        apartment,
+        base,
+        variantId: shown === base ? undefined : variantId,
+        source: shown,
+        apartment: shown,
         selectedId: undefined,
         hoveredId: undefined,
-        activeFloorId: apartment.floors[0]?.id,
+        activeFloorId: shown.floors[0]?.id,
+      });
+    },
+    setVariant: (variantId) =>
+      set((state) => {
+        if (!state.base) {
+          return state;
+        }
+        const shown = applyVariant(state.base, variantId).apartment;
+        const floorKept = shown.floors.some((floor) => floor.id === state.activeFloorId);
+        return {
+          variantId: shown === state.base ? undefined : variantId,
+          source: shown,
+          apartment: shown,
+          selectedId: undefined,
+          hoveredId: undefined,
+          activeFloorId: floorKept ? state.activeFloorId : shown.floors[0]?.id,
+        };
       }),
     select: (selectedId) => set({ selectedId }),
     hover: (hoveredId) => set({ hoveredId }),

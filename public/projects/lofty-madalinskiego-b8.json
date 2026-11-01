@@ -1592,5 +1592,75 @@
         }
       ]
     }
+  ],
+  "variants": [
+    {
+      "id": "guest-room",
+      "name": "Study as a guest room",
+      "description": "The study on the ground floor gets a double bed instead of the desk.",
+      "changes": [
+        {
+          "op": "remove",
+          "id": "desk-gabinet"
+        },
+        {
+          "op": "remove",
+          "id": "chair-gabinet"
+        },
+        {
+          "op": "add",
+          "floorId": "parter",
+          "item": {
+            "id": "bed-guest",
+            "type": "bed",
+            "position": [8.9, 7.15],
+            "rotation": 0,
+            "params": {},
+            "materials": {}
+          }
+        }
+      ]
+    },
+    {
+      "id": "sage-kitchen",
+      "name": "Sage kitchen and walnut floor",
+      "description": "Sage green kitchen fronts and a walnut floor in the living room.",
+      "changes": [
+        {
+          "op": "update",
+          "id": "counter-east",
+          "set": {
+            "materials": {
+              "fronts": "paint-sage"
+            }
+          }
+        },
+        {
+          "op": "update",
+          "id": "counter-south",
+          "set": {
+            "materials": {
+              "fronts": "paint-sage"
+            }
+          }
+        },
+        {
+          "op": "update",
+          "id": "wall-cabinets-east",
+          "set": {
+            "materials": {
+              "fronts": "paint-sage"
+            }
+          }
+        },
+        {
+          "op": "update",
+          "id": "room-salon-z-aneksem",
+          "set": {
+            "floorMaterial": "wood-walnut"
+          }
+        }
+      ]
+    }
   ]
 }

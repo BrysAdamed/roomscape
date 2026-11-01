@@ -133,6 +133,32 @@ export const locationSchema = z.object({
   timeZone: z.string().min(1).optional(),
 });
 
+export const variantChangeSchema = z.discriminatedUnion('op', [
+  z.object({ op: z.literal('remove'), id }),
+  z.object({ op: z.literal('add'), floorId: id, item: furnitureSchema }),
+  z.object({
+    op: z.literal('update'),
+    id,
+    set: z
+      .object({
+        position: planPointSchema,
+        rotation: z.number(),
+        elevation: nonNegative,
+        params: furnitureSchema.shape.params,
+        materials: z.record(z.string(), materialRef),
+        floorMaterial: materialRef,
+      })
+      .partial(),
+  }),
+]);
+
+export const variantSchema = z.object({
+  id,
+  name: z.string().min(1),
+  description: z.string().optional(),
+  changes: z.array(variantChangeSchema).min(1),
+});
+
 export const apartmentSchema = z.object({
   schemaVersion: z.literal(SCHEMA_VERSION),
   id,
@@ -140,6 +166,7 @@ export const apartmentSchema = z.object({
   north: z.number().min(0).lt(360).optional(),
   location: locationSchema.optional(),
   floors: z.array(floorSchema).min(1),
+  variants: z.array(variantSchema).optional(),
 });
 
 export type PlanPoint = z.infer<typeof planPointSchema>;
@@ -156,4 +183,6 @@ export type RoofWindow = z.infer<typeof roofWindowSchema>;
 export type PlanImage = z.infer<typeof planImageSchema>;
 export type Location = z.infer<typeof locationSchema>;
 export type Floor = z.infer<typeof floorSchema>;
+export type Variant = z.infer<typeof variantSchema>;
+export type VariantChange = z.infer<typeof variantChangeSchema>;
 export type Apartment = z.infer<typeof apartmentSchema>;

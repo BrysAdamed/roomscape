@@ -195,6 +195,25 @@ FURNITURE = {
 }
 
 
+# Alternative layouts the viewer offers next to the developer's plan, as changes against it.
+VARIANTS = [
+    {'id': 'guest-room', 'name': 'Study as a guest room',
+     'description': 'The study on the ground floor gets a double bed instead of the desk.',
+     'changes': [
+         {'op': 'remove', 'id': 'desk-gabinet'},
+         {'op': 'remove', 'id': 'chair-gabinet'},
+         {'op': 'add', 'floorId': 'parter', 'item': item('bed-guest', 'bed', 8.9, 7.15)},
+     ]},
+    {'id': 'sage-kitchen', 'name': 'Sage kitchen and walnut floor',
+     'description': 'Sage green kitchen fronts and a walnut floor in the living room.',
+     'changes': [
+         *({'op': 'update', 'id': unit, 'set': {'materials': {'fronts': 'paint-sage'}}}
+           for unit in ('counter-east', 'counter-south', 'wall-cabinets-east')),
+         {'op': 'update', 'id': 'room-salon-z-aneksem', 'set': {'floorMaterial': 'wood-walnut'}},
+     ]},
+]
+
+
 def stairs_steps() -> list[list[list[float]]]:
     """Dog-leg flight from the plan: 3 treads south from the hall, 7 winders turning 180° under the WC, 6 treads north
     arriving at the attic corridor."""
@@ -258,6 +277,7 @@ def author() -> dict:
         {'id': 'stairs-1', 'riserHeight': 0.1753, 'steps': stairs_steps(), 'closed': True, 'material': 'wood-oak-natural'}]
     for floor in apartment['floors']:
         floor['furniture'] = floor['furniture'] + pendant_lamps(floor)
+    apartment['variants'] = VARIANTS
     return apartment
 
 

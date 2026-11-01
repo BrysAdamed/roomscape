@@ -655,3 +655,13 @@ kbd {
 .param-slider-label .material-current {
   margin-left: auto;
 }
+
+.variant-select {
+  font: inherit;
+  color: inherit;
+  padding: 5px 8px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface);
+  max-width: 220px;
+}

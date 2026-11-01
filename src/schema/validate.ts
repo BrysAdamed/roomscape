@@ -2,6 +2,7 @@ import type { z } from 'zod';
 import { furnitureTypes } from '../catalogue/furniture/registry';
 import type { FurnitureType } from '../catalogue/furniture/types';
 import { materials } from '../catalogue/materials';
+import { applyVariant } from '../state/variants';
 import {
   apartmentSchema,
   CUSTOM_COLOR_PATTERN,
@@ -32,12 +33,32 @@ export function validateApartment(
     return { success: false, errors: parsed.error.issues.map(formatIssue) };
   }
 
-  const errors = checkReferences(parsed.data, context);
+  const errors = [...checkReferences(parsed.data, context), ...checkVariants(parsed.data, context)];
   return errors.length > 0 ? { success: false, errors } : { success: true, apartment: parsed.data };
 }
 
 export function wallLength(start: PlanPoint, end: PlanPoint): number {
   return Math.hypot(end[0] - start[0], end[1] - start[1]);
+}
+
+/** Every variant must apply cleanly and produce a valid apartment. */
+function checkVariants(apartment: Apartment, context: ValidationContext): string[] {
+  const errors: string[] = [];
+  const ids = new Set<string>();
+  (apartment.variants ?? []).forEach((variant, index) => {
+    if (ids.has(variant.id)) {
+      errors.push(`variants.${index}.id: duplicate variant id '${variant.id}'`);
+    }
+    ids.add(variant.id);
+    const applied = applyVariant(apartment, variant.id);
+    errors.push(
+      ...applied.errors,
+      ...checkReferences(applied.apartment, context).map(
+        (error) => `variants.${index} (${variant.id}): ${error}`,
+      ),
+    );
+  });
+  return errors;
 }
 
 function isTimeZone(timeZone: string): boolean {

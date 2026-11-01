@@ -17,7 +17,7 @@ An apartment is a single JSON file in `public/projects/`. The viewer renders it,
 ## Structure
 
 ```
-Apartment { schemaVersion, id, name, north?, location?, floors[] }
+Apartment { schemaVersion, id, name, north?, location?, floors[], variants[]? }
 Floor     { id, name, elevation, height, walls[], openings[], rooms[], furniture[], stairs[]?, railings[]?, roof?, planImage? }
 Wall      { id, start, end, thickness, height?, materials { left, right } }
 Opening   { id, wallId, kind, offset, width, height, sillHeight, frameMaterial?, door? }
@@ -34,6 +34,12 @@ PlanImage { src, bounds }
 
 - `north`: optional bearing of north in degrees, clockwise from plan up (the top of the drawing, -y). Read it from the plan's north arrow; the viewer shows a compass when it is set.
 - `location`: optional `{ latitude, longitude, timeZone? }` (IANA zone, e.g. `Europe/Warsaw`) used by the viewer's sun clock to place the sun. Defaults to Warsaw.
+
+### Variants
+
+- Alternative versions of the apartment (furniture swapped, a partition removed, other finishes) that the viewer offers next to the developer's plan: `{ id, name, description?, changes[] }`, stored as changes against the base so they survive regenerating it.
+- `changes[]`, applied in order: `{ op: "remove", id }` removes a wall (with its doors and windows), opening, room, piece of furniture, railing or stairs; `{ op: "add", floorId, item }` adds a piece of furniture; `{ op: "update", id, set }` patches furniture (`position`, `rotation`, `elevation`, `params`, `materials`), a room (`floorMaterial`) or a wall (`materials`).
+- The validator applies every variant and checks the result like the base; a change that refers to a missing id is an error.
 
 ### Floor
 

@@ -23,11 +23,12 @@ interface OpenedFile {
 }
 
 export function App() {
-  const [projectId, navigate] = useProjectRoute();
+  const { projectId, variantId, openProject: navigate, openVariant } = useProjectRoute();
   const [file, setFile] = useState<OpenedFile>();
   const project = useProject(file ? undefined : projectId);
   const load = useApartmentStore((state) => state.load);
-  const source = useApartmentStore((state) => state.source);
+  const base = useApartmentStore((state) => state.base);
+  const setVariant = useApartmentStore((state) => state.setVariant);
   const select = useApartmentStore((state) => state.select);
   const panelOpen = useApartmentStore(
     (state) =>
@@ -80,7 +81,13 @@ export function App() {
     return () => window.removeEventListener('keydown', onKeyDown);
   }, [select]);
 
-  const showViewer = apartment !== undefined && source === apartment;
+  useEffect(() => {
+    if (base) {
+      setVariant(variantId);
+    }
+  }, [base, variantId, setVariant]);
+
+  const showViewer = apartment !== undefined && base === apartment;
   const showPicker = !apartment && !projectId && !errors;
 
   return (
@@ -90,7 +97,11 @@ export function App() {
         <>
           <Viewport />
           <div className="top-left">
-            <ProjectBar origin={file?.name} onBack={() => openProject(undefined)} />
+            <ProjectBar
+              origin={file?.name}
+              onBack={() => openProject(undefined)}
+              onVariant={openVariant}
+            />
             <FloorSwitcher />
           </div>
           <CameraToolbar />

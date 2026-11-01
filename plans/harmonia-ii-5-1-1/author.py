@@ -99,6 +99,23 @@ FURNITURE = {
 }
 
 
+# Alternative layouts the viewer offers next to the developer's plan, as changes against it.
+VARIANTS = [
+    {'id': 'open-wardrobe', 'name': 'Open walk-in wardrobe',
+     'description': 'Without the partition wall between the walk-in wardrobe and the hall.',
+     'changes': [{'op': 'remove', 'id': 'parter-w-16'}]},
+    {'id': 'home-office', 'name': 'Bedroom 08 as a home office',
+     'description': 'The first-floor bedroom by the stairs becomes a study with two desks.',
+     'changes': [
+         {'op': 'remove', 'id': 'bed-08'},
+         {'op': 'add', 'floorId': 'pietro-1', 'item': item('desk-office-1', 'desk', 0.682, 9.0, 90)},
+         {'op': 'add', 'floorId': 'pietro-1', 'item': item('chair-office-1', 'chair', 1.25, 9.0, -90)},
+         {'op': 'add', 'floorId': 'pietro-1', 'item': item('desk-office-2', 'desk', 0.682, 10.4, 90)},
+         {'op': 'add', 'floorId': 'pietro-1', 'item': item('chair-office-2', 'chair', 1.25, 10.4, -90)},
+     ]},
+]
+
+
 def stairs_steps() -> list[list[list[float]]]:
     """U-shaped flight from the plan: 6 straight treads east, 8 winders turning 180° along the east wall, top tread."""
     steps = [[[x, 5.165], [x + 0.25, 5.165], [x + 0.25, 6.165], [x, 6.165]]
@@ -149,6 +166,7 @@ def author() -> dict:
         {'id': 'stairs-1', 'riserHeight': 0.1825, 'steps': stairs_steps(), 'material': 'wood-oak-natural'}]
     for floor in apartment['floors']:
         floor['furniture'] = floor['furniture'] + pendant_lamps(floor)
+    apartment['variants'] = VARIANTS
     return apartment
 
 

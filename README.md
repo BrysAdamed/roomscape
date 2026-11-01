@@ -11,6 +11,7 @@ Walk through an apartment before it exists. Roomscape turns a developer's floor 
 - **Measure anything.** Select a wall, room or piece of furniture to see its dimensions in the side panel and in the scene. Toggle labels for every wall length, or use the ruler to measure between any two points, for example from the sofa to the TV.
 - **Try out finishes.** Pick paint for each side of a wall, and choose floor finishes, furniture and stair materials from a catalogue. Export the result as JSON to keep it.
 - **Multi-storey apartments.** Switch between floors while the floor below shows through faintly. Stairs are modelled from the plan. A cutaway view lowers the walls to see into the rooms from above.
+- **Compare versions.** An apartment can come with variants, such as a study turned into a guest room or a partition wall removed. Pick one from the project bar to see it; the link includes the variant, so it can be shared.
 - **Check against the source.** Lay the original floor plan under the model to see how well it lines up.
 
 Each apartment is a single JSON file (walls, doors, windows, rooms, furniture, stairs; see [docs/schema.md](docs/schema.md)). A Python tool reads the PDF's vector drawing to get the walls, openings and rooms. It works out the scale from the room areas printed on the plan, and an AI agent finishes the model: it fixes what the extraction got wrong and furnishes the rooms.
@@ -42,7 +43,7 @@ The agent follows [docs/authoring.md](docs/authoring.md):
 
 It works best with vector PDFs exported from CAD software (most developer plans are). Scanned plans need far more manual work.
 
-To change an existing apartment, edit it in the viewer, export the JSON and hand it to the agent along with what you changed. The agent then writes the changes into that apartment's `author.py`, so they survive the next regeneration.
+To get another version of an apartment to compare, ask for a variant, for example "add a variant of Lofty B8 where the study is a guest room". To change an existing apartment, edit it in the viewer, export the JSON and hand it to the agent along with what you changed. The agent then writes the changes into that apartment's `author.py`, so they survive the next regeneration.
 
 ## How to add or modify furniture
 

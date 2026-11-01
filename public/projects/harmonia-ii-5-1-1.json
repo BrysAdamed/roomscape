@@ -1458,5 +1458,77 @@
         }
       ]
     }
+  ],
+  "variants": [
+    {
+      "id": "open-wardrobe",
+      "name": "Open walk-in wardrobe",
+      "description": "Without the partition wall between the walk-in wardrobe and the hall.",
+      "changes": [
+        {
+          "op": "remove",
+          "id": "parter-w-16"
+        }
+      ]
+    },
+    {
+      "id": "home-office",
+      "name": "Bedroom 08 as a home office",
+      "description": "The first-floor bedroom by the stairs becomes a study with two desks.",
+      "changes": [
+        {
+          "op": "remove",
+          "id": "bed-08"
+        },
+        {
+          "op": "add",
+          "floorId": "pietro-1",
+          "item": {
+            "id": "desk-office-1",
+            "type": "desk",
+            "position": [0.682, 9.0],
+            "rotation": 90,
+            "params": {},
+            "materials": {}
+          }
+        },
+        {
+          "op": "add",
+          "floorId": "pietro-1",
+          "item": {
+            "id": "chair-office-1",
+            "type": "chair",
+            "position": [1.25, 9.0],
+            "rotation": -90,
+            "params": {},
+            "materials": {}
+          }
+        },
+        {
+          "op": "add",
+          "floorId": "pietro-1",
+          "item": {
+            "id": "desk-office-2",
+            "type": "desk",
+            "position": [0.682, 10.4],
+            "rotation": 90,
+            "params": {},
+            "materials": {}
+          }
+        },
+        {
+          "op": "add",
+          "floorId": "pietro-1",
+          "item": {
+            "id": "chair-office-2",
+            "type": "chair",
+            "position": [1.25, 10.4],
+            "rotation": -90,
+            "params": {},
+            "materials": {}
+          }
+        }
+      ]
+    }
   ]
 }
