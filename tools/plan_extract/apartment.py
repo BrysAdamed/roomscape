@@ -33,6 +33,8 @@ def build_apartment(
     apartment: dict[str, Any] = {'schemaVersion': 1, 'id': config.id, 'name': config.name}
     if config.north is not None:
         apartment['north'] = config.north
+    if config.location is not None:
+        apartment['location'] = config.location
     return {**apartment, 'floors': floors}
 
 

@@ -90,11 +90,18 @@ export const floorSchema = z.object({
   planImage: planImageSchema.optional(),
 });
 
+export const locationSchema = z.object({
+  latitude: z.number().min(-90).max(90),
+  longitude: z.number().min(-180).max(180),
+  timeZone: z.string().min(1).optional(),
+});
+
 export const apartmentSchema = z.object({
   schemaVersion: z.literal(SCHEMA_VERSION),
   id,
   name: z.string().min(1),
   north: z.number().min(0).lt(360).optional(),
+  location: locationSchema.optional(),
   floors: z.array(floorSchema).min(1),
 });
 
@@ -106,5 +113,6 @@ export type Room = z.infer<typeof roomSchema>;
 export type FurnitureItem = z.infer<typeof furnitureSchema>;
 export type Stairs = z.infer<typeof stairsSchema>;
 export type PlanImage = z.infer<typeof planImageSchema>;
+export type Location = z.infer<typeof locationSchema>;
 export type Floor = z.infer<typeof floorSchema>;
 export type Apartment = z.infer<typeof apartmentSchema>;

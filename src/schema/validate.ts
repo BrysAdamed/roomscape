@@ -40,6 +40,15 @@ export function wallLength(start: PlanPoint, end: PlanPoint): number {
   return Math.hypot(end[0] - start[0], end[1] - start[1]);
 }
 
+function isTimeZone(timeZone: string): boolean {
+  try {
+    new Intl.DateTimeFormat('en-US', { timeZone });
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 function formatIssue(issue: z.core.$ZodIssue): string {
   const path = issue.path.length > 0 ? issue.path.join('.') : '(root)';
   return `${path}: ${issue.message}`;
@@ -63,6 +72,10 @@ function checkReferences(apartment: Apartment, context: ValidationContext): stri
   };
 
   claimId(apartment.id, 'id');
+  const timeZone = apartment.location?.timeZone;
+  if (timeZone && !isTimeZone(timeZone)) {
+    errors.push(`location.timeZone: unknown time zone '${timeZone}'`);
+  }
   apartment.floors.forEach((floor, floorIndex) => {
     const floorPath = `floors.${floorIndex}`;
     claimId(floor.id, `${floorPath}.id`);

@@ -9,6 +9,7 @@ import { HelpPanel } from './HelpPanel';
 import { FloorSwitcher } from './FloorSwitcher';
 import { ProjectBar } from './ProjectBar';
 import { ProjectPicker } from './ProjectPicker';
+import { SunClock } from './SunClock';
 import { parseApartmentFile, type LoadResult } from './projects';
 import { useFileDrop } from './useFileDrop';
 import { useProject } from './useProject';
@@ -82,6 +83,7 @@ export function App() {
           <CameraToolbar />
           <div className="side-column">
             <ConfigPanel />
+            <SunClock />
             <Compass />
             <HelpPanel />
           </div>

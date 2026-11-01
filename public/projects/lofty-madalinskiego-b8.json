@@ -3,6 +3,11 @@
   "id": "lofty-madalinskiego-b8",
   "name": "Lofty Madalińskiego – B8",
   "north": 96,
+  "location": {
+    "latitude": 50.026,
+    "longitude": 19.918,
+    "timeZone": "Europe/Warsaw"
+  },
   "floors": [
     {
       "id": "parter",

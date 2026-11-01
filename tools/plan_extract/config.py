@@ -40,6 +40,7 @@ class PlanConfig:
     defaults: Defaults = Defaults()
     opening_overrides: dict[str, dict[str, Any]] = field(default_factory=dict)
     north: float | None = None
+    location: dict[str, Any] | None = None
 
 
 def load_config(path: Path) -> PlanConfig:
@@ -73,4 +74,5 @@ def load_config(path: Path) -> PlanConfig:
         ),
         opening_overrides=raw.get('overrides', {}).get('openings', {}),
         north=raw.get('north'),
+        location=raw.get('location'),
     )

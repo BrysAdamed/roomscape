@@ -3,6 +3,7 @@
   "id": "harmonia-ii-5-1-1",
   "name": "Harmonia II – 5.1.1",
   "north": 13.5,
+  "location": { "latitude": 50.032, "longitude": 20.018, "timeZone": "Europe/Warsaw" },
   "pointsPerMetre": 19.843,
   "wallFill": [0.7529, 0.7529, 0.7529],
   "defaults": {
