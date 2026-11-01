@@ -34,6 +34,7 @@ const SELECT_CONTROLS: readonly Control[] = [
 
 const RULER_CONTROLS: readonly Control[] = [
   { keys: ['Click'], action: 'Place a point (two per measurement)' },
+  { keys: ['Ctrl'], action: 'Hold to switch straight / floor-only' },
   { keys: ['Esc'], action: 'Clear measurements' },
 ];
 

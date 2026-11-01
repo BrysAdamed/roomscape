@@ -19,6 +19,8 @@ export function CameraToolbar() {
     (state) => state.measurements.length > 0 || state.pendingPoint !== undefined,
   );
   const clearMeasurements = useViewerStore((state) => state.clearMeasurements);
+  const rulerFloorOnly = useViewerStore((state) => state.rulerFloorOnly);
+  const toggleRulerFloorOnly = useViewerStore((state) => state.toggleRulerFloorOnly);
   const requestTopView = useViewerStore((state) => state.requestTopView);
   const showPlan = useViewerStore((state) => state.showPlan);
   const togglePlan = useViewerStore((state) => state.togglePlan);
@@ -76,6 +78,16 @@ export function CameraToolbar() {
       >
         Ruler
       </button>
+      {tool === 'ruler' && (
+        <button
+          type="button"
+          aria-pressed={rulerFloorOnly}
+          onClick={toggleRulerFloorOnly}
+          title="Measure along the floor between the points dropped straight down (hold Ctrl to switch)"
+        >
+          Floor only
+        </button>
+      )}
       {hasMeasurements && (
         <button type="button" onClick={clearMeasurements}>
           Clear measurements
