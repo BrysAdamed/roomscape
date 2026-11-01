@@ -144,6 +144,22 @@ describe('buildWallGeometry', () => {
     // Assert
     expect(sideArea(withOpenings)).toBeCloseTo(solidArea - 1.2 - 1.8, 6);
   });
+
+  it('splits a cut-down wall at doors and notches windows that reach the top', () => {
+    // Arrange
+    const span = { wall: wall('w-1', [0, 0], [4, 0], 0.2), startExtension: 0, endExtension: 0 };
+
+    // Act
+    const cut = buildWallGeometry(span, 1.2, [
+      opening({ id: 'win', offset: 0.5, width: 1, height: 1.5, sillHeight: 0.9 }),
+      opening({ id: 'door', kind: 'door', offset: 2.5, width: 0.9, height: 2.05, sillHeight: 0 }),
+      opening({ id: 'high', offset: 3.6, width: 0.3, height: 0.4, sillHeight: 1.5 }),
+    ]);
+
+    // Assert
+    expect(cut.boundingBox!.max.y).toBeCloseTo(1.2);
+    expect(sideArea(cut)).toBeCloseTo(4 * 1.2 - 1 * 0.3 - 0.9 * 1.2, 6);
+  });
 });
 
 describe('buildFloorGeometry', () => {

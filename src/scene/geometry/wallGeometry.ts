@@ -22,9 +22,9 @@ export function buildWallGeometry(
 ): BufferGeometry {
   const { wall } = span;
   const frame = wallFrame(wall);
-  const shape = wallOutline(span, frame.length, height, openings);
+  const shapes = wallOutlines(span, frame.length, height, openings);
 
-  const extruded = new ExtrudeGeometry(shape, { depth: wall.thickness, bevelEnabled: false });
+  const extruded = new ExtrudeGeometry(shapes, { depth: wall.thickness, bevelEnabled: false });
   const geometry = groupFacesBySide(extruded);
   extruded.dispose();
 
@@ -39,44 +39,92 @@ export function buildWallGeometry(
   return geometry;
 }
 
-function wallOutline(
+interface Gap {
+  start: number;
+  end: number;
+  bottom: number;
+  top: number;
+}
+
+/**
+ * Wall elevation outlines (x along the wall, y up). Openings reaching the floor or the wall top become notches,
+ * openings spanning the full height split the wall into separate pieces, the rest are holes.
+ */
+function wallOutlines(
   span: WallSpan,
   length: number,
   height: number,
   openings: readonly Opening[],
-): Shape {
-  const left = -span.startExtension;
-  const right = length + span.endExtension;
-  const sorted = [...openings].sort((a, b) => a.offset - b.offset);
-  const floorLevel = sorted.filter((opening) => opening.sillHeight < EPSILON);
-  const raised = sorted.filter((opening) => opening.sillHeight >= EPSILON);
+): Shape[] {
+  const gaps: Gap[] = openings
+    .map((opening) => ({
+      start: opening.offset,
+      end: opening.offset + opening.width,
+      bottom: opening.sillHeight,
+      top: Math.min(opening.sillHeight + opening.height, height),
+    }))
+    .filter((gap) => gap.bottom < height - EPSILON)
+    .sort((a, b) => a.start - b.start);
+  const reachesFloor = (gap: Gap) => gap.bottom < EPSILON;
+  const reachesTop = (gap: Gap) => gap.top > height - EPSILON;
+  const cuts = gaps.filter((gap) => reachesFloor(gap) && reachesTop(gap));
 
+  const bounds = [
+    -span.startExtension,
+    ...cuts.flatMap((cut) => [cut.start, cut.end]),
+    length + span.endExtension,
+  ];
+  const shapes: Shape[] = [];
+  for (let index = 0; index < bounds.length; index += 2) {
+    const left = bounds[index]!;
+    const right = bounds[index + 1]!;
+    if (right - left < EPSILON) {
+      continue;
+    }
+    const inside = gaps.filter(
+      (gap) => !cuts.includes(gap) && gap.start >= left - EPSILON && gap.end <= right + EPSILON,
+    );
+    shapes.push(piece(left, right, height, inside, reachesFloor, reachesTop));
+  }
+  return shapes;
+}
+
+function piece(
+  left: number,
+  right: number,
+  height: number,
+  gaps: readonly Gap[],
+  reachesFloor: (gap: Gap) => boolean,
+  reachesTop: (gap: Gap) => boolean,
+): Shape {
   const shape = new Shape();
   shape.moveTo(left, 0);
-  for (const opening of floorLevel) {
-    const top = Math.min(opening.height, height);
-    shape.lineTo(opening.offset, 0);
-    shape.lineTo(opening.offset, top);
-    shape.lineTo(opening.offset + opening.width, top);
-    shape.lineTo(opening.offset + opening.width, 0);
+  for (const gap of gaps.filter(reachesFloor)) {
+    shape.lineTo(gap.start, 0);
+    shape.lineTo(gap.start, gap.top);
+    shape.lineTo(gap.end, gap.top);
+    shape.lineTo(gap.end, 0);
   }
   shape.lineTo(right, 0);
   shape.lineTo(right, height);
+  for (const gap of gaps.filter(reachesTop).reverse()) {
+    shape.lineTo(gap.end, height);
+    shape.lineTo(gap.end, gap.bottom);
+    shape.lineTo(gap.start, gap.bottom);
+    shape.lineTo(gap.start, height);
+  }
   shape.lineTo(left, height);
   shape.lineTo(left, 0);
 
-  for (const opening of raised) {
+  for (const gap of gaps.filter((gap) => !reachesFloor(gap) && !reachesTop(gap))) {
     const hole = new Path();
-    const bottom = opening.sillHeight;
-    const top = Math.min(opening.sillHeight + opening.height, height);
-    hole.moveTo(opening.offset, bottom);
-    hole.lineTo(opening.offset, top);
-    hole.lineTo(opening.offset + opening.width, top);
-    hole.lineTo(opening.offset + opening.width, bottom);
-    hole.lineTo(opening.offset, bottom);
+    hole.moveTo(gap.start, gap.bottom);
+    hole.lineTo(gap.start, gap.top);
+    hole.lineTo(gap.end, gap.top);
+    hole.lineTo(gap.end, gap.bottom);
+    hole.lineTo(gap.start, gap.bottom);
     shape.holes.push(hole);
   }
-
   return shape;
 }
 
@@ -84,13 +132,15 @@ function groupFacesBySide(source: BufferGeometry): BufferGeometry {
   const position = source.getAttribute('position');
   const normal = source.getAttribute('normal');
   const uv = source.getAttribute('uv');
-  const capsGroup = source.groups[0]!;
+  const caps = source.groups.filter((group) => group.materialIndex === 0);
 
   const buckets: number[][] = [[], [], []];
   const triangleCount = position.count / 3;
   for (let triangle = 0; triangle < triangleCount; triangle++) {
     const firstVertex = triangle * 3;
-    const isCap = firstVertex >= capsGroup.start && firstVertex < capsGroup.start + capsGroup.count;
+    const isCap = caps.some(
+      (group) => firstVertex >= group.start && firstVertex < group.start + group.count,
+    );
     const bucket = !isCap
       ? WALL_GROUP.edges
       : normal.getZ(firstVertex) < 0

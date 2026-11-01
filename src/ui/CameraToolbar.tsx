@@ -29,6 +29,8 @@ export function CameraToolbar() {
   const requestTopView = useViewerStore((state) => state.requestTopView);
   const showPlan = useViewerStore((state) => state.showPlan);
   const togglePlan = useViewerStore((state) => state.togglePlan);
+  const cutaway = useViewerStore((state) => state.cutaway);
+  const toggleCutaway = useViewerStore((state) => state.toggleCutaway);
   const hasPlan = useApartmentStore(
     (state) =>
       state.apartment !== undefined &&
@@ -54,6 +56,14 @@ export function CameraToolbar() {
       </button>
       <button type="button" onClick={requestTopView} title="Look straight down at the floor">
         Top view
+      </button>
+      <button
+        type="button"
+        aria-pressed={cutaway}
+        onClick={toggleCutaway}
+        title="Cut the walls down to see into the rooms"
+      >
+        Cutaway
       </button>
       {hasPlan && (
         <button

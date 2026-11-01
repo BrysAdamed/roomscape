@@ -15,6 +15,7 @@ interface ViewerState {
   showWallLengths: boolean;
   showLowerFloors: boolean;
   showPlan: boolean;
+  cutaway: boolean;
   topViewRequest: number;
   tool: Tool;
   measurements: Measurement[];
@@ -25,6 +26,7 @@ interface ViewerState {
   toggleWallLengths: () => void;
   toggleLowerFloors: () => void;
   togglePlan: () => void;
+  toggleCutaway: () => void;
   requestTopView: () => void;
   setTool: (tool: Tool) => void;
   addMeasurePoint: (point: Point3) => void;
@@ -38,6 +40,7 @@ export const useViewerStore = create<ViewerState>((set) => ({
   showWallLengths: false,
   showLowerFloors: true,
   showPlan: false,
+  cutaway: false,
   topViewRequest: 0,
   tool: 'select',
   measurements: [],
@@ -49,6 +52,7 @@ export const useViewerStore = create<ViewerState>((set) => ({
   toggleWallLengths: () => set((state) => ({ showWallLengths: !state.showWallLengths })),
   toggleLowerFloors: () => set((state) => ({ showLowerFloors: !state.showLowerFloors })),
   togglePlan: () => set((state) => ({ showPlan: !state.showPlan })),
+  toggleCutaway: () => set((state) => ({ cutaway: !state.cutaway })),
   requestTopView: () =>
     set((state) => ({ cameraMode: 'orbit', topViewRequest: state.topViewRequest + 1 })),
   setTool: (tool) => set({ tool, pendingPoint: undefined, hoverPoint: undefined }),

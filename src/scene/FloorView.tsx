@@ -12,6 +12,7 @@ import { StairsMesh } from './StairsMesh';
 import { WallMesh } from './WallMesh';
 
 const NO_OPENINGS: readonly Opening[] = [];
+const CUTAWAY_HEIGHT = 1.2;
 
 /** Renders one storey; a ghost floor is translucent context that cannot be selected. */
 export function FloorView({ floor, ghost = false }: { floor: Floor; ghost?: boolean }) {
@@ -25,6 +26,7 @@ export function FloorView({ floor, ghost = false }: { floor: Floor; ghost?: bool
   }, [floor.openings]);
   const override = ghost ? ghostMaterial : undefined;
   const showPlan = useViewerStore((state) => state.showPlan);
+  const cutaway = useViewerStore((state) => state.cutaway);
   const Wrap = ghost ? Passive : Selectable;
 
   return (
@@ -38,13 +40,14 @@ export function FloorView({ floor, ghost = false }: { floor: Floor; ghost?: bool
         <Wrap key={span.wall.id} id={span.wall.id}>
           <WallMesh
             span={span}
-            height={span.wall.height ?? floor.height}
+            height={Math.min(span.wall.height ?? floor.height, cutaway ? CUTAWAY_HEIGHT : Infinity)}
             openings={openingsByWall.get(span.wall.id) ?? NO_OPENINGS}
             override={override}
           />
         </Wrap>
       ))}
       {!ghost &&
+        !cutaway &&
         spans.flatMap((span) =>
           (openingsByWall.get(span.wall.id) ?? NO_OPENINGS).map((opening) => (
             <OpeningMesh key={opening.id} opening={opening} wall={span.wall} />
