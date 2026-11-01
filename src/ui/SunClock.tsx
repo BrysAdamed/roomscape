@@ -62,7 +62,8 @@ export function SunClock() {
                 title={option.label}
                 onClick={() => setSeason(option.season)}
               >
-                <span aria-hidden>{option.icon}</span> {option.label}
+                <span aria-hidden>{option.icon}</span>
+                <span>{option.label}</span>
               </button>
             ))}
           </div>
