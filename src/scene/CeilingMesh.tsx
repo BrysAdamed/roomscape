@@ -6,7 +6,10 @@ import { meshMaterial } from './materials';
 
 const CEILING_MATERIAL = 'paint-white';
 
-/** Ceiling over the indoor rooms, sloped under a roof; one-sided, so it hides when seen from above. */
+/**
+ * Ceiling over the indoor rooms, sloped under a roof. One-sided, so it hides when seen from above; it still casts
+ * shadows (three renders its back faces into the shadow map), so sunlight only gets in through the openings.
+ */
 /** Stairwells to the storey above and roof window openings. */
 function ceilingOpenings(floor: Floor): PlanPoint[][] {
   const stairwells = (floor.stairs ?? []).flatMap((stairs) => stairs.steps);
@@ -35,6 +38,7 @@ export function CeilingMesh({ floor }: { floor: Floor }) {
     <mesh
       geometry={geometry}
       material={meshMaterial(CEILING_MATERIAL)}
+      castShadow
       receiveShadow
       raycast={() => {}}
     />
