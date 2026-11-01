@@ -17,6 +17,7 @@ from tools.plan_extract.apartment import build_apartment, serialize  # noqa: E40
 from tools.plan_extract.config import load_config  # noqa: E402
 from tools.plan_extract.extract import extract_floor  # noqa: E402
 from tools.plan_extract.geometry import polygon_area  # noqa: E402
+from tools.plan_extract.lamps import pendant_lamps  # noqa: E402
 from tools.plan_extract.pdf import read_plan  # noqa: E402
 
 CONFIG = Path(__file__).with_name('extract.json')
@@ -139,7 +140,7 @@ def author() -> dict:
             room['polygon'] = ROOM_POLYGONS.get(room['id'], room['polygon'])
             if room['id'] in TILED:
                 room['floorMaterial'] = 'tile-grey-concrete'
-        floor['furniture'] = FURNITURE[floor['id']]
+        floor['furniture'] = FURNITURE[floor['id']] + pendant_lamps(floor)
     floors['parter']['stairs'] = [
         {'id': 'stairs-1', 'riserHeight': 0.1825, 'steps': stairs_steps(), 'material': 'wood-oak-natural'}]
     return apartment

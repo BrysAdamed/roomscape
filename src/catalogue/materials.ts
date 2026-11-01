@@ -9,6 +9,8 @@ export interface Material {
   roughness: number;
   metalness: number;
   opacity?: number;
+  /** Glow strength of a light source surface, such as a bulb. */
+  emissive?: number;
 }
 
 export const materials: readonly Material[] = [
@@ -196,6 +198,15 @@ export const materials: readonly Material[] = [
     color: '#141516',
     roughness: 0.08,
     metalness: 0.2,
+  },
+  {
+    id: 'glass-warm-light',
+    name: 'Warm light',
+    category: 'glass',
+    color: '#ffe2a8',
+    roughness: 0.3,
+    metalness: 0,
+    emissive: 1.4,
   },
   {
     id: 'ceramic-white',

@@ -598,6 +598,50 @@
             "width": 1.6
           },
           "materials": {}
+        },
+        {
+          "id": "lamp-01-02",
+          "type": "pendant-lamp",
+          "position": [3.253, 8.095],
+          "elevation": 2.1,
+          "rotation": 0,
+          "params": {
+            "drop": 0.33
+          },
+          "materials": {}
+        },
+        {
+          "id": "lamp-03",
+          "type": "pendant-lamp",
+          "position": [1.341, 3.917],
+          "elevation": 2.1,
+          "rotation": 0,
+          "params": {
+            "drop": 0.33
+          },
+          "materials": {}
+        },
+        {
+          "id": "lamp-04",
+          "type": "pendant-lamp",
+          "position": [3.25, 1.59],
+          "elevation": 2.1,
+          "rotation": 0,
+          "params": {
+            "drop": 0.33
+          },
+          "materials": {}
+        },
+        {
+          "id": "lamp-05",
+          "type": "pendant-lamp",
+          "position": [4.859, 3.871],
+          "elevation": 2.1,
+          "rotation": 0,
+          "params": {
+            "drop": 0.33
+          },
+          "materials": {}
         }
       ],
       "planImage": {
@@ -1317,6 +1361,83 @@
           "params": {
             "width": 0.9,
             "length": 2.0
+          },
+          "materials": {}
+        },
+        {
+          "id": "lamp-06",
+          "type": "pendant-lamp",
+          "position": [3.191, 5.489],
+          "elevation": 2.1,
+          "rotation": 0,
+          "params": {
+            "drop": 0.33
+          },
+          "materials": {}
+        },
+        {
+          "id": "lamp-07",
+          "type": "pendant-lamp",
+          "position": [4.842, 9.59],
+          "elevation": 2.1,
+          "rotation": 0,
+          "params": {
+            "drop": 0.33
+          },
+          "materials": {}
+        },
+        {
+          "id": "lamp-08",
+          "type": "pendant-lamp",
+          "position": [1.856, 9.326],
+          "elevation": 2.1,
+          "rotation": 0,
+          "params": {
+            "drop": 0.33
+          },
+          "materials": {}
+        },
+        {
+          "id": "lamp-09",
+          "type": "pendant-lamp",
+          "position": [1.327, 5.835],
+          "elevation": 2.1,
+          "rotation": 0,
+          "params": {
+            "drop": 0.33
+          },
+          "materials": {}
+        },
+        {
+          "id": "lamp-10",
+          "type": "pendant-lamp",
+          "position": [1.313, 3.885],
+          "elevation": 2.1,
+          "rotation": 0,
+          "params": {
+            "drop": 0.33
+          },
+          "materials": {}
+        },
+        {
+          "id": "lamp-11",
+          "type": "pendant-lamp",
+          "position": [3.247, 1.59],
+          "elevation": 2.1,
+          "rotation": 0,
+          "params": {
+            "drop": 0.33
+          },
+          "materials": {}
+        },
+        {
+          "id": "lamp-12",
+          "type": "pendant-lamp",
+          "position": [4.856, 3.871],
+          "elevation": 2.1,
+          "rotation": 0,
+          "params": {
+            "drop": 0.33
           },
           "materials": {}
         }

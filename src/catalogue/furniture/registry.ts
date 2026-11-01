@@ -3,6 +3,7 @@ import { bed } from './bed';
 import { chair } from './chair';
 import { desk, table } from './desk';
 import { cookerHood, fridge, kitchenCounter, wallCabinet } from './kitchen';
+import { pendantLamp } from './lamp';
 import { sofa, tvUnit } from './living';
 import type { FurnitureType } from './types';
 import { wardrobe } from './wardrobe';
@@ -15,6 +16,7 @@ export const furnitureTypes: readonly FurnitureType[] = [
   desk,
   fridge,
   kitchenCounter,
+  pendantLamp,
   shower,
   sofa,
   table,

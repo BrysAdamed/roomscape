@@ -46,6 +46,8 @@ function createMaterial(ref: string, usage: SurfaceUsage): MeshStandardMaterial 
     transparent: opacity < 1,
     opacity,
     depthWrite: opacity === 1,
+    emissive: definition.emissive ? definition.color : '#000000',
+    emissiveIntensity: definition.emissive ?? 1,
     ...surfaceTextures(definition.category, usage),
   });
 }

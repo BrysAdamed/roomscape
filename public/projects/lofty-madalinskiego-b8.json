@@ -552,6 +552,50 @@
             "doors": 3
           },
           "materials": {}
+        },
+        {
+          "id": "lamp-komunikacja-1",
+          "type": "pendant-lamp",
+          "position": [6.942, 7.079],
+          "elevation": 2.1,
+          "rotation": 0,
+          "params": {
+            "drop": 0.38
+          },
+          "materials": {}
+        },
+        {
+          "id": "lamp-salon-z-aneksem",
+          "type": "pendant-lamp",
+          "position": [2.911, 8.195],
+          "elevation": 2.1,
+          "rotation": 0,
+          "params": {
+            "drop": 0.38
+          },
+          "materials": {}
+        },
+        {
+          "id": "lamp-wc-1",
+          "type": "pendant-lamp",
+          "position": [5.865, 8.287],
+          "elevation": 2.1,
+          "rotation": 0,
+          "params": {
+            "drop": 0.38
+          },
+          "materials": {}
+        },
+        {
+          "id": "lamp-gabinet",
+          "type": "pendant-lamp",
+          "position": [8.994, 8.329],
+          "elevation": 2.1,
+          "rotation": 0,
+          "params": {
+            "drop": 0.38
+          },
+          "materials": {}
         }
       ],
       "planImage": {
@@ -1406,6 +1450,83 @@
           "params": {
             "width": 0.4,
             "depth": 0.3
+          },
+          "materials": {}
+        },
+        {
+          "id": "lamp-komunikacja-2",
+          "type": "pendant-lamp",
+          "position": [5.417, 5.831],
+          "elevation": 2.1,
+          "rotation": 0,
+          "params": {
+            "drop": 0.28
+          },
+          "materials": {}
+        },
+        {
+          "id": "lamp-sypialnia-1",
+          "type": "pendant-lamp",
+          "position": [7.887, 2.977],
+          "elevation": 2.1,
+          "rotation": 0,
+          "params": {
+            "drop": 0.103
+          },
+          "materials": {}
+        },
+        {
+          "id": "lamp-sypialnia-2",
+          "type": "pendant-lamp",
+          "position": [7.842, 7.473],
+          "elevation": 2.1,
+          "rotation": 0,
+          "params": {
+            "drop": 0.126
+          },
+          "materials": {}
+        },
+        {
+          "id": "lamp-wc-2",
+          "type": "pendant-lamp",
+          "position": [4.844, 8.952],
+          "elevation": 2.1,
+          "rotation": 0,
+          "params": {
+            "drop": 0.28
+          },
+          "materials": {}
+        },
+        {
+          "id": "lamp-sypialnia-3",
+          "type": "pendant-lamp",
+          "position": [2.966, 8.449],
+          "elevation": 2.1,
+          "rotation": 0,
+          "params": {
+            "drop": 0.144
+          },
+          "materials": {}
+        },
+        {
+          "id": "lamp-sypialnia-4",
+          "type": "pendant-lamp",
+          "position": [2.295, 3.657],
+          "elevation": 2.1,
+          "rotation": 0,
+          "params": {
+            "drop": 0.28
+          },
+          "materials": {}
+        },
+        {
+          "id": "lamp-lazienka",
+          "type": "pendant-lamp",
+          "position": [5.303, 2.003],
+          "elevation": 2.1,
+          "rotation": 0,
+          "params": {
+            "drop": 0.28
           },
           "materials": {}
         }
