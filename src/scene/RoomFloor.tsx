@@ -7,5 +7,7 @@ export function RoomFloor({ room }: { room: Room }) {
   const geometry = useMemo(() => buildFloorGeometry(room.polygon), [room.polygon]);
   useEffect(() => () => geometry.dispose(), [geometry]);
 
-  return <mesh geometry={geometry} material={meshMaterial(room.floorMaterial)} receiveShadow />;
+  return (
+    <mesh geometry={geometry} material={meshMaterial(room.floorMaterial, 'floor')} receiveShadow />
+  );
 }

@@ -26,7 +26,7 @@ def main() -> int:
     print_report(config, results)
 
     if args.out:
-        args.out.write_text(serialize(build_apartment(config, results, config.points_per_metre)), encoding='utf-8')
+        args.out.write_text(serialize(build_apartment(config, results, config.points_per_metre)), encoding='utf-8', newline='\n')
         print(f'\nwrote {args.out}')
     if args.debug_dir:
         args.debug_dir.mkdir(parents=True, exist_ok=True)

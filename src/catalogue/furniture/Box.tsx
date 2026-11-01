@@ -1,4 +1,5 @@
 import type { Material } from 'three';
+import { metricBoxGeometry } from './metricBox';
 
 interface BoxProps {
   size: [number, number, number];
@@ -8,8 +9,12 @@ interface BoxProps {
 
 export function Box({ size, position, material }: BoxProps) {
   return (
-    <mesh position={position} material={material} castShadow receiveShadow>
-      <boxGeometry args={size} />
-    </mesh>
+    <mesh
+      position={position}
+      geometry={metricBoxGeometry(...size)}
+      material={material}
+      castShadow
+      receiveShadow
+    />
   );
 }

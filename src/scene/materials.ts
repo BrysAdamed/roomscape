@@ -1,23 +1,30 @@
 import { MeshStandardMaterial } from 'three';
 import { findMaterial } from '../catalogue/materials';
 import { CUSTOM_COLOR_PATTERN } from '../schema/apartment';
+import type { SurfaceUsage } from './textures/patterns';
+import { surfaceTextures } from './textures/surfaceTextures';
 
 const FALLBACK_COLOR = '#ff00ff';
 const CUSTOM_COLOR_ROUGHNESS = 0.9;
 const cache = new Map<string, MeshStandardMaterial>();
 
-export function meshMaterial(ref: string): MeshStandardMaterial {
-  let material = cache.get(ref);
+export function meshMaterial(ref: string, usage: SurfaceUsage = 'surface'): MeshStandardMaterial {
+  const key = `${ref}|${usage}`;
+  let material = cache.get(key);
   if (!material) {
-    material = createMaterial(ref);
-    cache.set(ref, material);
+    material = createMaterial(ref, usage);
+    cache.set(key, material);
   }
   return material;
 }
 
-function createMaterial(ref: string): MeshStandardMaterial {
+function createMaterial(ref: string, usage: SurfaceUsage): MeshStandardMaterial {
   if (CUSTOM_COLOR_PATTERN.test(ref)) {
-    return new MeshStandardMaterial({ color: ref, roughness: CUSTOM_COLOR_ROUGHNESS });
+    return new MeshStandardMaterial({
+      color: ref,
+      roughness: CUSTOM_COLOR_ROUGHNESS,
+      ...surfaceTextures('paint', usage),
+    });
   }
   const definition = findMaterial(ref);
   if (!definition) {
@@ -31,5 +38,6 @@ function createMaterial(ref: string): MeshStandardMaterial {
     transparent: opacity < 1,
     opacity,
     depthWrite: opacity === 1,
+    ...surfaceTextures(definition.category, usage),
   });
 }
