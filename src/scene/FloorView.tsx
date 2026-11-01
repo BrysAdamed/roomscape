@@ -80,9 +80,9 @@ export function FloorView({ floor, ghost = false }: { floor: Floor; ghost?: bool
               </Selectable>
             )),
         )}
+      {!ghost && !cutaway && <CeilingMesh floor={floor} />}
       {!ghost && !cutaway && floor.roof && (
         <>
-          <CeilingMesh floor={floor} roof={floor.roof} />
           {floor.roof.windows?.map((roofWindow) => (
             <Selectable key={roofWindow.id} id={roofWindow.id}>
               <RoofWindowMesh roofWindow={roofWindow} roof={floor.roof!} height={floor.height} />

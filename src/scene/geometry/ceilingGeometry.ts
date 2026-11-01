@@ -1,17 +1,32 @@
 import { BufferGeometry, Float32BufferAttribute, ShapeUtils, Vector2 } from 'three';
 import type { PlanPoint, Roof } from '../../schema/apartment';
+import { subtractConvex } from './polygonClip';
 import { ceilingPieces, slopeHeight } from './roof';
 
-/** Downward-facing ceiling surfaces over the given room outlines, following the roof slopes. */
+/**
+ * Downward-facing ceiling surfaces over the given room outlines, following the roof slopes when there is a roof.
+ * `holes` are convex openings (stairwells, roof windows) left out of the ceiling.
+ */
 export function buildCeilingGeometry(
-  roof: Roof,
+  roof: Roof | undefined,
   height: number,
   polygons: readonly (readonly PlanPoint[])[],
+  holes: readonly (readonly PlanPoint[])[] = [],
 ): BufferGeometry {
   const positions: number[] = [];
   const uvs: number[] = [];
   for (const polygon of polygons) {
-    for (const piece of ceilingPieces(roof, height, polygon)) {
+    const pieces = (
+      roof ? ceilingPieces(roof, height, polygon) : [{ polygon: [...polygon], slope: undefined }]
+    ).flatMap((piece) =>
+      holes
+        .reduce(
+          (parts, hole) => parts.flatMap((part) => subtractConvex(part, hole)),
+          [piece.polygon],
+        )
+        .map((part) => ({ polygon: part, slope: piece.slope })),
+    );
+    for (const piece of pieces) {
       const heightAt = (point: PlanPoint) =>
         piece.slope ? Math.min(height, slopeHeight(piece.slope, point)) : height;
       const contour = piece.polygon.map(([x, y]) => new Vector2(x, y));

@@ -5,8 +5,8 @@ import { DEFAULT_ROOF_WINDOW_MATERIAL, slopeAt, slopeHeight } from './geometry/r
 import { meshMaterial } from './materials';
 
 const FRAME = 0.06;
-const DEPTH = 0.08;
-const BELOW_CEILING = 0.012;
+const DEPTH = 0.2;
+const INTO_ROOM = 0.02;
 const GLASS_MATERIAL = 'glass-clear';
 const DEG = Math.PI / 180;
 
@@ -39,7 +39,7 @@ export function RoofWindowMesh({ roofWindow, roof, height }: RoofWindowMeshProps
       roofWindow.position[0],
       slopeHeight(slope, roofWindow.position),
       roofWindow.position[1],
-    ).addScaledVector(normal, BELOW_CEILING + DEPTH / 2);
+    ).addScaledVector(normal, INTO_ROOM - DEPTH / 2);
     return { quaternion, center };
   }, [roof, height, roofWindow.position]);
 

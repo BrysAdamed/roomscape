@@ -1,4 +1,5 @@
-import type { PlanPoint, Roof, RoofSlope } from '../../schema/apartment';
+import type { PlanPoint, Roof, RoofSlope, RoofWindow } from '../../schema/apartment';
+import { area, clipHalfPlane } from './polygonClip';
 
 export const DEFAULT_ROOF_WINDOW_MATERIAL = 'wood-white-lacquer';
 const EPSILON = 1e-6;
@@ -44,6 +45,26 @@ export function slopeAt(roof: Roof, height: number, point: PlanPoint): RoofSlope
     }
   }
   return lowest;
+}
+
+/** Plan outline of a roof window's opening: `width` along the eaves, `length` up the slope projected onto the floor. */
+export function roofWindowFootprint(
+  roofWindow: Pick<RoofWindow, 'position' | 'width' | 'length'>,
+  slope: RoofSlope,
+): PlanPoint[] {
+  const [x, y] = roofWindow.position;
+  const [ux, uy] = slope.uphill;
+  const halfWidth = roofWindow.width / 2;
+  const halfLength = (roofWindow.length * Math.cos(slope.pitch * DEG)) / 2;
+  return [
+    [-1, -1],
+    [1, -1],
+    [1, 1],
+    [-1, 1],
+  ].map(([along, up]): PlanPoint => [
+    x - uy * halfWidth * along! + ux * halfLength * up!,
+    y + ux * halfWidth * along! + uy * halfLength * up!,
+  ]);
 }
 
 export type ProfilePoint = [x: number, height: number];
@@ -240,30 +261,6 @@ function nonEmpty(polygons: PlanPoint[][]): PlanPoint[][] {
   return polygons.filter((polygon) => area(polygon) > 1e-6);
 }
 
-/** Keeps the part of the polygon where `side(point) >= 0`; `side` must be linear (Sutherland–Hodgman). */
-export function clipHalfPlane(
-  polygon: readonly PlanPoint[],
-  side: (point: PlanPoint) => number,
-): PlanPoint[] {
-  const result: PlanPoint[] = [];
-  polygon.forEach((current, index) => {
-    const next = polygon[(index + 1) % polygon.length]!;
-    const a = side(current);
-    const b = side(next);
-    if (a >= 0) {
-      result.push(current);
-    }
-    if (a >= 0 !== b >= 0) {
-      const t = a / (a - b);
-      result.push([
-        current[0] + (next[0] - current[0]) * t,
-        current[1] + (next[1] - current[1]) * t,
-      ]);
-    }
-  });
-  return result;
-}
-
 function clipRect(polygon: PlanPoint[], x0: number, y0: number, x1: number, y1: number) {
   let result = clipHalfPlane(polygon, ([x]) => x - x0);
   result = clipHalfPlane(result, ([x]) => x1 - x);
@@ -279,13 +276,4 @@ function outsideRect(polygon: PlanPoint[], x0: number, y0: number, x1: number, y
   const top = clipHalfPlane(middle, ([, y]) => y0 - y);
   const bottom = clipHalfPlane(middle, ([, y]) => y - y1);
   return [left, right, top, bottom];
-}
-
-export function area(polygon: readonly PlanPoint[]): number {
-  let sum = 0;
-  polygon.forEach((point, index) => {
-    const next = polygon[(index + 1) % polygon.length]!;
-    sum += point[0] * next[1] - next[0] * point[1];
-  });
-  return Math.abs(sum) / 2;
 }

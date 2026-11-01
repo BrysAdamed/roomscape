@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import type { Roof } from '../../schema/apartment';
-import { area, ceilingAt, ceilingPieces, profileAt, wallTopProfile } from './roof';
+import { area } from './polygonClip';
+import { ceilingAt, ceilingPieces, profileAt, wallTopProfile } from './roof';
 
 const pitch = (Math.atan(0.5) * 180) / Math.PI;
 
