@@ -4,7 +4,7 @@ import { resolveMaterialRefs, resolveParams } from '../catalogue/furniture/resol
 import type { MaterialCategory } from '../catalogue/materials';
 import { polygonArea } from '../scene/geometry/floorGeometry';
 import { formatLength } from '../scene/measure/format';
-import type { FurnitureItem, PlanPoint, Room, Wall } from '../schema/apartment';
+import type { FurnitureItem, PlanPoint, Room, Stairs, Wall } from '../schema/apartment';
 import { wallLength } from '../schema/validate';
 import { findElement, type WallSide } from '../state/apartmentEdits';
 import { useApartmentStore } from '../state/apartmentStore';
@@ -14,6 +14,7 @@ import { wallFaceDirection } from './wallFaces';
 const WALL_CATEGORIES: readonly MaterialCategory[] = ['paint', 'tile', 'stone', 'wood'];
 const FLOOR_CATEGORIES: readonly MaterialCategory[] = ['wood', 'tile', 'stone'];
 const WALL_SIDES: readonly WallSide[] = ['left', 'right'];
+const STAIRS_CATEGORIES: readonly MaterialCategory[] = ['wood', 'stone', 'tile'];
 
 export function ConfigPanel() {
   const apartment = useApartmentStore((state) => state.apartment);
@@ -41,6 +42,7 @@ export function ConfigPanel() {
       )}
       {element.kind === 'room' && <RoomSettings room={element.room} />}
       {element.kind === 'furniture' && <FurnitureSettings item={element.item} />}
+      {element.kind === 'stairs' && <StairsSettings stairs={element.stairs} />}
     </aside>
   );
 }
@@ -51,6 +53,8 @@ function title(element: NonNullable<ReturnType<typeof findElement>>): string {
       return `Wall ${element.wall.id}`;
     case 'room':
       return element.room.name;
+    case 'stairs':
+      return 'Stairs';
     case 'furniture':
       return findFurnitureType(element.item.type)?.name ?? element.item.type;
   }
@@ -126,6 +130,27 @@ function FurnitureSettings({ item }: { item: FurnitureItem }) {
           onChange={(ref) => setFurnitureMaterial(item.id, slot, ref)}
         />
       ))}
+    </>
+  );
+}
+
+function StairsSettings({ stairs }: { stairs: Stairs }) {
+  const setStairsMaterial = useApartmentStore((state) => state.setStairsMaterial);
+  return (
+    <>
+      <Facts
+        rows={[
+          ['Risers', String(stairs.steps.length + 1)],
+          ['Riser height', formatLength(stairs.riserHeight)],
+          ['Total rise', formatLength(stairs.riserHeight * (stairs.steps.length + 1))],
+        ]}
+      />
+      <MaterialPicker
+        label="Treads"
+        value={stairs.material}
+        categories={STAIRS_CATEGORIES}
+        onChange={(ref) => setStairsMaterial(stairs.id, ref)}
+      />
     </>
   );
 }

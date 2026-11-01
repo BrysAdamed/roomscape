@@ -1,11 +1,12 @@
-import type { Apartment, Floor } from '../schema/apartment';
+import type { Apartment, Floor, Stairs } from '../schema/apartment';
 
 export type WallSide = 'left' | 'right';
 
 export type SelectableElement =
   | { kind: 'wall'; floor: Floor; wall: Floor['walls'][number] }
   | { kind: 'room'; floor: Floor; room: Floor['rooms'][number] }
-  | { kind: 'furniture'; floor: Floor; item: Floor['furniture'][number] };
+  | { kind: 'furniture'; floor: Floor; item: Floor['furniture'][number] }
+  | { kind: 'stairs'; floor: Floor; stairs: Stairs };
 
 export function findElement(apartment: Apartment, id: string): SelectableElement | undefined {
   for (const floor of apartment.floors) {
@@ -15,6 +16,8 @@ export function findElement(apartment: Apartment, id: string): SelectableElement
     if (room) return { kind: 'room', floor, room };
     const item = floor.furniture.find((candidate) => candidate.id === id);
     if (item) return { kind: 'furniture', floor, item };
+    const stairs = floor.stairs?.find((candidate) => candidate.id === id);
+    if (stairs) return { kind: 'stairs', floor, stairs };
   }
   return undefined;
 }
@@ -53,6 +56,16 @@ export function setFurnitureMaterial(
       materials: { ...item.materials, [slot]: ref },
     }));
     return furniture === floor.furniture ? floor : { ...floor, furniture };
+  });
+}
+
+export function setStairsMaterial(apartment: Apartment, stairsId: string, ref: string): Apartment {
+  return updateFloors(apartment, (floor) => {
+    if (!floor.stairs) {
+      return floor;
+    }
+    const stairs = replaceById(floor.stairs, stairsId, (item) => ({ ...item, material: ref }));
+    return stairs === floor.stairs ? floor : { ...floor, stairs };
   });
 }
 

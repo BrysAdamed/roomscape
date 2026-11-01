@@ -3,6 +3,7 @@ import type { Apartment } from '../schema/apartment';
 import {
   setFurnitureMaterial,
   setRoomFloorMaterial,
+  setStairsMaterial,
   setWallMaterial,
   type WallSide,
 } from './apartmentEdits';
@@ -20,6 +21,7 @@ interface ApartmentState {
   setWallMaterial: (wallId: string, side: WallSide, ref: string) => void;
   setRoomFloorMaterial: (roomId: string, ref: string) => void;
   setFurnitureMaterial: (itemId: string, slot: string, ref: string) => void;
+  setStairsMaterial: (stairsId: string, ref: string) => void;
 }
 
 export const useApartmentStore = create<ApartmentState>((set) => {
@@ -49,5 +51,7 @@ export const useApartmentStore = create<ApartmentState>((set) => {
       edit((apartment) => setRoomFloorMaterial(apartment, roomId, ref)),
     setFurnitureMaterial: (itemId, slot, ref) =>
       edit((apartment) => setFurnitureMaterial(apartment, itemId, slot, ref)),
+    setStairsMaterial: (stairsId, ref) =>
+      edit((apartment) => setStairsMaterial(apartment, stairsId, ref)),
   };
 });

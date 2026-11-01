@@ -1,6 +1,6 @@
 import { findFurnitureType } from '../../catalogue/furniture/registry';
 import { resolveParams } from '../../catalogue/furniture/resolve';
-import type { Apartment, Floor, FurnitureItem, Room, Wall } from '../../schema/apartment';
+import type { Apartment, Floor, FurnitureItem, Room, Stairs, Wall } from '../../schema/apartment';
 import { wallLength } from '../../schema/validate';
 import { findElement } from '../../state/apartmentEdits';
 
@@ -29,6 +29,8 @@ export function elementDimensions(apartment: Apartment, id: string): DimensionLi
       return roomDimensions(element.room, element.floor);
     case 'furniture':
       return furnitureDimensions(element.item, element.floor);
+    case 'stairs':
+      return stairsDimensions(element.stairs, element.floor);
   }
 }
 
@@ -90,4 +92,10 @@ export function furnitureDimensions(item: FurnitureItem, floor: Floor): Dimensio
     line([right, height, -depth / 2], [right, height, depth / 2], depth),
     line([right, 0, front], [right, height, front], height),
   ];
+}
+
+export function stairsDimensions(stairs: Stairs, floor: Floor): DimensionLine[] {
+  const [x, z] = stairs.steps[0]![0]!;
+  const rise = stairs.riserHeight * (stairs.steps.length + 1);
+  return [{ start: [x, floor.elevation, z], end: [x, floor.elevation + rise, z], value: rise }];
 }
