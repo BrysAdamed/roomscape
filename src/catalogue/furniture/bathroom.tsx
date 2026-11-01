@@ -1,5 +1,6 @@
 import { Box } from './Box';
 import { Cylinder } from './Cylinder';
+import { Recess } from './Recess';
 import { defineFurniture, type FurnitureRenderProps } from './types';
 
 type ToiletSlots = 'ceramic';
@@ -48,10 +49,15 @@ function Washbasin({ params, materials }: FurnitureRenderProps<BasinParams, Basi
         position={[0, height - 0.12 - cabinetHeight / 2, -0.01]}
         material={materials.cabinet}
       />
-      <Box
-        size={[width, 0.12, depth]}
-        position={[0, height - 0.06, 0]}
-        material={materials.basin}
+      <Recess
+        slab={[width, depth, 0.12]}
+        opening={[width * 0.72, depth * 0.62]}
+        offset={[0, depth * 0.08]}
+        depth={0.11}
+        shape="oval"
+        position={[0, height, 0]}
+        slabMaterial={materials.basin}
+        bowlMaterial={materials.basin}
       />
       <Box
         size={[0.03, 0.18, 0.03]}
