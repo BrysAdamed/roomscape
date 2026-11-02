@@ -24,7 +24,7 @@ export function RailingMesh({ railing, override }: { railing: Railing; override?
   return (
     <group>
       {posts.map(([x, z], index) => (
-        <mesh key={index} position={[x, height / 2, z]} material={frame} castShadow>
+        <mesh key={index} position={[x, height / 2, z]} material={frame} castShadow receiveShadow>
           <boxGeometry args={[POST, height, POST]} />
         </mesh>
       ))}
@@ -34,7 +34,7 @@ export function RailingMesh({ railing, override }: { railing: Railing; override?
         const bars = Math.max(0, Math.floor(segment.length / BAR_SPACING) - 1);
         return (
           <group key={index} position={[x, 0, z]} rotation={[0, segment.angle, 0]}>
-            <mesh position={[0, height - RAIL / 2, 0]} material={frame} castShadow>
+            <mesh position={[0, height - RAIL / 2, 0]} material={frame} castShadow receiveShadow>
               <boxGeometry args={[segment.length + POST, RAIL, RAIL]} />
             </mesh>
             {railing.style === 'bars' ? (
@@ -48,6 +48,7 @@ export function RailingMesh({ railing, override }: { railing: Railing; override?
                   ]}
                   material={frame}
                   castShadow
+                  receiveShadow
                 >
                   <boxGeometry args={[BAR, infillHeight, BAR]} />
                 </mesh>

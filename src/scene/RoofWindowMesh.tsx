@@ -58,7 +58,7 @@ export function RoofWindowMesh({ roofWindow, roof, height }: RoofWindowMeshProps
   return (
     <group position={placement.center} quaternion={placement.quaternion}>
       {bars.map(([x, y, barWidth, barLength], index) => (
-        <mesh key={index} position={[x, y, 0]} material={frame}>
+        <mesh key={index} position={[x, y, 0]} material={frame} receiveShadow>
           <boxGeometry args={[barWidth, barLength, DEPTH]} />
         </mesh>
       ))}

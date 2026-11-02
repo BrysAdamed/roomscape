@@ -60,6 +60,7 @@ function Door({ opening, depth, frameMaterial }: OpeningPartProps) {
         position={[0, leafHeight / 2, 0]}
         material={meshMaterial(opening.door?.material ?? DEFAULT_OPENING_MATERIAL)}
         castShadow
+        receiveShadow
       >
         <boxGeometry args={[leafWidth, leafHeight, DOOR_LEAF_THICKNESS]} />
       </mesh>
