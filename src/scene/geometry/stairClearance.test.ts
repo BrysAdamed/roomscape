@@ -17,7 +17,7 @@ const stairs: Stairs = {
 };
 
 describe('capUnderStairs', () => {
-  it('steps a wall down to the underside of each tread it runs under', () => {
+  it('steps a wall down to the underside of each tread it runs under, a little past each riser', () => {
     // Act
     const top = capUnderStairs(
       [
@@ -34,13 +34,33 @@ describe('capUnderStairs', () => {
     const under = (step: number) => step - TREAD_THICKNESS;
     expect(top.map(([x, height]) => [+x.toFixed(6), +height.toFixed(6)])).toEqual([
       [0, 2.6],
-      [1, 2.6],
-      [1, under(1)],
-      [2, under(1)],
-      [2, under(2)],
-      [3, under(2)],
-      [3, 2.6],
+      [0.98, 2.6],
+      [0.98, under(1)],
+      [2.02, under(1)],
+      [2.02, under(2)],
+      [3.02, under(2)],
+      [3.02, 2.6],
       [4, 2.6],
+    ]);
+  });
+
+  it('keeps a wall along a riser below the lower of the two treads it spans', () => {
+    // Act
+    const top = capUnderStairs(
+      [
+        [0, 2.6],
+        [1, 2.6],
+      ],
+      [stairs],
+      [2.03, 0],
+      [2.03, 1],
+      0.1,
+    );
+
+    // Assert
+    expect(top.map(([x, height]) => [+x.toFixed(6), +height.toFixed(6)])).toEqual([
+      [0, 1 - TREAD_THICKNESS],
+      [1, 1 - TREAD_THICKNESS],
     ]);
   });
 

@@ -158,7 +158,8 @@ function breakpoints(
   return result;
 }
 
-function simplify(profile: ProfilePoint[]): ProfilePoint[] {
+/** Drops profile points that lie on the straight line between their neighbours. */
+export function simplify(profile: ProfilePoint[]): ProfilePoint[] {
   return profile.filter((point, index) => {
     const previous = profile[index - 1];
     const next = profile[index + 1];

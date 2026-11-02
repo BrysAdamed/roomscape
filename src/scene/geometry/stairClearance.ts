@@ -1,15 +1,18 @@
 import type { PlanPoint, Stairs } from '../../schema/apartment';
 import { containsPoint } from './polygonClip';
-import { profileAt, type ProfilePoint } from './roof';
+import { profileAt, simplify, type ProfilePoint } from './roof';
 import { TREAD_THICKNESS } from './stairsGeometry';
 
 const EPSILON = 1e-6;
 const NUDGE = 1e-4;
+const RISER_MARGIN = 0.02;
+const SIDE_INSET = 0.002;
 
 /**
  * Lowers a wall's top profile (x along the wall from `start`) where the wall runs under stair treads, so it stops at
- * the underside of each tread instead of poking through the stairs. A wall only partly under the stairs keeps its
- * height elsewhere.
+ * the underside of the lowest tread over either face, a little past each riser, instead of poking through the stairs. A
+ * wall only partly under the stairs keeps its height elsewhere, and one that only touches the side of the stairs keeps
+ * it everywhere.
  */
 export function capUnderStairs(
   profile: readonly ProfilePoint[],
@@ -24,10 +27,9 @@ export function capUnderStairs(
   const length = Math.hypot(end[0] - start[0], end[1] - start[1]);
   const direction: PlanPoint = [(end[0] - start[0]) / length, (end[1] - start[1]) / length];
   const normal: PlanPoint = [-direction[1], direction[0]];
-  const faces = [-thickness / 2, thickness / 2].map((offset): PlanPoint => [
-    start[0] + normal[0] * offset,
-    start[1] + normal[1] * offset,
-  ]);
+  const faces = [SIDE_INSET - thickness / 2, thickness / 2 - SIDE_INSET].map(
+    (offset): PlanPoint => [start[0] + normal[0] * offset, start[1] + normal[1] * offset],
+  );
   const pointOn = (face: PlanPoint, x: number): PlanPoint => [
     face[0] + direction[0] * x,
     face[1] + direction[1] * x,
@@ -35,16 +37,20 @@ export function capUnderStairs(
   const heightAt = (x: number) =>
     Math.min(
       profileAt(profile, x),
-      Math.max(...faces.map((face) => undersideAt(stairs, pointOn(face, x)))),
+      ...faces.flatMap((face) =>
+        [x - RISER_MARGIN, x, x + RISER_MARGIN].map((at) => undersideAt(stairs, pointOn(face, at))),
+      ),
     );
 
   const from = profile[0]![0];
   const to = profile[profile.length - 1]![0];
   const breaks = new Set(profile.map(([x]) => x));
   for (const face of faces) {
-    for (const x of treadEdgeCrossings(stairs, face, direction)) {
-      if (x > from + EPSILON && x < to - EPSILON) {
-        breaks.add(x);
+    for (const crossing of treadEdgeCrossings(stairs, face, direction)) {
+      for (const x of [crossing - RISER_MARGIN, crossing, crossing + RISER_MARGIN]) {
+        if (x > from + EPSILON && x < to - EPSILON) {
+          breaks.add(x);
+        }
       }
     }
   }
@@ -59,7 +65,7 @@ export function capUnderStairs(
         capped.push([x, right]);
       }
     });
-  return capped;
+  return simplify(capped);
 }
 
 /** Height of the underside of the tread above a plan point, or infinity where no tread is. */
