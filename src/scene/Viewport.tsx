@@ -15,8 +15,8 @@ import { SelectionHighlight } from './selection/SelectionHighlight';
 export function Viewport() {
   const apartment = useApartmentStore((state) => state.apartment);
   const select = useApartmentStore((state) => state.select);
-  const source = useApartmentStore((state) => state.source);
-  const framing = useMemo(() => frameApartment(source), [source]);
+  const base = useApartmentStore((state) => state.base);
+  const framing = useMemo(() => frameApartment(base), [base]);
 
   return (
     <Canvas
