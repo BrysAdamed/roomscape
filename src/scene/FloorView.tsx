@@ -64,7 +64,7 @@ export function FloorView({ floor, ghost = false }: { floor: Floor; ghost?: bool
     <group position={[0, floor.elevation, 0]}>
       {floor.rooms.map((room) => (
         <Wrap key={room.id} id={room.id}>
-          <RoomFloor room={room} override={override} />
+          <RoomFloor room={room} override={override} underside={floor.elevation > 0} />
         </Wrap>
       ))}
       {spans.map((span, index) => (

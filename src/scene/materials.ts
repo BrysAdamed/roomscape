@@ -1,4 +1,4 @@
-import { DoubleSide, MeshStandardMaterial, type Material } from 'three';
+import { BackSide, DoubleSide, MeshStandardMaterial, type Material, type Side } from 'three';
 import { findMaterial } from '../catalogue/materials';
 import { CUSTOM_COLOR_PATTERN } from '../schema/apartment';
 import type { SurfaceUsage } from './textures/patterns';
@@ -16,17 +16,31 @@ export const ghostMaterial = new MeshStandardMaterial({
   depthWrite: false,
 });
 
-const doubleSidedCache = new WeakMap<Material, Material>();
+const sidedCache = new Map<Side, WeakMap<Material, Material>>();
+
+function withSide(material: Material, side: Side): Material {
+  let cache = sidedCache.get(side);
+  if (!cache) {
+    cache = new WeakMap();
+    sidedCache.set(side, cache);
+  }
+  let result = cache.get(material);
+  if (!result) {
+    result = material.clone();
+    result.side = side;
+    cache.set(material, result);
+  }
+  return result;
+}
 
 /** The same material drawn from both sides, for open surfaces such as a lamp shade. */
 export function doubleSided(material: Material): Material {
-  let result = doubleSidedCache.get(material);
-  if (!result) {
-    result = material.clone();
-    result.side = DoubleSide;
-    doubleSidedCache.set(material, result);
-  }
-  return result;
+  return withSide(material, DoubleSide);
+}
+
+/** The same material drawn only from behind, for the underside of a surface that faces up. */
+export function backSided(material: Material): Material {
+  return withSide(material, BackSide);
 }
 
 export function meshMaterial(ref: string, usage: SurfaceUsage = 'surface'): MeshStandardMaterial {
