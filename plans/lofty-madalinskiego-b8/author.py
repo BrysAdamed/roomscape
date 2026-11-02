@@ -202,7 +202,7 @@ VARIANTS = [
      'changes': [
          {'op': 'remove', 'id': 'desk-gabinet'},
          {'op': 'remove', 'id': 'chair-gabinet'},
-         {'op': 'add', 'floorId': 'parter', 'item': item('bed-guest', 'bed', 8.9, 7.15)},
+         {'op': 'add', 'floorId': 'parter', 'item': item('bed-guest', 'bed', 9.22, 7.1)},
      ]},
     {'id': 'sage-kitchen', 'name': 'Sage kitchen and walnut floor',
      'description': 'Sage green kitchen fronts and a walnut floor in the living room.',

@@ -1613,7 +1613,7 @@
           "item": {
             "id": "bed-guest",
             "type": "bed",
-            "position": [8.9, 7.15],
+            "position": [9.22, 7.1],
             "rotation": 0,
             "params": {},
             "materials": {}
