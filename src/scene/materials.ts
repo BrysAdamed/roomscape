@@ -1,4 +1,4 @@
-import { MeshStandardMaterial } from 'three';
+import { DoubleSide, MeshStandardMaterial, type Material } from 'three';
 import { findMaterial } from '../catalogue/materials';
 import { CUSTOM_COLOR_PATTERN } from '../schema/apartment';
 import type { SurfaceUsage } from './textures/patterns';
@@ -15,6 +15,19 @@ export const ghostMaterial = new MeshStandardMaterial({
   opacity: 0.22,
   depthWrite: false,
 });
+
+const doubleSidedCache = new WeakMap<Material, Material>();
+
+/** The same material drawn from both sides, for open surfaces such as a lamp shade. */
+export function doubleSided(material: Material): Material {
+  let result = doubleSidedCache.get(material);
+  if (!result) {
+    result = material.clone();
+    result.side = DoubleSide;
+    doubleSidedCache.set(material, result);
+  }
+  return result;
+}
 
 export function meshMaterial(ref: string, usage: SurfaceUsage = 'surface'): MeshStandardMaterial {
   const key = `${ref}|${usage}`;

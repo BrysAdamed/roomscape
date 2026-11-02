@@ -1,3 +1,4 @@
+import { doubleSided } from '../../scene/materials';
 import { Cylinder } from './Cylinder';
 import { defineFurniture, type FurnitureRenderProps } from './types';
 
@@ -13,7 +14,12 @@ function PendantLamp({ params, materials }: FurnitureRenderProps<LampParams, Lam
   const radius = diameter / 2;
   return (
     <group>
-      <mesh position={[0, shadeHeight / 2, 0]} material={materials.shade} castShadow>
+      <mesh
+        position={[0, shadeHeight / 2, 0]}
+        material={doubleSided(materials.shade)}
+        castShadow
+        receiveShadow
+      >
         <cylinderGeometry args={[radius * 0.45, radius, shadeHeight, 32, 1, true]} />
       </mesh>
       <mesh position={[0, shadeHeight * 0.35, 0]} material={materials.bulb}>
