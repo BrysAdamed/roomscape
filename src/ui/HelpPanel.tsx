@@ -25,6 +25,13 @@ const CAMERA_CONTROLS: Record<CameraMode, readonly Control[]> = {
     { keys: flyKeys('up', 'down'), action: 'Fly up / down' },
     { keys: flyKeys('sprint'), action: 'Move faster' },
   ],
+  walk: [
+    { keys: ['Drag'], action: 'Look around' },
+    { keys: flyKeys('forward', 'left', 'back', 'right'), action: 'Walk (stairs too)' },
+    { keys: flyKeys('turnLeft', 'turnRight'), action: 'Turn' },
+    { keys: flyKeys('lookUp', 'lookDown'), action: 'Look up / down' },
+    { keys: flyKeys('sprint'), action: 'Walk faster' },
+  ],
 };
 
 const SELECT_CONTROLS: readonly Control[] = [

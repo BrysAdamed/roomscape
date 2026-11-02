@@ -7,16 +7,17 @@ import { FloorView } from './FloorView';
 
 export function ApartmentView({ apartment }: { apartment: Apartment }) {
   const activeFloorId = useApartmentStore((state) => state.activeFloorId);
-  const showLowerFloors = useViewerStore((state) => state.showLowerFloors);
+  const showLower = useViewerStore((state) => state.showLowerFloors);
+  const walk = useViewerStore((state) => state.cameraMode === 'walk');
   const floors = useMemo(
-    () => visibleFloors(apartment, activeFloorId, showLowerFloors),
-    [apartment, activeFloorId, showLowerFloors],
+    () => visibleFloors(apartment, activeFloorId, { showLower, walk }),
+    [apartment, activeFloorId, showLower, walk],
   );
 
   return (
     <group>
-      {floors.map(({ floor, ghost }) => (
-        <FloorView key={floor.id} floor={floor} ghost={ghost} />
+      {floors.map(({ floor, ghost, interactive }) => (
+        <FloorView key={floor.id} floor={floor} ghost={ghost} interactive={interactive} />
       ))}
     </group>
   );

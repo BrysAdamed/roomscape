@@ -665,3 +665,8 @@ kbd {
   background: var(--surface);
   max-width: 220px;
 }
+
+button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}

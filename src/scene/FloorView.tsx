@@ -22,8 +22,16 @@ import { WallMesh } from './WallMesh';
 const NO_OPENINGS: readonly Opening[] = [];
 const CUTAWAY_HEIGHT = 1.2;
 
-/** Renders one storey; a ghost floor is translucent context that cannot be selected. */
-export function FloorView({ floor, ghost = false }: { floor: Floor; ghost?: boolean }) {
+interface FloorViewProps {
+  floor: Floor;
+  /** Translucent context. */
+  ghost?: boolean;
+  /** Its elements can be selected. */
+  interactive?: boolean;
+}
+
+/** Renders one storey. */
+export function FloorView({ floor, ghost = false, interactive = !ghost }: FloorViewProps) {
   const spans = useMemo(() => layoutWalls(floor.walls), [floor.walls]);
   const openingsByWall = useMemo(() => {
     const grouped = new Map<string, Opening[]>();
@@ -35,7 +43,7 @@ export function FloorView({ floor, ghost = false }: { floor: Floor; ghost?: bool
   const override = ghost ? ghostMaterial : undefined;
   const showPlan = useViewerStore((state) => state.showPlan);
   const cutaway = useViewerStore((state) => state.cutaway);
-  const Wrap = ghost ? Passive : Selectable;
+  const Wrap = interactive ? Selectable : Passive;
   const tops = useMemo(
     () =>
       spans.map((span) => {
@@ -83,9 +91,9 @@ export function FloorView({ floor, ghost = false }: { floor: Floor; ghost?: bool
           (openingsByWall.get(span.wall.id) ?? NO_OPENINGS)
             .filter(hasOpeningMesh)
             .map((opening) => (
-              <Selectable key={opening.id} id={opening.id}>
+              <Wrap key={opening.id} id={opening.id}>
                 <OpeningMesh opening={opening} wall={span.wall} />
-              </Selectable>
+              </Wrap>
             )),
         )}
       {!ghost && !cutaway && <CeilingMesh floor={floor} />}
@@ -93,13 +101,13 @@ export function FloorView({ floor, ghost = false }: { floor: Floor; ghost?: bool
       {!ghost && !cutaway && floor.roof && (
         <>
           {floor.roof.windows?.map((roofWindow) => (
-            <Selectable key={roofWindow.id} id={roofWindow.id}>
+            <Wrap key={roofWindow.id} id={roofWindow.id}>
               <RoofWindowMesh roofWindow={roofWindow} roof={floor.roof!} height={floor.height} />
-            </Selectable>
+            </Wrap>
           ))}
         </>
       )}
-      {showPlan && !ghost && floor.planImage && (
+      {showPlan && interactive && floor.planImage && (
         <Suspense fallback={null}>
           <PlanOverlay image={floor.planImage} />
         </Suspense>

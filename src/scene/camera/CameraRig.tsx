@@ -1,13 +1,15 @@
 import { useEffect, useLayoutEffect, useRef, type ComponentRef } from 'react';
 import { useThree } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
-import { Quaternion, Vector3 } from 'three';
+import { Euler, Quaternion, Vector3, type PerspectiveCamera } from 'three';
 import { useApartmentStore } from '../../state/apartmentStore';
 import { activeFloor } from '../../state/floors';
 import { useViewerStore } from '../../state/viewerStore';
 import type { CameraFraming } from './framing';
 import { FlyControls } from './FlyControls';
 import { cameraHeading } from './heading';
+import { DEFAULT_FOV, WALK_FOV } from './fieldOfView';
+import { EYE_HEIGHT, walkStart } from './walkSurface';
 
 const LOOK_AHEAD = 3;
 const UP = new Vector3(0, 1, 0);
@@ -79,6 +81,26 @@ export function CameraRig({ framing }: { framing: CameraFraming }) {
     orbit.current?.update();
   }, [camera, mode]);
 
+  useLayoutEffect(() => {
+    if ((camera as PerspectiveCamera).isPerspectiveCamera) {
+      setFieldOfView(camera as PerspectiveCamera, mode === 'walk' ? WALK_FOV : DEFAULT_FOV);
+    }
+    if (mode !== 'walk') {
+      return;
+    }
+    const { apartment, activeFloorId } = useApartmentStore.getState();
+    const floor = apartment && activeFloor(apartment, activeFloorId);
+    if (
+      floor &&
+      (camera.position.y > floor.elevation + floor.height || camera.position.y < floor.elevation)
+    ) {
+      const [x, z] = walkStart(floor) ?? [framing.target[0], framing.target[2]];
+      camera.position.set(x, floor.elevation + EYE_HEIGHT, z);
+    }
+    const level = new Euler().setFromQuaternion(camera.quaternion, 'YXZ');
+    camera.quaternion.setFromEuler(level.set(0, level.y, 0, 'YXZ'));
+  }, [camera, mode, framing]);
+
   return mode === 'orbit' ? (
     <OrbitControls
       ref={orbit}
@@ -89,8 +111,13 @@ export function CameraRig({ framing }: { framing: CameraFraming }) {
       maxDistance={60}
     />
   ) : (
-    <FlyControls />
+    <FlyControls key={mode} walk={mode === 'walk'} />
   );
+}
+
+function setFieldOfView(camera: PerspectiveCamera, fov: number) {
+  camera.fov = fov;
+  camera.updateProjectionMatrix();
 }
 
 function pointInFront(position: Vector3, direction: Vector3): Vector3 {

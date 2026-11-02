@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { seasonOf, type Season } from '../scene/lighting/seasons';
 
-export type CameraMode = 'orbit' | 'fly';
+export type CameraMode = 'orbit' | 'fly' | 'walk';
 export type Tool = 'select' | 'ruler';
 export type Point3 = [number, number, number];
 

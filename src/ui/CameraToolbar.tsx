@@ -5,6 +5,7 @@ import { useViewerStore, type CameraMode } from '../state/viewerStore';
 const MODES: { mode: CameraMode; label: string }[] = [
   { mode: 'orbit', label: 'Orbit' },
   { mode: 'fly', label: 'Fly' },
+  { mode: 'walk', label: 'Walk' },
 ];
 
 export function CameraToolbar() {
@@ -51,7 +52,12 @@ export function CameraToolbar() {
       <button type="button" onClick={requestReset}>
         Reset view
       </button>
-      <button type="button" onClick={requestTopView} title="Look straight down at the floor">
+      <button
+        type="button"
+        onClick={requestTopView}
+        disabled={mode === 'walk'}
+        title={mode === 'walk' ? 'Not available while walking' : 'Look straight down at the floor'}
+      >
         Top view
       </button>
       <button

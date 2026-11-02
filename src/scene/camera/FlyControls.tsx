@@ -1,8 +1,10 @@
 import { useEffect, useRef } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import { Euler, Vector3 } from 'three';
+import { useApartmentStore } from '../../state/apartmentStore';
 import { useViewerStore } from '../../state/viewerStore';
 import { flyActionFor, type FlyAction } from './flyBindings';
+import { EYE_HEIGHT, walkSurface } from './walkSurface';
 
 const LOOK_SENSITIVITY = 0.004;
 const WALK_SPEED = 2.5;
@@ -11,12 +13,14 @@ const PITCH_SPEED = 1.2;
 const SPRINT_MULTIPLIER = 3;
 const MIN_HEIGHT = 0.2;
 const MAX_PITCH = Math.PI / 2 - 0.01;
+const STEP_EASING = 12;
 
 const forward = new Vector3();
 const right = new Vector3();
 const move = new Vector3();
 
-export function FlyControls() {
+/** First-person controls; in walk mode the camera stays at eye height and follows floors and stairs. */
+export function FlyControls({ walk = false }: { walk?: boolean }) {
   const camera = useThree((state) => state.camera);
   const domElement = useThree((state) => state.gl.domElement);
   const active = useRef(new Map<string, FlyAction>());
@@ -82,9 +86,6 @@ export function FlyControls() {
       orientation.current.z = 0;
     }
     const actions = new Set(active.current.values());
-    if (actions.size === 0) {
-      return;
-    }
     const axis = (positive: FlyAction, negative: FlyAction) =>
       (actions.has(positive) ? 1 : 0) - (actions.has(negative) ? 1 : 0);
     const speed = actions.has('sprint') ? SPRINT_MULTIPLIER : 1;
@@ -96,19 +97,20 @@ export function FlyControls() {
       state.camera.quaternion.setFromEuler(orientation.current);
     }
 
-    move.set(axis('right', 'left'), axis('up', 'down'), axis('forward', 'back'));
-    if (move.lengthSq() === 0) {
-      return;
-    }
-    const yaw = orientation.current.y;
-    forward.set(-Math.sin(yaw), 0, -Math.cos(yaw));
-    right.set(Math.cos(yaw), 0, -Math.sin(yaw));
-    const step = WALK_SPEED * speed * delta;
-    const { x, y, z } = move.normalize();
-
     const { position } = state.camera;
-    position.addScaledVector(right, x * step).addScaledVector(forward, z * step);
-    position.y = Math.max(MIN_HEIGHT, position.y + y * step);
+    move.set(axis('right', 'left'), walk ? 0 : axis('up', 'down'), axis('forward', 'back'));
+    if (move.lengthSq() > 0) {
+      const yaw = orientation.current.y;
+      forward.set(-Math.sin(yaw), 0, -Math.cos(yaw));
+      right.set(Math.cos(yaw), 0, -Math.sin(yaw));
+      const step = WALK_SPEED * speed * delta;
+      const { x, y, z } = move.normalize();
+      position.addScaledVector(right, x * step).addScaledVector(forward, z * step);
+      position.y = Math.max(MIN_HEIGHT, position.y + y * step);
+    }
+    if (walk) {
+      followSurface(position, delta);
+    }
   });
 
   return null;
@@ -118,6 +120,20 @@ export function FlyControls() {
 function cameraJumps(): string {
   const { topViewRequest, faceNorthRequest } = useViewerStore.getState();
   return `${topViewRequest}:${faceNorthRequest}`;
+}
+
+/** Keeps a walker's eyes at eye height above the floor or stair tread under them, switching storeys on the stairs. */
+function followSurface(position: Vector3, delta: number) {
+  const { apartment, activeFloorId, setActiveFloor } = useApartmentStore.getState();
+  if (!apartment) {
+    return;
+  }
+  const surface = walkSurface(apartment, activeFloorId, [position.x, position.z]);
+  if (surface.floorId !== activeFloorId) {
+    setActiveFloor(surface.floorId);
+  }
+  const target = surface.height + EYE_HEIGHT;
+  position.y += (target - position.y) * (1 - Math.exp(-delta * STEP_EASING));
 }
 
 function rotate(euler: Euler, yaw: number, pitch: number) {

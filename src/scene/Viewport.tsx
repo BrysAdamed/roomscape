@@ -3,6 +3,7 @@ import { Canvas } from '@react-three/fiber';
 import { useApartmentStore } from '../state/apartmentStore';
 import { ApartmentView } from './ApartmentView';
 import { CameraRig } from './camera/CameraRig';
+import { DEFAULT_FOV } from './camera/fieldOfView';
 import { HeadingTracker } from './camera/HeadingTracker';
 import { frameApartment } from './camera/framing';
 import { AmbientOcclusion } from './lighting/AmbientOcclusion';
@@ -20,7 +21,7 @@ export function Viewport() {
 
   return (
     <Canvas
-      camera={{ position: framing.position, fov: 50, near: 0.05 }}
+      camera={{ position: framing.position, fov: DEFAULT_FOV, near: 0.05 }}
       shadows="percentage"
       onPointerMissed={(event) => {
         if (event.type === 'click') {
