@@ -46,6 +46,18 @@ export function subtractConvex(
   return pieces;
 }
 
+/** Even-odd test; points exactly on an edge may land on either side. */
+export function containsPoint(polygon: readonly PlanPoint[], [x, y]: PlanPoint): boolean {
+  let inside = false;
+  polygon.forEach(([x0, y0], index) => {
+    const [x1, y1] = polygon[(index + 1) % polygon.length]!;
+    if (y0 > y !== y1 > y && x < x0 + ((y - y0) * (x1 - x0)) / (y1 - y0)) {
+      inside = !inside;
+    }
+  });
+  return inside;
+}
+
 export function area(polygon: readonly PlanPoint[]): number {
   return Math.abs(signedArea(polygon));
 }

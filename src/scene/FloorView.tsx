@@ -5,6 +5,7 @@ import { useViewerStore } from '../state/viewerStore';
 import { CeilingMesh } from './CeilingMesh';
 import { FurnitureMesh } from './FurnitureMesh';
 import { wallTopProfile } from './geometry/roof';
+import { capUnderStairs } from './geometry/stairClearance';
 import { layoutWalls } from './geometry/wallLayout';
 import { LampLights } from './lighting/LampLights';
 import { ghostMaterial } from './materials';
@@ -40,17 +41,23 @@ export function FloorView({ floor, ghost = false }: { floor: Floor; ghost?: bool
       spans.map((span) => {
         const cap = Math.min(span.wall.height ?? floor.height, cutaway ? CUTAWAY_HEIGHT : Infinity);
         const length = wallLength(span.wall.start, span.wall.end);
-        return wallTopProfile(
-          floor.roof,
-          cap,
+        return capUnderStairs(
+          wallTopProfile(
+            floor.roof,
+            cap,
+            span.wall.start,
+            span.wall.end,
+            span.wall.thickness,
+            -span.startExtension,
+            length + span.endExtension,
+          ),
+          floor.stairs ?? [],
           span.wall.start,
           span.wall.end,
           span.wall.thickness,
-          -span.startExtension,
-          length + span.endExtension,
         );
       }),
-    [spans, floor.roof, floor.height, cutaway],
+    [spans, floor.roof, floor.height, floor.stairs, cutaway],
   );
 
   return (

@@ -9,7 +9,7 @@ import {
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import type { PlanPoint, Stairs } from '../../schema/apartment';
 
-const TREAD_THICKNESS = 0.05;
+export const TREAD_THICKNESS = 0.05;
 const SOFFIT_DEPTH = 0.2;
 
 /**
